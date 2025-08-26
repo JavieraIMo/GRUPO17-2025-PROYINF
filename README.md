@@ -3,10 +3,10 @@
 
 Este es el repositorio del *Grupo 17*, cuyos integrantes son:
 
-* Integrante 1 - Rol:
+* Fernanda - Rol:
+* Antonia Salinas - Rol: 202330512-k
+* Augusto - Rol:
 * Javiera Constanza Ibaca Morales - Rol: 202273624-0
-* Integrante 3 - Rol:
-* Integrante 4 - Rol:
 * **Tutor**: Miguel Belisario Huerta Flores
 
 
