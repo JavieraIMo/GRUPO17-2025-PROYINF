@@ -3,11 +3,12 @@
 
 Este es el repositorio del *Grupo 17*, cuyos integrantes son:
 
-* Integrante 1 - Rol
-* Integrante 2 - Rol
-* Integrante 3 - Rol
-* Integrante 4 - Rol
-* **Tutor**: Nombre Tutor
+* Integrante 1 - Rol:
+* Javiera Constanza Ibaca Morales - Rol: 202273624-0
+* Integrante 3 - Rol:
+* Integrante 4 - Rol:
+* **Tutor**: Miguel Belisario Huerta Flores
+
 
 ## Wiki
 
