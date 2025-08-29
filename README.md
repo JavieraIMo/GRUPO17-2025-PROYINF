@@ -72,12 +72,6 @@ A continuación se **evaluarán** diversas herramientas y lenguajes para elegir 
 - **Escalabilidad:** Soporte para crecimiento de usuarios
 - **Integración:** APIs para sistemas bancarios existentes
 
-### Consideraciones de Desarrollo
-- **Metodología:** Scrum/Agile
-- **Versionado:** Git con GitFlow
-- **Testing:** Unit tests, integration tests, E2E tests
-- **Documentación:** Técnica y de usuario actualizada
-
 ---
 
 **📅 Próximas actualizaciones:** Definición de stack completo en Hito 2
