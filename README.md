@@ -26,4 +26,60 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Javier
 
 ## Aspectos técnicos relevantes
 
-_Todo aspecto relevante cuando para poder usar el proyecto o consideraciones del proyecto base a ser entregado_
+A continuación se **evaluarán** diversas herramientas y lenguajes para elegir los más adecuados y flexibles al proyecto. **Se podrán considerar opciones adicionales** a medida que se **defina** el stack a utilizar.
+
+### Proyecto: Sistema de Préstamos Digitales
+
+**Estado del desarrollo:** 📋 Fase de análisis y diseño
+
+### Stack Tecnológico
+> 🚧 **En definición** - Se actualizará según avance del proyecto
+
+**Consideraciones técnicas planificadas:**
+
+#### Backend
+- **Lenguajes candidatos:** Java, Python, Node.js, C#
+- **Framework web:** Por definir según lenguaje seleccionado
+- **Base de datos:** SQL (PostgreSQL/MySQL) o NoSQL (MongoDB)
+- **API:** RESTful API para integración con sistemas externos
+
+#### Frontend  
+- **Web:** React, Angular o Vue.js (por definir)
+- **Mobile:** Flutter, React Native o desarrollo nativo (por evaluar)
+- **UI/UX:** Material Design o framework equivalente
+
+#### Integraciones Externas (Confirmadas)
+- **Servicios de riesgo:** DICOM, Equifax, CCS
+- **Validación identidad:** Clave Única, biometría facial
+- **Firma digital:** eCert Chile u entidad certificadora similar
+- **Pagos:** Transbank WebPay, Servipag
+- **Notificaciones:** SMS, WhatsApp Business API, Email
+
+#### Infraestructura y Despliegue
+- **Cloud:** AWS, Azure o Google Cloud (por evaluar)
+- **Contenedores:** Docker + Kubernetes (candidato)
+- **CI/CD:** GitHub Actions + plataforma de despliegue
+- **Monitoreo:** Logging y métricas (herramientas por definir)
+
+#### Seguridad
+- **Autenticación:** JWT + OAuth 2.0
+- **Encriptación:** HTTPS, cifrado de datos sensibles
+- **Compliance:** Cumplimiento normativo financiero chileno
+
+### Requisitos del Sistema
+- **Disponibilidad:** 7x24 para operaciones críticas
+- **SLA objetivo:** Aprobación en menos de 24 horas
+- **Escalabilidad:** Soporte para crecimiento de usuarios
+- **Integración:** APIs para sistemas bancarios existentes
+
+### Consideraciones de Desarrollo
+- **Metodología:** Scrum/Agile
+- **Versionado:** Git con GitFlow
+- **Testing:** Unit tests, integration tests, E2E tests
+- **Documentación:** Técnica y de usuario actualizada
+
+---
+
+**📅 Próximas actualizaciones:** Definición de stack completo en Hito 2
+
+*Última actualización: Agosto 2025*
