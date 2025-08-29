@@ -3,9 +3,9 @@
 
 Este es el repositorio del *Grupo 17*, cuyos integrantes son:
 
-* Fernanda - Rol:
+* Fernanda López - Rol: 202373638-4
 * Antonia Salinas - Rol: 202330512-k
-* Augusto - Rol:
+* Augusto Fuenzalida - Rol:202373114-5
 * Javiera Ibaca Morales - Rol: 202273624-0
 * **Tutor**: Miguel Belisario Huerta Flores
 
