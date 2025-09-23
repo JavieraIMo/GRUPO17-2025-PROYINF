@@ -1,5 +1,5 @@
 # GRUPOALARA-2025-PROYINF
-# Grupo 17
+# Grupo 17 - Simulador de Préstamos Crediticios
 
 Este es el repositorio del *Grupo 17*, cuyos integrantes son:
 
@@ -9,6 +9,73 @@ Este es el repositorio del *Grupo 17*, cuyos integrantes son:
 * Javiera Ibaca Morales - Rol: 202273624-0
 * **Tutor**: Miguel Belisario Huerta Flores
 
+## Descripción del Proyecto
+
+**Grupo Alara** es una aplicación web de simulación de préstamos crediticios desarrollada en React. La plataforma permite a los usuarios calcular préstamos con diferentes montos y plazos, ofreciendo una interfaz profesional similar a las páginas bancarias reales.
+
+### Características Principales
+
+- 🏦 **Interfaz Bancaria Profesional**: Diseño moderno y responsive
+- 🔐 **Sistema de Autenticación**: Login modal con validación
+- 📊 **Simulador de Préstamos**: Cálculo en tiempo real de cuotas e intereses
+- 📱 **Diseño Responsive**: Funciona en desktop, tablet y móvil
+- ⚡ **React Modular**: Arquitectura de componentes reutilizables
+
+## Estructura del Proyecto
+
+```
+src/
+├── components/
+│   ├── Header/           # Navegación y autenticación
+│   ├── Footer/           # Pie de página
+│   ├── Hero/            # Sección principal
+│   ├── Simulator/       # Calculadora de préstamos
+│   ├── Features/        # Características del servicio
+│   └── Login/           # Modal de inicio de sesión
+├── styles/              # Estilos globales
+├── pages/               # Páginas principales
+├── utils/               # Utilidades y helpers
+└── App.jsx             # Componente principal
+```
+
+## Componentes Desarrollados
+
+### 🎯 **Header**
+- Navegación principal
+- Botón de login/logout
+- Menú responsive
+
+### 🔐 **LoginModal**
+- Modal de autenticación
+- Validación de formularios
+- Manejo de errores
+
+### 🏠 **Hero**
+- Sección de bienvenida
+- Call-to-action dinámico
+- Mensajes según estado de login
+
+### 📊 **Simulator**
+- Calculadora de préstamos
+- Resultados en tiempo real
+- Formato de moneda chilena (CLP)
+
+### ⭐ **Features**
+- Características del servicio
+- Tarjetas con hover effects
+- Call-to-action integrado
+
+### 🦶 **Footer**
+- Enlaces de navegación
+- Información legal
+- Datos de contacto
+
+## Tecnologías Utilizadas
+
+- **React 18+**: Framework principal
+- **CSS3**: Estilos modernos con Flexbox y Grid
+- **JavaScript ES6+**: Lógica de aplicación
+- **Responsive Design**: Media queries y diseño adaptable
 
 ## Wiki
 
@@ -34,15 +101,13 @@ A continuación se **evaluarán** diversas herramientas y lenguajes para elegir 
 **Consideraciones técnicas planificadas:**
 
 #### Backend
-- **Lenguajes candidatos:** Java, Python, Node.js, C#
-- **Framework web:** Por definir según lenguaje seleccionado
-- **Base de datos:** SQL (PostgreSQL/MySQL) o NoSQL (MongoDB)
+
+- **Framework web:** Node.js
+- **Base de datos:** PostgreSQL
 - **API:** RESTful API para integración con sistemas externos
 
 #### Frontend  
-- **Web:** React, Angular o Vue.js (por definir)
-- **Mobile:** Flutter, React Native o desarrollo nativo (por evaluar)
-- **UI/UX:** Material Design o framework equivalente
+- **Web:** React
 
 #### Integraciones Externas (Confirmadas)
 - **Servicios de riesgo:** DICOM, Equifax, CCS
