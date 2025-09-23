@@ -30,7 +30,7 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Javier
 - 🏦 **Interfaz Bancaria Profesional**: Diseño moderno y responsive
 - 🔐 **Sistema de Autenticación**: Login modal con validación
 - 📊 **Simulador de Préstamos**: Cálculo en tiempo real de cuotas e intereses
-- 📱 **Diseño Responsive**: Funciona en desktop, tablet y móvil
+- 📱 **Diseño Responsive**: Funciona en desktop
 - ⚡ **React Modular**: Arquitectura de componentes reutilizables
 
 ## Estructura del Proyecto
