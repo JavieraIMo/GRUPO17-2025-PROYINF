@@ -9,6 +9,18 @@ Este es el repositorio del *Grupo 17*, cuyos integrantes son:
 * Javiera Ibaca Morales - Rol: 202273624-0
 * **Tutor**: Miguel Belisario Huerta Flores
 
+## Wiki
+
+Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/JavieraIMo/GRUPOALARA-2025-PROYINF/wiki)
+
+## Videos
+
+* [Video presentación cliente](https://aula.usm.cl/mod/resource/view.php?id=6926137)
+* [Video presentación avance 1](https://www.youtube.com/)
+* Etc ...
+
+## Aspectos técnicos relevantes
+
 ## Descripción del Proyecto
 
 **Grupo Alara** es una aplicación web de simulación de préstamos crediticios desarrollada en React. La plataforma permite a los usuarios calcular préstamos con diferentes montos y plazos, ofreciendo una interfaz profesional similar a las páginas bancarias reales.
@@ -77,26 +89,14 @@ src/
 - **JavaScript ES6+**: Lógica de aplicación
 - **Responsive Design**: Media queries y diseño adaptable
 
-## Wiki
-
-Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/JavieraIMo/GRUPOALARA-2025-PROYINF/wiki)
-
-## Videos
-
-* [Video presentación cliente](https://aula.usm.cl/mod/resource/view.php?id=6926137)
-* [Video presentación avance 1](https://www.youtube.com/)
-* Etc ...
-
-## Aspectos técnicos relevantes
-
-A continuación se **evaluarán** diversas herramientas y lenguajes para elegir los más adecuados y flexibles al proyecto. **Se podrán considerar opciones adicionales** a medida que se **defina** el stack a utilizar.
-
 ### Proyecto: Sistema de Préstamos Digitales
 
 **Estado del desarrollo:** 📋 Fase de análisis y diseño
 
 ### Stack Tecnológico
-> 🚧 **En definición** - Se actualizará según avance del proyecto
+> Back-end: React
+> Front-end: Node.js
+> Base de datos: PostreSQL
 
 **Consideraciones técnicas planificadas:**
 
@@ -135,6 +135,4 @@ A continuación se **evaluarán** diversas herramientas y lenguajes para elegir 
 
 ---
 
-**📅 Próximas actualizaciones:** Definición de stack completo en Hito 2
-
-*Última actualización: Agosto 2025*
+*Última actualización: Septiembre 2025*
