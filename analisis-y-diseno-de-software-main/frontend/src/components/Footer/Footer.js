@@ -33,9 +33,7 @@ function Footer() {
           <h4 className="footer-title">Productos</h4>
           <ul className="footer-links">
             <li><a href="/prestamos-personales" className="footer-link">Préstamos Personales</a></li>
-            <li><a href="/prestamos-hipotecarios" className="footer-link">Préstamos Hipotecarios</a></li>
             <li><a href="/simulaciones" className="footer-link">Simulaciones</a></li>
-            <li><a href="/calculadoras" className="footer-link">Calculadoras</a></li>
           </ul>
         </div>
 
@@ -60,7 +58,7 @@ function Footer() {
             </p>
             <p className="footer-contact-item">
               <span className="contact-icon">📞</span>
-              +56 2 2345 6789
+              +56 2 1234 5678
             </p>
             <p className="footer-contact-item">
               <span className="contact-icon">📍</span>

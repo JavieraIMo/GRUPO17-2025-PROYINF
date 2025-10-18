@@ -1,0 +1,8 @@
+<!-- Favicon básico en formato HTML -->
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo negro -->
+  <rect width="16" height="16" fill="#111827" rx="2"/>
+  
+  <!-- Letra A blanca simple -->
+  <path d="M8 2 L13 14 L11 14 L10 11 L6 11 L5 14 L3 14 L8 2 Z M7 9 L9 9 L8 6 L7 9 Z" fill="white"/>
+</svg>
