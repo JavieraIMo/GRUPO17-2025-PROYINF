@@ -1,1 +1,73 @@
 /* Home.css */
+
+/* Hero Section */
+.home {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.hero {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #001763;
+  margin-bottom: 1rem;
+  font-family: 'Times New Roman', 'Georgia', serif;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* Botón Comenzar - Página principal */
+.btn-comenzar {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #111827 100%);
+  color: #f8fafc;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
+  min-width: 160px;
+}
+
+.btn-comenzar:hover {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-comenzar:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.1rem;
+  }
+  
+  .btn-comenzar {
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+  }
+}

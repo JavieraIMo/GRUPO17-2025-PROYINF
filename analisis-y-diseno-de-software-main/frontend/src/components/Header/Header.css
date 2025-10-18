@@ -1,0 +1,547 @@
+/**
+ * ============================================================================
+ * HEADER COMPONENT STYLES
+ * ============================================================================
+ * 
+ * Estilos del componente Header principal de ALARA Simulador
+ * Incluye: Logo, navegación, autenticación, menú hamburguesa
+ * 
+ * Estructura:
+ * 1. Variables y Base Styles
+ * 2. Layout Principal
+ * 3. Logo y Branding
+ * 4. Navegación Desktop
+ * 5. Botones y Acciones
+ * 6. Menú Hamburguesa Mobile
+ * 7. Menú Lateral
+ * 8. Estados de Usuario
+ * 9. Responsive Design
+ * ============================================================================
+ */
+
+/* ============================================================================
+   1. VARIABLES Y BASE STYLES
+   ============================================================================ */
+
+:root {
+  --color-primary: #001763;         /* Azul ALARA principal */
+  --color-navy: #0f172a;            /* Azul marino profundo */
+  --color-navy-light: #1e293b;      /* Azul marino claro */
+  --color-navy-dark: #0c1222;       /* Azul marino muy oscuro */
+  --color-elegant-black: #111827;   /* Negro elegante */
+  --color-charcoal: #1f2937;        /* Carbón sofisticado */
+  --color-slate: #374151;           /* Pizarra */
+  --color-text: #1f2937;            /* Texto principal */
+  --color-text-light: #6b7280;      /* Texto secundario */
+  --color-text-white: #f8fafc;      /* Texto blanco */
+  --color-bg: #ffffff;              /* Fondo blanco */
+  --color-border: #e5e7eb;          /* Bordes */
+  --color-hover: #f3f4f6;           /* Hover background */
+  --color-gradient-elegant: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #111827 100%);
+  --color-gradient-subtle: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  --shadow-header: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-button-elegant: 0 4px 12px rgba(15, 23, 42, 0.3);
+  --shadow-button-hover: 0 8px 25px rgba(15, 23, 42, 0.4);
+}
+
+/* ============================================================================
+   2. LAYOUT PRINCIPAL
+   ============================================================================ */
+
+.header {
+  background: var(--color-bg);
+  box-shadow: var(--shadow-header);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  padding: 1rem 0;
+}
+
+.nav-container {
+  max-width: 1700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  position: relative;
+}
+
+/* ============================================================================
+   3. LOGO Y BRANDING
+   ============================================================================ */
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.logo-link:hover {
+  opacity: 0.9;
+}
+
+/* Logo principal con imagen */
+.logo-image {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-with-image {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Textos del logo */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-text-styled {
+  font-family: 'Times New Roman', 'Georgia', serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.logo-subtitle {
+  font-family: 'Arial Black', 'Helvetica', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  margin-top: -5px;
+  padding: 0;
+  line-height: 1;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-text);
+}
+
+/* ============================================================================
+   4. NAVEGACIÓN DESKTOP
+   ============================================================================ */
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.nav-link:hover {
+  background-color: var(--color-hover);
+  color: var(--color-navy);
+}
+
+/* ============================================================================
+   5. BOTONES Y ACCIONES
+   ============================================================================ */
+
+/* Contenedores de botones */
+.nav-cta {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.right-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Botón de Registrarse - Header */
+.btn-registrarse {
+  background: var(--color-gradient-elegant);
+  color: var(--color-text-white);
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-button-elegant);
+  width: 130px;
+  text-align: center;
+}
+
+.btn-registrarse:hover {
+  background: var(--color-gradient-subtle);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-2px);
+}
+
+/* Botón de Iniciar Sesión - Header */
+.btn-iniciar-sesion {
+  background: white;
+  color: var(--color-navy);
+  border: 2px solid var(--color-navy);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
+  width: 130px;
+  text-align: center;
+}
+
+.btn-iniciar-sesion:hover {
+  background: var(--color-navy);
+  color: var(--color-text-white);
+  border-color: var(--color-navy-light);
+  box-shadow: var(--shadow-button-elegant);
+  transform: translateY(-2px);
+}
+
+/* Botón de perfil - Usuario logueado */
+.btn-profile {
+  background: var(--color-hover);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-profile:hover {
+  background: #f8fafc;
+  border-color: var(--color-navy);
+  color: var(--color-navy);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+}
+
+.profile-icon {
+  font-size: 1rem;
+}
+
+/* Botón de logout - Cerrar sesión */
+.btn-logout {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ============================================================================
+   6. ESTADOS DE USUARIO
+   ============================================================================ */
+
+/* Saludo de usuario en desktop */
+.user-greeting {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Info de usuario en menú lateral */
+.user-info {
+  padding: 1rem 1.5rem;
+  background: #f9fafb;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.user-welcome {
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* ============================================================================
+   7. MENÚ HAMBURGUESA MOBILE
+   ============================================================================ */
+
+.hamburger-btn {
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-around;
+  width: 35px;
+  height: 35px;
+  background: none;
+  border: 2px solid var(--color-primary);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover {
+  background-color: var(--color-primary);
+}
+
+.hamburger-btn:hover .hamburger-line {
+  background-color: white;
+}
+
+/* Líneas del hamburguesa */
+.hamburger-line {
+  width: 100%;
+  height: 4px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  margin: 2px 0;
+}
+
+/* ============================================================================
+   8. MENÚ LATERAL
+   ============================================================================ */
+
+/* Overlay de fondo para cerrar menú */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  backdrop-filter: blur(2px);
+}
+
+/* Menú lateral deslizable */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 25px rgba(0, 0, 0, 0.15);
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1002;
+  overflow-y: auto;
+}
+
+.side-menu-open {
+  right: 0;
+}
+
+/* Header del menú lateral */
+.side-menu-header {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--color-text-light);
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  color: var(--color-text);
+  background-color: var(--color-hover);
+}
+
+.close-icon {
+  line-height: 1;
+}
+
+/* Items del menú lateral */
+.side-menu-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-menu-item {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.side-menu-link {
+  display: block;
+  padding: 1rem 1.5rem;
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.side-menu-link:hover {
+  background-color: #f9fafb;
+  color: var(--color-navy);
+}
+
+/* Botones en menú lateral */
+.side-menu-cta {
+  width: calc(100% - 3rem);
+  margin: 1.5rem;
+  border-radius: 0.5rem;
+  justify-content: center;
+}
+
+/* ============================================================================
+   9. RESPONSIVE DESIGN
+   ============================================================================ */
+
+/* Tablets y dispositivos pequeños */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 1rem;
+    justify-content: space-between;
+  }
+  
+  /* Ocultar elementos desktop */
+  .desktop-menu {
+    display: none;
+  }
+  
+  .desktop-cta {
+    display: none;
+  }
+
+  /* Mostrar hamburguesa */
+  .hamburger-btn {
+    display: flex;
+    margin-left: auto;
+  }
+  
+  /* Ajustar logo */
+  .nav-logo {
+    flex: none;
+  }
+  
+  .logo-text {
+    font-size: 1.2rem;
+  }
+  
+  .logo-text-styled {
+    font-size: 2rem;
+  }
+  
+  /* Ajustar botones móviles */
+  .btn-registrarse,
+  .btn-iniciar-sesion,
+  .btn-profile {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .user-name {
+    font-size: 0.85rem;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 0.75rem;
+  }
+  
+  .logo-text-styled {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  
+  .logo-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .side-menu {
+    width: 280px;
+    right: -280px;
+  }
+}
+
+/* Estados de focus para accesibilidad */
+@media (prefers-reduced-motion: no-preference) {
+  .hamburger-btn:focus,
+  .btn-registrarse:focus,
+  .btn-iniciar-sesion:focus,
+  .btn-profile:focus {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+}
+
+/* Dark mode support (futuro) */
+@media (prefers-color-scheme: dark) {
+  /* Variables para modo oscuro - implementar cuando sea necesario */
+}
+
+/* ============================================================================
+   FIN DEL ARCHIVO
+   ============================================================================ */

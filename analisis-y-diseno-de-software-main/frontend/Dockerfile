@@ -13,9 +13,13 @@ RUN npm install
 # Copiar el código fuente
 COPY . .
 
-# Variables de entorno para hot reload
+# Variables de entorno para hot reload y HMR
 ENV CHOKIDAR_USEPOLLING=true
 ENV WATCHPACK_POLLING=true
+ENV FAST_REFRESH=true
+ENV WDS_SOCKET_HOST=localhost
+ENV WDS_SOCKET_PORT=3001
+ENV WDS_SOCKET_PATH=/ws
 
 # Exponer puerto 3000 (React dev server)
 EXPOSE 3000
