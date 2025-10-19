@@ -4,7 +4,7 @@ services:
   app:
     build: ./backend
     ports:
-      - "3000:3000"
+      - "3100:3000"
     environment:
       - DB_HOST=postgres_db
       - DB_PORT=5432
@@ -23,17 +23,17 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3001:3000"
+      - "3101:3000"
     volumes:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - REACT_APP_API_URL=http://localhost:3000
+      - REACT_APP_API_URL=http://localhost:3100
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
       - FAST_REFRESH=true
       - WDS_SOCKET_HOST=localhost
-      - WDS_SOCKET_PORT=3001
+      - WDS_SOCKET_PORT=3101
       - WDS_SOCKET_PATH=/ws
 
   postgres_db:
@@ -44,8 +44,25 @@ services:
       - POSTGRES_DB=mydb
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./backend/sql:/sql  # Montar archivos SQL
     ports:
       - "5433:5432"
 
+  # pgAdmin - Interfaz gráfica para PostgreSQL
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@alara.cl
+      - PGADMIN_DEFAULT_PASSWORD=admin123
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres_db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
 volumes:
   postgres_data:
+  pgadmin_data:

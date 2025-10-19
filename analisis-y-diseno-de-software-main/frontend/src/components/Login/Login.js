@@ -58,26 +58,24 @@ function Login({ onClose, onSuccess, onSwitchToRegister }) {
     setIsLoading(true);
     
     try {
-      // Simular autenticación
-      console.log('Datos del login:', formData);
+      console.log('Intentando autenticación con:', formData.email);
       
-      // Simular llamada a API
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const result = await authenticateUser(formData.email, formData.password);
       
-      // Simular credenciales válidas
-      const isValidUser = await authenticateUser(formData.email, formData.password);
-      
-      if (isValidUser) {
+      if (result.success) {
+        console.log('Login exitoso:', result.user);
         // Llamar callback de éxito
         if (onSuccess) {
           onSuccess({
-            email: formData.email,
-            firstName: 'Usuario', // En producción vendría del backend
-            lastName: 'Demo'
+            email: result.user.email,
+            firstName: result.user.nombre_completo.split(' ')[0],
+            lastName: result.user.nombre_completo.split(' ').slice(1).join(' '),
+            id: result.user.id,
+            rut: result.user.rut
           });
         }
       } else {
-        setErrors({ general: 'Email o contraseña incorrectos' });
+        setErrors({ general: result.error || 'Email o contraseña incorrectos' });
       }
       
     } catch (error) {
@@ -88,23 +86,29 @@ function Login({ onClose, onSuccess, onSwitchToRegister }) {
     }
   };
 
-  // Simular autenticación
+  // Autenticación con API real
   const authenticateUser = async (email, password) => {
-    // Simulación - en producción sería una llamada a la API
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // Simular usuarios válidos
-    const validUsers = [
-      { email: 'demo@alara.cl', password: 'Demo123' },
-      { email: 'test@example.com', password: 'Test123' }
-    ];
-    
-    return validUsers.some(user => 
-      user.email === email && user.password === password
-    );
-  };
+    try {
+      const response = await fetch('http://localhost:3100/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-  return (
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        return { success: true, user: data.data.user };
+      } else {
+        return { success: false, error: data.error || 'Error desconocido' };
+      }
+    } catch (error) {
+      console.error('Error en autenticación:', error);
+      return { success: false, error: 'Error de conexión' };
+    }
+  };  return (
     <div className="login-overlay" onClick={onClose}>
       <div className="login-modal" onClick={e => e.stopPropagation()}>
         <div className="login-header">

@@ -1,151 +1,117 @@
-const express = require('express');
-const cors = require('cors'); // NUEVO: Para comunicación con React
-const pool = require('./db');
-const app = express();
-const port = 3000;
+// =====================================================
+// ALARA SIMULADOR - BACKEND API
+// Arquitectura MVC con Node.js + Express + PostgreSQL
+// =====================================================
 
-// CORS - Permite que React (puerto 3001) se comunique con Node.js (puerto 3000)
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+
+// Importar rutas MVC
+const authRoutes = require('./src/routes/authRoutes');
+
+// Inicializar aplicación Express
+const app = express();
+const port = process.env.PORT || 3000;
+
+// =====================================================
+// MIDDLEWARES GLOBALES
+// =====================================================
+
+// CORS - Permite comunicación con React
 app.use(cors({
-  origin: 'http://localhost:3001', // URL de tu app React
-  credentials: true
+  origin: process.env.FRONTEND_URL || 'http://localhost:3101',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Middleware para procesar JSON (React envía JSON)
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Parsear JSON y URL-encoded data
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// ELIMINAR estas líneas (ya no necesitas EJS):
-// app.set('view engine', 'ejs');
-// app.set('views', './src/views');
-// app.use(express.static('public'));
+// Logging middleware (desarrollo)
+if (process.env.NODE_ENV !== 'production') {
+  app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+    next();
+  });
+}
 
-// ============= RUTAS API =============
+// =====================================================
+// RUTAS PRINCIPALES
+// =====================================================
 
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ 
+    success: true,
     status: 'OK',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    service: 'ALARA Backend API',
+    version: '1.0.0'
   });
 });
 
-// ============= AUTENTICACIÓN =============
+// Rutas de autenticación (MVC)
+app.use('/api/auth', authRoutes);
 
-// Verificar si email ya existe (HU-1)
-app.get('/api/check-email/:email', async (req, res) => {
-  try {
-    const { email } = req.params;
-    
-    // TODO: Cuando tengamos la tabla clientes
-    // const result = await pool.query('SELECT id FROM clientes WHERE email = $1', [email]);
-    // const exists = result.rows.length > 0;
-    
-    // Por ahora, simulamos algunos emails que ya existen
-    const existingEmails = ['test@test.com', 'admin@alara.cl', 'demo@demo.cl'];
-    const exists = existingEmails.includes(email.toLowerCase());
-    
-    res.json({ 
-      exists,
-      email: email.toLowerCase()
-    });
-    
-  } catch (error) {
-    console.error('Error verificando email:', error);
-    res.status(500).json({
-      error: 'Error verificando email',
-      message: error.message
-    });
-  }
+// Mantener las rutas legacy para compatibilidad con React
+const AuthController = require('./src/controllers/authController');
+app.get('/api/check-email/:email', AuthController.checkEmail);
+app.post('/api/register', AuthController.register);
+
+// =====================================================
+// MIDDLEWARES DE ERROR
+// =====================================================
+
+// Manejo de rutas no encontradas
+app.use('*', (req, res) => {
+  res.status(404).json({
+    success: false,
+    error: 'Endpoint no encontrado',
+    path: req.originalUrl,
+    method: req.method
+  });
 });
 
-// Registro de usuario (HU-1)
-app.post('/api/register', async (req, res) => {
-  try {
-    const { 
-      firstName, 
-      lastName, 
-      email, 
-      phone, 
-      rut, 
-      password 
-    } = req.body;
-    
-    // Validaciones básicas
-    if (!firstName || !lastName || !email || !phone || !rut || !password) {
-      return res.status(400).json({
-        error: 'Campos requeridos faltantes',
-        required: ['firstName', 'lastName', 'email', 'phone', 'rut', 'password']
-      });
-    }
-    
-    // Verificar email único
-    // TODO: Descomentar cuando tengamos la tabla
-    // const emailCheck = await pool.query('SELECT id FROM clientes WHERE email = $1', [email]);
-    // if (emailCheck.rows.length > 0) {
-    //   return res.status(409).json({
-    //     error: 'Email ya registrado',
-    //     field: 'email'
-    //   });
-    // }
-    
-    // Simular verificación de email único
-    const existingEmails = ['test@test.com', 'admin@alara.cl', 'demo@demo.cl'];
-    if (existingEmails.includes(email.toLowerCase())) {
-      return res.status(409).json({
-        error: 'Email ya registrado',
-        field: 'email'
-      });
-    }
-    
-    // TODO: Encriptar contraseña
-    // const bcrypt = require('bcrypt');
-    // const saltRounds = 10;
-    // const passwordHash = await bcrypt.hash(password, saltRounds);
-    
-    // TODO: Insertar en base de datos
-    // const result = await pool.query(`
-    //   INSERT INTO clientes (
-    //     rut, nombre_completo, email, telefono, password_hash, 
-    //     fecha_registro, activo
-    //   ) VALUES ($1, $2, $3, $4, $5, NOW(), true)
-    //   RETURNING id, rut, nombre_completo, email, fecha_registro
-    // `, [rut, `${firstName} ${lastName}`, email, phone, passwordHash]);
-    
-    // Simular inserción exitosa
-    const mockUser = {
-      id: Date.now(),
-      rut,
-      nombre_completo: `${firstName} ${lastName}`,
-      email: email.toLowerCase(),
-      telefono: phone,
-      fecha_registro: new Date().toISOString(),
-      activo: true
-    };
-    
-    console.log('Usuario registrado (simulado):', {
-      ...mockUser,
-      password: '[ENCRIPTADO]'
-    });
-    
-    res.status(201).json({
-      success: true,
-      message: 'Usuario registrado exitosamente',
-      user: {
-        id: mockUser.id,
-        firstName,
-        lastName,
-        email: mockUser.email,
-        rut: mockUser.rut
-      }
-    });
-    
-  } catch (error) {
-    console.error('Error en registro:', error);
-    res.status(500).json({
-      error: 'Error interno del servidor',
-      message: error.message
-    });
-  }
+// Manejo global de errores
+app.use((error, req, res, next) => {
+  console.error('Error global:', error);
+  
+  res.status(error.status || 500).json({
+    success: false,
+    error: error.message || 'Error interno del servidor',
+    ...(process.env.NODE_ENV === 'development' && { stack: error.stack })
+  });
+});
+
+// =====================================================
+// INICIAR SERVIDOR
+// =====================================================
+
+app.listen(port, () => {
+  console.log('🚀 ==========================================');
+  console.log('🏦 ALARA SIMULADOR - Backend API');
+  console.log('🚀 ==========================================');
+  console.log(`📡 Servidor corriendo en: http://localhost:${port}`);
+  console.log(`🔗 CORS habilitado para: ${process.env.FRONTEND_URL || 'http://localhost:3101'}`);
+  console.log(`🏗️  Arquitectura: MVC (Modelo-Vista-Controlador)`);
+  console.log(`📊 Base de datos: PostgreSQL`);
+  console.log('📋 ==========================================');
+  console.log('📋 ENDPOINTS DISPONIBLES:');
+  console.log('📋 ==========================================');
+  console.log('🔍 GET  /api/health           - Estado del servidor');
+  console.log('🔐 POST /api/auth/register    - Registro MVC');
+  console.log('🔐 POST /api/auth/login       - Login MVC');
+  console.log('📧 GET  /api/auth/check-email/:email - Verificar email MVC');
+  console.log('🆔 GET  /api/auth/check-rut/:rut     - Verificar RUT MVC');
+  console.log('👤 GET  /api/auth/profile     - Perfil usuario MVC');
+  console.log('📋 ==========================================');
+  console.log('🔄 LEGACY (compatibilidad):');
+  console.log('📧 GET  /api/check-email/:email - Verificar email legacy');
+  console.log('🔐 POST /api/register         - Registro legacy');
+  console.log('📋 ==========================================');
 });
 
 // ============= SIMULACIONES =============
@@ -247,13 +213,6 @@ app.get('*', (req, res) => {
   res.json({
     message: 'API Simulador de Préstamos',
     note: 'Esta es una API REST. Usa /api/ para acceder a los endpoints.',
-    frontend: 'Ejecuta la app React en el puerto 3001'
+    frontend: 'Ejecuta la app React en el puerto 3101'
   });
-});
-
-// ============= INICIAR SERVIDOR =============
-
-app.listen(port, () => {
-  console.log(`🚀 API Backend corriendo en http://localhost:${port}`);
-  console.log(`📋 Endpoints disponibles en http://localhost:${port}/api`);
 });

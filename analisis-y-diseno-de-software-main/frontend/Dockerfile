@@ -18,10 +18,10 @@ ENV CHOKIDAR_USEPOLLING=true
 ENV WATCHPACK_POLLING=true
 ENV FAST_REFRESH=true
 ENV WDS_SOCKET_HOST=localhost
-ENV WDS_SOCKET_PORT=3001
+ENV WDS_SOCKET_PORT=3101
 ENV WDS_SOCKET_PATH=/ws
 
-# Exponer puerto 3000 (React dev server)
+# Exponer puerto 3000 (React dev server interno)
 EXPOSE 3000
 
 # Comando para iniciar el servidor de desarrollo

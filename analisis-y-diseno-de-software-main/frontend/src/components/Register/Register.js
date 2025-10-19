@@ -164,7 +164,7 @@ function Register({ onClose, onSuccess }) {
   // Verificar si el email ya existe (preparado para API futura)
   const checkEmailExists = async (email) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/check-email/${email}`);
+      const response = await fetch(`http://localhost:3100/api/check-email/${email}`);
       const data = await response.json();
       return data.exists;
     } catch (error) {
@@ -196,14 +196,14 @@ function Register({ onClose, onSuccess }) {
         return;
       }
 
-      // Preparar datos para envío
+      // Preparar datos para envío (formato MVC)
       const registrationData = {
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(), 
+        nombre_completo: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
         email: formData.email.toLowerCase().trim(),
-        phone: formData.phone.replace(/[^0-9]/g, ''),
+        telefono: formData.phone.replace(/[^0-9]/g, '') || null,
         rut: formData.rut,
-        password: formData.password
+        password: formData.password,
+        confirm_password: formData.confirmPassword
       };
       
       console.log('Enviando datos a API:', {
@@ -212,7 +212,7 @@ function Register({ onClose, onSuccess }) {
       });
       
       // Llamada real a la API
-      const response = await fetch('http://localhost:3000/api/register', {
+      const response = await fetch('http://localhost:3100/api/register', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

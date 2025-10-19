@@ -178,4 +178,243 @@ docker-compose up --build
 
 ---
 
-*Última actualización: Octubre 2025*
+## 🚀 Guía de Instalación Completa (Desde Cero)
+
+Esta guía te permite configurar todo el sistema ALARA en una nueva máquina local.
+
+### 📋 Prerrequisitos
+
+Antes de comenzar, asegúrate de tener instalado:
+
+1. **Git**
+   - Descargar desde: https://git-scm.com/downloads
+   - Verificar instalación: `git --version`
+
+2. **Docker Desktop**
+   - Descargar desde: https://www.docker.com/products/docker-desktop/
+   - **IMPORTANTE:** Debe incluir Docker Compose
+   - Verificar instalación: `docker --version` y `docker-compose --version`
+
+3. **Puertos disponibles** (verificar que no estén en uso):
+   - `3100` - Backend API
+   - `3101` - Frontend React
+   - `5433` - PostgreSQL
+   - `5050` - pgAdmin
+
+### 📥 Paso 1: Clonar el Repositorio
+
+```bash
+# Clonar el proyecto
+git clone https://github.com/JavieraIMo/GRUPO17-2025-PROYINF.git
+
+# Navegar al directorio del proyecto
+cd GRUPO17-2025-PROYINF/analisis-y-diseno-de-software-main
+```
+
+### 🔧 Paso 2: Configuración de Puertos
+
+El proyecto utiliza puertos específicos para evitar conflictos comunes (3000/3001):
+
+| Servicio | Puerto Interno | Puerto Externo | URL de Acceso |
+|----------|---------------|----------------|---------------|
+| **Frontend React** | 3000 | **3101** | `http://localhost:3101` |
+| **Backend API** | 3000 | **3100** | `http://localhost:3100` |
+| **PostgreSQL** | 5432 | **5433** | `localhost:5433` |
+| **pgAdmin** | 80 | **5050** | `http://localhost:5050` |
+
+#### ⚠️ Resolución de Conflictos de Puerto
+
+Si tienes conflictos de puerto, puedes cambiarlos editando `docker-compose.yml`:
+
+```yaml
+# Ejemplo: cambiar puerto del frontend de 3101 a 3201
+frontend:
+  ports:
+    - "3201:3000"  # Puerto externo:interno
+```
+
+### 🐳 Paso 3: Construcción e Inicio
+
+#### Opción A: Script Automático (Recomendado para Windows)
+```bash
+# Ejecutar script de inicio completo
+./start-complete.bat
+```
+
+#### Opción B: Comando Manual (Multiplataforma)
+```bash
+# Construir e iniciar todos los servicios
+docker-compose up --build
+
+# Para ejecutar en segundo plano
+docker-compose up --build -d
+```
+
+### ⏳ Paso 4: Verificación de Instalación
+
+1. **Esperar inicialización** (2-3 minutos primera vez)
+
+2. **Verificar servicios activos:**
+```bash
+docker ps
+```
+
+3. **Probar conectividad:**
+   - ✅ Frontend: http://localhost:3101
+   - ✅ Backend API: http://localhost:3100/api/health
+   - ✅ pgAdmin: http://localhost:5050
+
+### 🗄️ Paso 5: Configuración de Base de Datos
+
+#### 5.1 Acceso a pgAdmin
+1. Ir a: http://localhost:5050
+2. **Credenciales:**
+   - Email: `admin@alara.cl`
+   - Contraseña: `admin123`
+
+#### 5.2 Conectar a PostgreSQL
+1. Clic derecho en "Servers" → "Create" → "Server"
+2. **General Tab:**
+   - Name: `ALARA Database`
+3. **Connection Tab:**
+   - Host: `postgres_db` (nombre del servicio Docker)
+   - Port: `5432` (puerto interno)
+   - Database: `mydb`
+   - Username: `user`
+   - Password: `password`
+
+#### 5.3 Crear Esquema de HU-1
+```sql
+-- Ejecutar en pgAdmin Query Tool
+CREATE TABLE IF NOT EXISTS clientes (
+    id SERIAL PRIMARY KEY,
+    rut VARCHAR(12) UNIQUE NOT NULL,
+    nombre_completo VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    telefono VARCHAR(20),
+    password_hash VARCHAR(255) NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    activo BOOLEAN DEFAULT TRUE
+);
+```
+
+### 🧪 Paso 6: Pruebas del Sistema
+
+#### 6.1 Prueba de Registro de Usuario
+1. Ir a: http://localhost:3101
+2. Clic en "Registrarse"
+3. Usar datos de prueba:
+   - RUT: `12.345.678-5`
+   - Nombre: `Usuario Test`
+   - Email: `test@alara.cl`
+   - Teléfono: `+56912345678`
+   - Contraseña: `Test123!`
+
+#### 6.2 Prueba de Login
+1. Clic en "Iniciar Sesión"
+2. Usar las credenciales del usuario registrado
+
+#### 6.3 Verificar en Base de Datos
+En pgAdmin, ejecutar:
+```sql
+SELECT id, rut, nombre_completo, email FROM clientes;
+```
+
+### 🛠️ Comandos Útiles para Desarrollo
+
+#### Docker
+```bash
+# Ver logs del backend
+docker logs analisis-y-diseno-de-software-main-app-1
+
+# Ver logs del frontend
+docker logs analisis-y-diseno-de-software-main-frontend-1
+
+# Reiniciar un servicio específico
+docker-compose restart app
+
+# Parar todos los servicios
+docker-compose down
+
+# Limpiar y reconstruir
+docker-compose down && docker-compose up --build
+```
+
+#### Base de Datos
+```bash
+# Conectarse directamente a PostgreSQL
+docker exec -it analisis-y-diseno-de-software-main-postgres_db-1 psql -U user -d mydb
+
+# Limpiar tabla de usuarios
+docker exec -it analisis-y-diseno-de-software-main-postgres_db-1 psql -U user -d mydb -c "DELETE FROM clientes;"
+
+# Resetear contador de IDs
+docker exec -it analisis-y-diseno-de-software-main-postgres_db-1 psql -U user -d mydb -c "ALTER SEQUENCE clientes_id_seq RESTART WITH 1;"
+```
+
+### 🔧 Solución de Problemas Comunes
+
+#### Problema: Puerto ya en uso
+```bash
+# Verificar qué proceso usa el puerto
+netstat -ano | findstr :3100
+
+# Matar proceso (Windows)
+taskkill /PID [PID_NUMBER] /F
+```
+
+#### Problema: Contenedor no inicia
+```bash
+# Ver logs detallados
+docker-compose logs [service_name]
+
+# Reconstruir contenedor específico
+docker-compose up --build [service_name]
+```
+
+#### Problema: Error de conexión a BD
+1. Verificar que PostgreSQL esté corriendo: `docker ps`
+2. Verificar logs de PostgreSQL: `docker logs [postgres_container_name]`
+3. Reiniciar servicios: `docker-compose restart`
+
+### 📁 Estructura de Archivos Clave
+
+```
+analisis-y-diseno-de-software-main/
+├── docker-compose.yml          # ⚙️ Configuración de servicios y puertos
+├── backend/
+│   ├── index.js               # 🚪 Punto de entrada del servidor
+│   ├── src/controllers/       # 🎮 Lógica de negocio MVC
+│   ├── src/models/           # 📊 Modelos de datos
+│   └── src/routes/           # 🛣️ Endpoints de API
+└── frontend/
+    ├── src/components/       # 🧩 Componentes React
+    ├── src/pages/           # 📄 Páginas de la aplicación
+    └── Dockerfile           # 🐳 Configuración del contenedor React
+```
+
+### ✅ Lista de Verificación Post-Instalación
+
+- [ ] Docker Desktop ejecutándose
+- [ ] Puertos 3100, 3101, 5433, 5050 disponibles
+- [ ] Proyecto clonado y en directorio correcto
+- [ ] `docker-compose up --build` ejecutado exitosamente
+- [ ] Frontend accesible en http://localhost:3101
+- [ ] Backend responde en http://localhost:3100/api/health
+- [ ] pgAdmin accesible en http://localhost:5050
+- [ ] Base de datos conectada y tabla `clientes` creada
+- [ ] Registro de usuario funcional
+- [ ] Login de usuario funcional
+
+---
+
+### 📞 Soporte
+
+Si encuentras problemas durante la instalación:
+1. Revisar los logs: `docker-compose logs`
+2. Verificar la [Wiki del proyecto](https://github.com/JavieraIMo/GRUPOALARA-2025-PROYINF/wiki)
+3. Contactar al equipo de desarrollo
+
+---
+
+*Última actualización: Octubre 2025 - Versión 1.2 con guía de instalación completa*
