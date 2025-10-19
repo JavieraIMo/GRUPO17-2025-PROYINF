@@ -112,21 +112,23 @@ GRUPO17-2025-PROYINF/
 
 ### Proyecto: Sistema de Préstamos Digitales
 
-**Estado del desarrollo:** � Infraestructura base implementada con Docker
+**Estado del desarrollo:** ✅ **HU-1 Implementada** - Registro y Login funcional con PostgreSQL
 
 ### Stack Tecnológico
-> **Frontend:** React 19.2.0 (Containerizado con Docker)
-> **Backend:** Node.js + Express (Containerizado con Docker)  
-> **Base de datos:** PostgreSQL 15 (Containerizado con Docker)
+> **Frontend:** React 19.2.0 + CSS3 (Puerto 3101)
+> **Backend:** Node.js + Express + MVC (Puerto 3100)
+> **Base de datos:** PostgreSQL 15 con bcrypt (Puerto 5433)
+> **Admin BD:** pgAdmin 4 Web (Puerto 5050)
 > **Orquestación:** Docker Compose para desarrollo
-> **Arquitectura:** MVC preparada en backend
+> **Arquitectura:** MVC completa con autenticación segura
 
 ## Servicios Configurados
 
 ### 🐳 **Docker Compose**
-- **Frontend React**: `http://localhost:3001`
-- **Backend API**: `http://localhost:3000`
+- **Frontend React**: `http://localhost:3101` (puerto actualizado)
+- **Backend API**: `http://localhost:3100` (puerto actualizado)
 - **PostgreSQL**: `localhost:5433` (puerto externo para evitar conflictos)
+- **pgAdmin**: `http://localhost:5050` (interfaz web de administración)
 
 ### 🚀 **Scripts de Ejecución**
 ```bash
@@ -143,12 +145,13 @@ docker-compose up --build
 ### ⚙️ **Características Técnicas Implementadas**
 - ✅ **Contenedorización completa** con Docker Compose
 - ✅ **Hot-reload configurado** para desarrollo ágil  
-- ✅ **Arquitectura MVC** preparada en backend
-- ✅ **Separación de servicios** (frontend/backend/db)
+- ✅ **Arquitectura MVC completa** implementada en backend
+- ✅ **Autenticación con bcrypt** y PostgreSQL
+- ✅ **Validación RUT chileno** con algoritmo oficial
+- ✅ **Separación de servicios** (frontend/backend/db/pgAdmin)
 - ✅ **Scripts de automatización** para inicio rápido
-- ✅ **Configuración de puertos** sin conflictos
-- ✅ **Header profesional** con branding ALARA
-- ✅ **Diseño responsive** móvil y desktop
+- ✅ **Configuración de puertos** optimizada (3100/3101)
+- ✅ **HU-1 completada** (Registro y Login de usuarios)
 
 **Consideraciones técnicas planificadas para siguientes fases:**
 
@@ -215,12 +218,12 @@ cd GRUPO17-2025-PROYINF/analisis-y-diseno-de-software-main
 
 El proyecto utiliza puertos específicos para evitar conflictos comunes (3000/3001):
 
-| Servicio | Puerto Interno | Puerto Externo | URL de Acceso |
-|----------|---------------|----------------|---------------|
-| **Frontend React** | 3000 | **3101** | `http://localhost:3101` |
-| **Backend API** | 3000 | **3100** | `http://localhost:3100` |
-| **PostgreSQL** | 5432 | **5433** | `localhost:5433` |
-| **pgAdmin** | 80 | **5050** | `http://localhost:5050` |
+| Servicio           | Puerto Interno | Puerto Externo | URL de Acceso           |
+|--------------------|----------------|----------------|-------------------------|
+| **Frontend React** | 3000           | **3101**       | `http://localhost:3101` |
+| **Backend API**    | 3000           | **3100**       | `http://localhost:3100` |
+| **PostgreSQL**     | 5432           | **5433**       | `localhost:5433`        |
+| **pgAdmin**        | 80             | **5050**       | `http://localhost:5050` |
 
 #### ⚠️ Resolución de Conflictos de Puerto
 
@@ -296,28 +299,6 @@ CREATE TABLE IF NOT EXISTS clientes (
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     activo BOOLEAN DEFAULT TRUE
 );
-```
-
-### 🧪 Paso 6: Pruebas del Sistema
-
-#### 6.1 Prueba de Registro de Usuario
-1. Ir a: http://localhost:3101
-2. Clic en "Registrarse"
-3. Usar datos de prueba:
-   - RUT: `12.345.678-5`
-   - Nombre: `Usuario Test`
-   - Email: `test@alara.cl`
-   - Teléfono: `+56912345678`
-   - Contraseña: `Test123!`
-
-#### 6.2 Prueba de Login
-1. Clic en "Iniciar Sesión"
-2. Usar las credenciales del usuario registrado
-
-#### 6.3 Verificar en Base de Datos
-En pgAdmin, ejecutar:
-```sql
-SELECT id, rut, nombre_completo, email FROM clientes;
 ```
 
 ### 🛠️ Comandos Útiles para Desarrollo
@@ -405,15 +386,6 @@ analisis-y-diseno-de-software-main/
 - [ ] Base de datos conectada y tabla `clientes` creada
 - [ ] Registro de usuario funcional
 - [ ] Login de usuario funcional
-
----
-
-### 📞 Soporte
-
-Si encuentras problemas durante la instalación:
-1. Revisar los logs: `docker-compose logs`
-2. Verificar la [Wiki del proyecto](https://github.com/JavieraIMo/GRUPOALARA-2025-PROYINF/wiki)
-3. Contactar al equipo de desarrollo
 
 ---
 
