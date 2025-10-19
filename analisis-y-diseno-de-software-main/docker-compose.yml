@@ -44,7 +44,6 @@ services:
       - POSTGRES_DB=mydb
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./backend/sql:/sql  # Montar archivos SQL
     ports:
       - "5433:5432"
 
@@ -65,4 +64,3 @@ services:
 
 volumes:
   postgres_data:
-  pgadmin_data:
