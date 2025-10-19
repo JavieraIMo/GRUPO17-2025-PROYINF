@@ -14,6 +14,8 @@ function Register({ onClose, onSuccess }) {
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +26,13 @@ function Register({ onClose, onSuccess }) {
       setFormData(prev => ({
         ...prev,
         [name]: formattedRut
+      }));
+    } else if (name === 'phone') {
+      // Formatear teléfono (solo números)
+      const formattedPhone = value.replace(/[^0-9]/g, '');
+      setFormData(prev => ({
+        ...prev,
+        [name]: formattedPhone
       }));
     } else {
       setFormData(prev => ({
@@ -152,6 +161,20 @@ function Register({ onClose, onSuccess }) {
     return newErrors;
   };
 
+  // Verificar si el email ya existe (preparado para API futura)
+  const checkEmailExists = async (email) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/check-email/${email}`);
+      const data = await response.json();
+      return data.exists;
+    } catch (error) {
+      console.error('Error verificando email:', error);
+      // Fallback a verificación local si falla la API
+      const existingEmails = ['test@test.com', 'admin@alara.cl', 'demo@demo.cl'];
+      return existingEmails.includes(email.toLowerCase());
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -165,7 +188,7 @@ function Register({ onClose, onSuccess }) {
     setIsLoading(true);
     
     try {
-      // Simular verificación de email único
+      // Verificar email único
       const emailExists = await checkEmailExists(formData.email);
       if (emailExists) {
         setErrors({ email: 'Este email ya está registrado' });
@@ -173,40 +196,64 @@ function Register({ onClose, onSuccess }) {
         return;
       }
 
-      // Simular registro exitoso
-      console.log('Datos del registro:', {
-        ...formData,
-        password: '[ENCRYPTED]' // No mostrar contraseña real
+      // Preparar datos para envío
+      const registrationData = {
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(), 
+        email: formData.email.toLowerCase().trim(),
+        phone: formData.phone.replace(/[^0-9]/g, ''),
+        rut: formData.rut,
+        password: formData.password
+      };
+      
+      console.log('Enviando datos a API:', {
+        ...registrationData,
+        password: '[SERÁ_ENCRIPTADO_EN_BACKEND]'
       });
       
-      // Simular llamada a API
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Llamada real a la API
+      const response = await fetch('http://localhost:3000/api/register', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(registrationData)
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        if (response.status === 409 && result.field === 'email') {
+          setErrors({ email: 'Este email ya está registrado' });
+          setIsLoading(false);
+          return;
+        }
+        throw new Error(result.message || 'Error en el registro');
+      }
+      
+      // Registro exitoso
+      console.log('Registro exitoso:', result);
+      alert('¡Registro exitoso! Bienvenido a ALARA Simulador');
       
       // Llamar callback de éxito
       if (onSuccess) {
-        onSuccess({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email
-        });
+        onSuccess(result.user);
+      }
+      
+      // Cerrar modal
+      if (onClose) {
+        onClose();
       }
       
     } catch (error) {
-      console.error('Error en el registro:', error);
-      setErrors({ general: 'Error al registrarse. Intenta nuevamente.' });
+      console.error('Error en registro:', error);
+      setErrors({ 
+        general: 'Error al procesar el registro. Intenta nuevamente.' 
+      });
     } finally {
       setIsLoading(false);
     }
-  };
-
-  // Simular verificación de email único
-  const checkEmailExists = async (email) => {
-    // Simulación - en producción sería una llamada a la API
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // Simular algunos emails que ya existen
-    const existingEmails = ['test@example.com', 'admin@alara.cl'];
-    return existingEmails.includes(email.toLowerCase());
   };
 
   const passwordValidation = validatePassword(formData.password);

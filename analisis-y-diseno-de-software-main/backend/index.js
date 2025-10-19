@@ -21,19 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // ============= RUTAS API =============
 
-// API Info - Para verificar que funciona
-app.get('/api', (req, res) => {
-  res.json({
-    message: 'API Simulador de Préstamos - Grupo Alara',
-    version: '1.0.0',
-    endpoints: {
-      health: 'GET /api/health',
-      simulate: 'POST /api/simulate',
-      history: 'GET /api/history'
-    }
-  });
-});
-
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ 
@@ -41,6 +28,127 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// ============= AUTENTICACIÓN =============
+
+// Verificar si email ya existe (HU-1)
+app.get('/api/check-email/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    
+    // TODO: Cuando tengamos la tabla clientes
+    // const result = await pool.query('SELECT id FROM clientes WHERE email = $1', [email]);
+    // const exists = result.rows.length > 0;
+    
+    // Por ahora, simulamos algunos emails que ya existen
+    const existingEmails = ['test@test.com', 'admin@alara.cl', 'demo@demo.cl'];
+    const exists = existingEmails.includes(email.toLowerCase());
+    
+    res.json({ 
+      exists,
+      email: email.toLowerCase()
+    });
+    
+  } catch (error) {
+    console.error('Error verificando email:', error);
+    res.status(500).json({
+      error: 'Error verificando email',
+      message: error.message
+    });
+  }
+});
+
+// Registro de usuario (HU-1)
+app.post('/api/register', async (req, res) => {
+  try {
+    const { 
+      firstName, 
+      lastName, 
+      email, 
+      phone, 
+      rut, 
+      password 
+    } = req.body;
+    
+    // Validaciones básicas
+    if (!firstName || !lastName || !email || !phone || !rut || !password) {
+      return res.status(400).json({
+        error: 'Campos requeridos faltantes',
+        required: ['firstName', 'lastName', 'email', 'phone', 'rut', 'password']
+      });
+    }
+    
+    // Verificar email único
+    // TODO: Descomentar cuando tengamos la tabla
+    // const emailCheck = await pool.query('SELECT id FROM clientes WHERE email = $1', [email]);
+    // if (emailCheck.rows.length > 0) {
+    //   return res.status(409).json({
+    //     error: 'Email ya registrado',
+    //     field: 'email'
+    //   });
+    // }
+    
+    // Simular verificación de email único
+    const existingEmails = ['test@test.com', 'admin@alara.cl', 'demo@demo.cl'];
+    if (existingEmails.includes(email.toLowerCase())) {
+      return res.status(409).json({
+        error: 'Email ya registrado',
+        field: 'email'
+      });
+    }
+    
+    // TODO: Encriptar contraseña
+    // const bcrypt = require('bcrypt');
+    // const saltRounds = 10;
+    // const passwordHash = await bcrypt.hash(password, saltRounds);
+    
+    // TODO: Insertar en base de datos
+    // const result = await pool.query(`
+    //   INSERT INTO clientes (
+    //     rut, nombre_completo, email, telefono, password_hash, 
+    //     fecha_registro, activo
+    //   ) VALUES ($1, $2, $3, $4, $5, NOW(), true)
+    //   RETURNING id, rut, nombre_completo, email, fecha_registro
+    // `, [rut, `${firstName} ${lastName}`, email, phone, passwordHash]);
+    
+    // Simular inserción exitosa
+    const mockUser = {
+      id: Date.now(),
+      rut,
+      nombre_completo: `${firstName} ${lastName}`,
+      email: email.toLowerCase(),
+      telefono: phone,
+      fecha_registro: new Date().toISOString(),
+      activo: true
+    };
+    
+    console.log('Usuario registrado (simulado):', {
+      ...mockUser,
+      password: '[ENCRIPTADO]'
+    });
+    
+    res.status(201).json({
+      success: true,
+      message: 'Usuario registrado exitosamente',
+      user: {
+        id: mockUser.id,
+        firstName,
+        lastName,
+        email: mockUser.email,
+        rut: mockUser.rut
+      }
+    });
+    
+  } catch (error) {
+    console.error('Error en registro:', error);
+    res.status(500).json({
+      error: 'Error interno del servidor',
+      message: error.message
+    });
+  }
+});
+
+// ============= SIMULACIONES =============
 
 // Simular préstamo (lo que React enviará)
 app.post('/api/simulate', (req, res) => {
