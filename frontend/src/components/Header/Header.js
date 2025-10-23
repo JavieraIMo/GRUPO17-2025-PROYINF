@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Login from '../Login';
 import Register from '../Register';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -70,13 +71,13 @@ function Header() {
           {/* Menú de navegación desktop */}
           <ul className="nav-menu desktop-menu">
             <li className="nav-item">
-              <a href="#inicio" className="nav-link">Inicio</a>
+              <Link to="/" className="nav-link">Inicio</Link>
             </li>
             <li className="nav-item">
-              <a href="#simulador" className="nav-link">Simulador</a>
+              <Link to="/simulador" className="nav-link">Simulador</Link>
             </li>
             <li className="nav-item">
-              <a href="#contacto" className="nav-link">Contacto</a>
+              <Link to="/contacto" className="nav-link">Contacto</Link>
             </li>
           </ul>
           
@@ -138,13 +139,13 @@ function Header() {
           </div>
           <ul className="side-menu-items">
             <li className="side-menu-item">
-              <a href="#inicio" className="side-menu-link" onClick={closeMenu}>Inicio</a>
+              <Link to="/" className="side-menu-link" onClick={closeMenu}>Inicio</Link>
             </li>
             <li className="side-menu-item">
-              <a href="#simulador" className="side-menu-link" onClick={closeMenu}>Simulador</a>
+              <Link to="/simulador" className="side-menu-link" onClick={closeMenu}>Simulador</Link>
             </li>
             <li className="side-menu-item">
-              <a href="#contacto" className="side-menu-link" onClick={closeMenu}>Contacto</a>
+              <Link to="/contacto" className="side-menu-link" onClick={closeMenu}>Contacto</Link>
             </li>
             
             {!user ? (

@@ -1,7 +1,12 @@
+import LoanSimulator from './components/LoanSimulator/LoanSimulator';
 import React, { useEffect } from 'react';
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 import './App.css';
 
 function App() {
@@ -37,13 +42,21 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Header />
-      <main className="main-content">
-        <Home />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/simulador" element={<LoanSimulator />} />
+            {/* Agrega más rutas si tienes más páginas */}
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

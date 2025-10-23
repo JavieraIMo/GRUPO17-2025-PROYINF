@@ -1,5 +1,6 @@
 import React from 'react';
 import './Home.css';
+import LoanSimulator from '../components/LoanSimulator/LoanSimulator';
 
 function Home() {
   return (

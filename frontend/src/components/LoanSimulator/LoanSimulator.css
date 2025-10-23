@@ -1,0 +1,173 @@
+
+/* Contenedor principal */
+/* =============================== */
+/* Contenedor principal            */
+/* =============================== */
+.loan-simulator {
+  background: var(--color-bg);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0,23,99,0.10);
+  max-width: 440px;
+  margin: 40px auto;
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid var(--color-border);
+}
+/* Título del simulador */
+.loan-simulator h2 {
+  color: var(--color-primary);
+  margin-bottom: 22px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-family: 'Times New Roman', 'Georgia', serif;
+}
+/* Formulario */
+.loan-simulator form {
+  width: 100%;
+  margin-bottom: 28px;
+}
+/* Etiquetas */
+.loan-simulator label {
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 8px;
+  display: block;
+  font-size: 1.05rem;
+}
+/* Inputs y selectores */
+.loan-simulator input,
+.loan-simulator select {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+}
+/* Slider personalizado */
+.loan-simulator input[type="range"] {
+  width: 100%;
+  margin-bottom: 8px;
+  background: transparent;
+  appearance: none;
+  height: 8px;
+}
+/* Pista Webkit (Chrome, Safari)    */
+.loan-simulator input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 6px;
+}
+/* Control Webkit (Chrome, Safari)  */
+.loan-simulator input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--color-primary);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,23,99,0.12);
+  cursor: pointer;
+  margin-top: -6px;
+}
+/* Control Webkit enfocado          */
+.loan-simulator input[type="range"]:focus::-webkit-slider-thumb {
+  outline: 2px solid var(--color-navy-light);
+}
+/* Pista Firefox                    */
+.loan-simulator input[type="range"]::-moz-range-track {
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 6px;
+}
+/* Control Firefox                  */
+.loan-simulator input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--color-primary);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,23,99,0.12);
+  cursor: pointer;
+}
+/* Control Firefox enfocado         */
+.loan-simulator input[type="range"]:focus::-moz-range-thumb {
+  outline: 2px solid var(--color-navy-light);
+}
+/* Pista inferior Edge/IE           */
+.loan-simulator input[type="range"]::-ms-fill-lower {
+  background: var(--color-primary);
+  border-radius: 6px;
+}
+/* Pista superior Edge/IE           */
+.loan-simulator input[type="range"]::-ms-fill-upper {
+  background: var(--color-primary);
+  border-radius: 6px;
+}
+/* Control Edge/IE                  */
+.loan-simulator input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--color-primary);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,23,99,0.12);
+  cursor: pointer;
+}
+/* Quitar borde al enfocar slider   */
+.loan-simulator input[type="range"]:focus {
+  outline: none;
+}
+/* Inputs y selectores enfocados    */
+.loan-simulator input:focus,
+.loan-simulator select:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+/* Botón de simulación */
+.loan-simulator button[type="submit"] {
+  background: var(--color-gradient-elegant);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,23,99,0.08);
+  margin-top: 8px;
+  transition: background 0.2s, transform 0.2s;
+}
+/* Botón hover                      */
+.loan-simulator button[type="submit"]:hover {
+  background: var(--color-navy-light);
+  transform: translateY(-2px) scale(1.03);
+}
+/* Resultados */
+.loan-results {
+  background: #f3f4f6;
+  border-radius: 14px;
+  padding: 22px 18px;
+  width: 100%;
+  margin-top: 16px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,23,99,0.04);
+}
+/* Título de resultados             */
+.loan-results h3 {
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+/* Texto de resultados              */
+.loan-results p {
+  margin: 8px 0;
+  font-size: 1.07rem;
+  color: var(--color-slate);
+}
+/* Texto destacado en resultados    */
+.loan-results strong {
+  color: var(--color-navy);
+  font-weight: 700;
+}
