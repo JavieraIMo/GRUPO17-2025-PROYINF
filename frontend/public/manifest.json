@@ -1,3 +1,4 @@
+
 {
   "short_name": "ALARA",
   "name": "ALARA Simulador - Simulador de Préstamos",
@@ -9,7 +10,7 @@
       "type": "image/x-icon"
     },
     {
-      "src": "favicon.svg",
+      "src": "favicon-simple.svg",
       "type": "image/svg+xml",
       "sizes": "any"
     },
