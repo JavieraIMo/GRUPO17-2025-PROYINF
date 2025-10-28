@@ -1,3 +1,4 @@
+import LoanLogic from './pages/LoanLogic';
 import LoanSimulator from './components/LoanSimulator/LoanSimulator';
 import React, { useEffect } from 'react';
 
@@ -51,6 +52,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/simulador" element={<LoanSimulator />} />
+            <Route path="/logica-simulador" element={<LoanLogic />} />
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>
         </main>

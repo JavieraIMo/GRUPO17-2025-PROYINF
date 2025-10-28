@@ -4,8 +4,8 @@ echo.
 cd /d "C:\Users\javii\Desktop\Alara\GRUPO17-2025-PROYINF\analisis-y-diseno-de-software-main"
 echo.
 echo =========================================
-echo Frontend React: http://localhost:3001
-echo Backend API: http://localhost:3000
+echo Frontend React: http://localhost:3101
+echo Backend API: http://localhost:3100
 echo Base de datos PostgreSQL: puerto 5433
 echo =========================================
 echo.

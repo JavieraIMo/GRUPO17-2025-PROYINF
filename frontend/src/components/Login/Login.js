@@ -180,11 +180,6 @@ function Login({ onClose, onSuccess, onSwitchToRegister }) {
             )}
           </button>
 
-          <div className="demo-credentials">
-            <p className="demo-title">Credenciales de prueba:</p>
-            <p className="demo-text">Email: demo@alara.cl</p>
-            <p className="demo-text">Contraseña: Demo123</p>
-          </div>
         </form>
 
         <div className="login-footer">

@@ -52,7 +52,7 @@ const LoanSimulator = () => {
       }}>
         Para mayor exactitud en la simulación, <span style={{color: '#001763', fontWeight: 700}}>regístrate</span> y obtén condiciones personalizadas.
       </div>
-      <form onSubmit={handleSimulate}>
+  <form onSubmit={handleSimulate}>
         <div>
           <label>Monto (CLP):</label>
           <input
@@ -92,6 +92,11 @@ const LoanSimulator = () => {
         </div>
         <button type="submit">Simular</button>
       </form>
+      <div style={{textAlign: 'center', marginTop: '10px'}}>
+        <a href="/logica-simulador" style={{color: '#001763', textDecoration: 'underline', fontWeight: 500}}>
+          Ver cómo se calcula la cuota
+        </a>
+      </div>
       {result && (
         <div className="loan-results">
           <h3>Resultados</h3>
