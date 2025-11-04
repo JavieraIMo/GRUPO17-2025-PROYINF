@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 services:
   # Backend API
   backend:
@@ -44,6 +44,7 @@ services:
       - POSTGRES_DB=mydb
     volumes:
       - ./backend/sql:/app/sql
+      - ./backend/initdb:/docker-entrypoint-initdb.d
     ports:
       - "5433:5432"
 
@@ -56,11 +57,11 @@ services:
       - PGADMIN_CONFIG_SERVER_MODE=False
       - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
     ports:
-      - "5050:80"
+       - "5051:80"
     depends_on:
       - postgres_db
     volumes:
-      - pgadmin_data:/var/lib/pgadmin
+      - ./backend/initdb:/docker-entrypoint-initdb.d
 
 volumes:
   postgres_data:
