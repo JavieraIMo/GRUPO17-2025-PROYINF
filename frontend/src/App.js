@@ -1,9 +1,12 @@
-import LoanLogic from './pages/LoanLogic';
-import LoanSimulator from './components/LoanSimulator/LoanSimulator';
-import React, { useEffect } from 'react';
 
+import LoanLogic from './pages/LoanLogic';
+import BasicLoanLogic from './pages/BasicLoanLogic';
+import LoanSimulator from './components/LoanSimulator/LoanSimulator';
+import AdvancedLoanSimulator from './components/AdvancedLoanSimulator/AdvancedLoanSimulator';
+import HistorialSimulaciones from './pages/HistorialSimulaciones';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home';
 import Login from './components/Login/Login';
@@ -11,6 +14,20 @@ import Register from './components/Register/Register';
 import './App.css';
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem('alara_user');
+    return stored ? JSON.parse(stored) : null;
+  });
+
+  // Guardar usuario en localStorage cuando cambie
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('alara_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('alara_user');
+    }
+  }, [user]);
+
   useEffect(() => {
     // Actualizar el título y favicon dinámicamente
     document.title = 'ALARA Simulador - Simulador de Préstamos';
@@ -45,14 +62,17 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
+  <Header user={user} setUser={setUser} />
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home user={user} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/simulador" element={<LoanSimulator />} />
+            <Route path="/simulador-avanzado" element={user ? <AdvancedLoanSimulator user={user} /> : <Login />} />
             <Route path="/logica-simulador" element={<LoanLogic />} />
+            <Route path="/logica-simulador-basico" element={<BasicLoanLogic />} />
+            <Route path="/historial" element={<HistorialSimulaciones user={user} />} />
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>
         </main>

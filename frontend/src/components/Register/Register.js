@@ -238,7 +238,10 @@ function Register({ onClose, onSuccess }) {
       
       // Llamar callback de éxito
       if (onSuccess) {
-        onSuccess(result.user);
+        onSuccess({
+          ...result.user,
+          token: result.user.token || result.token // token JWT si está disponible
+        });
       }
       
       // Cerrar modal

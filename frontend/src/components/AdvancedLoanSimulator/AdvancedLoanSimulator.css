@@ -1,0 +1,65 @@
+/* Unificar con LoanSimulator */
+.advanced-simulator {
+  background: var(--color-bg);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0,23,99,0.10);
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid var(--color-border);
+}
+.advanced-simulator h2 {
+  color: var(--color-primary);
+  margin-bottom: 22px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-family: 'Times New Roman', 'Georgia', serif;
+}
+/* Formulario */
+.sim-form {
+  width: 100%;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+}
+.sim-form label {
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 8px;
+  display: block;
+  font-size: 1.05rem;
+}
+.sim-form input,
+.sim-form select {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+}
+/* Resultados */
+.sim-results {
+  margin-top: 2rem;
+  width: 100%;
+}
+.sim-results table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.98rem;
+}
+.sim-results th, .sim-results td {
+  border: 1px solid #eee;
+  padding: 0.5rem;
+  text-align: right;
+}
+.sim-results th {
+  background: #f3f4f6;
+  color: #001763;
+  font-weight: 700;
+}

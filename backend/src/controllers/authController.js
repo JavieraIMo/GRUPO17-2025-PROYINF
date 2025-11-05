@@ -145,13 +145,17 @@ class AuthController {
                 });
             }
 
-            // 4. RESPUESTA EXITOSA
+            // 4. GENERAR TOKEN JWT
+            const { signToken } = require('../utils/jwt');
+            const jwtToken = signToken({ id: user.id, email: user.email });
+
+            // 5. RESPUESTA EXITOSA CON TOKEN
             res.status(200).json({
                 success: true,
                 message: 'Login exitoso',
                 data: {
-                    user: user.toJSON()
-                    // Aquí se agregaría JWT token en el futuro
+                    user: user.toJSON(),
+                    token: jwtToken
                 }
             });
 

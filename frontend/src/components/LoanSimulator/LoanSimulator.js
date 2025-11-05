@@ -1,5 +1,6 @@
 import './LoanSimulator.css';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function formatCLP(value) {
   return value.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
@@ -26,6 +27,7 @@ function calculateLoan(amount, term) {
 }
 
 const LoanSimulator = () => {
+  const navigate = useNavigate();
   const [amount, setAmount] = useState(MIN_AMOUNT);
   const [term, setTerm] = useState(TERMS[0]);
   const [result, setResult] = useState(null);
@@ -40,6 +42,7 @@ const LoanSimulator = () => {
   return (
     <div className="loan-simulator">
       <h2>Simulador de Préstamos</h2>
+      {/* Botón eliminado, el link de abajo ahora lleva a la explicación básica */}
       <div style={{
         background: '#f3f4f6',
         color: '#374151',
@@ -52,7 +55,7 @@ const LoanSimulator = () => {
       }}>
         Para mayor exactitud en la simulación, <span style={{color: '#001763', fontWeight: 700}}>regístrate</span> y obtén condiciones personalizadas.
       </div>
-  <form onSubmit={handleSimulate}>
+      <form onSubmit={handleSimulate}>
         <div>
           <label>Monto (CLP):</label>
           <input
@@ -90,10 +93,10 @@ const LoanSimulator = () => {
             {TERMS.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
         </div>
-        <button type="submit">Simular</button>
+  <button type="submit" style={{width: '100%', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.7rem 0', fontWeight: 700, fontSize: '1.08rem', cursor: 'pointer', marginTop: '8px'}}>Simular</button>
       </form>
       <div style={{textAlign: 'center', marginTop: '10px'}}>
-        <a href="/logica-simulador" style={{color: '#001763', textDecoration: 'underline', fontWeight: 500}}>
+        <a href="/logica-simulador-basico" style={{color: '#001763', textDecoration: 'underline', fontWeight: 500}}>
           Ver cómo se calcula la cuota
         </a>
       </div>

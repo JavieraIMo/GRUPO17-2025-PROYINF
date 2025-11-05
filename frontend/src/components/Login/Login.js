@@ -66,12 +66,14 @@ function Login({ onClose, onSuccess, onSwitchToRegister }) {
         console.log('Login exitoso:', result.user);
         // Llamar callback de éxito
         if (onSuccess) {
+          // Guardar token si viene en la respuesta
           onSuccess({
             email: result.user.email,
             firstName: result.user.nombre_completo.split(' ')[0],
             lastName: result.user.nombre_completo.split(' ').slice(1).join(' '),
             id: result.user.id,
-            rut: result.user.rut
+            rut: result.user.rut,
+            token: result.user.token || result.token // token JWT si está disponible
           });
         }
       } else {

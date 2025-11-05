@@ -1,14 +1,16 @@
+            <li className="nav-item">
+              <Link to="/logica-simulador" className="nav-link">¿Cómo se calcula?</Link>
+            </li>
 import React, { useState } from 'react';
 import Login from '../Login';
 import Register from '../Register';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
-function Header() {
+function Header({ user, setUser }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(false); // Siempre inicia en false
   const [showRegister, setShowRegister] = useState(false);
-  const [user, setUser] = useState(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -32,6 +34,7 @@ function Header() {
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem('alara_user');
     closeMenu();
   };
 
@@ -76,9 +79,20 @@ function Header() {
             <li className="nav-item">
               <Link to="/simulador" className="nav-link">Simulador</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/contacto" className="nav-link">Contacto</Link>
-            </li>
+            {user && (
+              <li className="nav-item">
+                <Link to="/simulador-avanzado" className="nav-link">Simulador Avanzado</Link>
+              </li>
+            )}
+            {user ? (
+              <li className="nav-item">
+                <Link to="/historial" className="nav-link">Historial</Link>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link to="/contacto" className="nav-link">Contacto</Link>
+              </li>
+            )}
           </ul>
           
           {/* Contenedor derecho: Botón CTA + Hamburger */}
