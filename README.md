@@ -15,7 +15,9 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Javier
 ## Videos
 
 * [Video presentación cliente](https://aula.usm.cl/mod/resource/view.php?id=6926137)
-* [Video presentación avance 1]([https://www.youtube.com/](https://youtu.be/KnxOXxoZvGs))
+* [Video presentación avance 1](https://youtu.be/KnxOXxoZvGs)
+* [Video presentación avance 2 (Hito 4)](https://www.youtube.com/)
+* [Video presentación avance 3 (Hito 5)](https://www.youtube.com/)
 * Etc ...
 
 ## Aspectos técnicos relevantes
