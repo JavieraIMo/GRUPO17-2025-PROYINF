@@ -126,11 +126,12 @@ GRUPO17-2025-PROYINF/
 
 ## Servicios Configurados
 
+
 ### 🐳 **Docker Compose**
-- **Frontend React**: `http://localhost:3101` (puerto actualizado)
-- **Backend API**: `http://localhost:3100` (puerto actualizado)
-- **PostgreSQL**: `localhost:5433` (puerto externo para evitar conflictos)
-- **pgAdmin**: `http://localhost:5050` (interfaz web de administración)
+- **Frontend React**: `http://localhost:3101` (organización por roles: Public/User/Admin)
+- **Backend API**: `http://localhost:3100`
+- **PostgreSQL**: `localhost:5433`
+- **pgAdmin**: `http://localhost:5050`
 
 ### 🚀 **Scripts de Ejecución**
 ```bash
@@ -151,6 +152,8 @@ docker-compose up --build
 - ✅ **Autenticación con bcrypt** y PostgreSQL
 - ✅ **Validación RUT chileno** con algoritmo oficial
 - ✅ **Separación de servicios** (frontend/backend/db/pgAdmin)
+  ✅ **Frontend organizado por roles** (Public/User/Admin)
+  ✅ **Tabla `simulaciones` implementada** en la base de datos
 - ✅ **Scripts de automatización** para inicio rápido
 - ✅ **Configuración de puertos** optimizada (3100/3101)
 - ✅ **HU-1 completada** (Registro y Login de usuarios)
@@ -202,9 +205,9 @@ Antes de comenzar, asegúrate de tener instalado:
 
 3. **Puertos disponibles** (verificar que no estén en uso):
    - `3100` - Backend API
-   - `3101` - Frontend React
+   - `3000` - Frontend React (desarrollo)
    - `5433` - PostgreSQL
-   - `5050` - pgAdmin
+   - `5051` - pgAdmin
 
 ### 📥 Paso 1: Clonar el Repositorio
 
@@ -218,24 +221,24 @@ cd GRUPO17-2025-PROYINF/analisis-y-diseno-de-software-main
 
 ### 🔧 Paso 2: Configuración de Puertos
 
-El proyecto utiliza puertos específicos para evitar conflictos comunes (3000/3001):
+El proyecto utiliza puertos específicos para evitar conflictos comunes:
 
 | Servicio           | Puerto Interno | Puerto Externo | URL de Acceso           |
 |--------------------|----------------|----------------|-------------------------|
-| **Frontend React** | 3000           | **3101**       | `http://localhost:3101` |
-| **Backend API**    | 3000           | **3100**       | `http://localhost:3100` |
+| **Frontend React** | 3000           | **3000**       | `http://localhost:3000` |
+| **Backend API**    | 3100           | **3100**       | `http://localhost:3100` |
 | **PostgreSQL**     | 5432           | **5433**       | `localhost:5433`        |
-| **pgAdmin**        | 80             | **5050**       | `http://localhost:5050` |
+| **pgAdmin**        | 80             | **5051**       | `http://localhost:5051` |
 
 #### ⚠️ Resolución de Conflictos de Puerto
 
 Si tienes conflictos de puerto, puedes cambiarlos editando `docker-compose.yml`:
 
 ```yaml
-# Ejemplo: cambiar puerto del frontend de 3101 a 3201
+# Ejemplo: cambiar puerto del frontend de 3000 a 3200
 frontend:
   ports:
-    - "3201:3000"  # Puerto externo:interno
+    - "3200:3000"  # Puerto externo:interno
 ```
 
 ### 🐳 Paso 3: Construcción e Inicio
@@ -360,20 +363,28 @@ docker-compose up --build [service_name]
 2. Verificar logs de PostgreSQL: `docker logs [postgres_container_name]`
 3. Reiniciar servicios: `docker-compose restart`
 
-### 📁 Estructura de Archivos Clave
+
+### 📁 Estructura de Archivos Clave (actualizada)
 
 ```
-analisis-y-diseno-de-software-main/
+GRUPO17-2025-PROYINF/
 ├── docker-compose.yml          # ⚙️ Configuración de servicios y puertos
 ├── backend/
-│   ├── index.js               # 🚪 Punto de entrada del servidor
-│   ├── src/controllers/       # 🎮 Lógica de negocio MVC
-│   ├── src/models/           # 📊 Modelos de datos
-│   └── src/routes/           # 🛣️ Endpoints de API
+│   ├── index.js                # 🚪 Punto de entrada del servidor
+│   ├── src/controllers/        # 🎮 Lógica de negocio MVC
+│   ├── src/models/             # 📊 Modelos de datos
+│   ├── src/routes/             # 🛣️ Endpoints de API
+│   ├── src/middlewares/        # 🛡️ Middlewares personalizados
+│   ├── src/utils/              # 🧮 Utilidades y helpers
+│   └── db/, sql/               # 📄 Scripts y esquemas SQL
 └── frontend/
-    ├── src/components/       # 🧩 Componentes React
-    ├── src/pages/           # 📄 Páginas de la aplicación
-    └── Dockerfile           # 🐳 Configuración del contenedor React
+   ├── src/components/         # 🧩 Componentes React
+   ├── src/pages/              # 📄 Páginas principales
+   ├── src/Rols/               # 🗂️ Organización por roles
+   │   ├── Public/             # 👥 Público
+   │   ├── User/               # 👤 Usuario
+   │   └── Admin/              # 🛡️ Administrador
+   └── Dockerfile              # 🐳 Configuración del contenedor React
 ```
 
 ### ✅ Lista de Verificación Post-Instalación
@@ -385,7 +396,7 @@ analisis-y-diseno-de-software-main/
 - [ ] Frontend accesible en http://localhost:3101
 - [ ] Backend responde en http://localhost:3100/api/health
 - [ ] pgAdmin accesible en http://localhost:5050
-- [ ] Base de datos conectada y tabla `clientes` creada
+- [ ] Base de datos conectada y tabla `simulaciones` creada
 - [ ] Registro de usuario funcional
 - [ ] Login de usuario funcional
 
