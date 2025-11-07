@@ -13,7 +13,7 @@ const HistorialSimulaciones = ({ user }) => {
 
   useEffect(() => {
     if (!user || !user.token) return;
-    fetch('http://localhost:3100/api/simulaciones', {
+  fetch('http://localhost:3100/api/simulaciones', {
       headers: {
         'Authorization': `Bearer ${user.token}`,
       },

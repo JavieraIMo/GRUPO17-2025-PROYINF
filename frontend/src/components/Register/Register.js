@@ -186,7 +186,7 @@ function Register({ onClose, onSuccess }) {
     }
 
     setIsLoading(true);
-    
+    console.log('[ALARA][Register] Enviando datos a API:', formData);
     try {
       // Verificar email único
       const emailExists = await checkEmailExists(formData.email);
@@ -205,14 +205,15 @@ function Register({ onClose, onSuccess }) {
         password: formData.password,
         confirm_password: formData.confirmPassword
       };
-      
-      console.log('Enviando datos a API:', {
+
+      console.log('[ALARA][Register] Datos preparados para API:', {
         ...registrationData,
         password: '[SERÁ_ENCRIPTADO_EN_BACKEND]'
       });
-      
+
       // Llamada real a la API
-      const response = await fetch('http://localhost:3100/api/register', {
+      console.log('[ALARA][Register] Llamando a /api/auth/register...');
+      const response = await fetch('http://localhost:3100/api/auth/register', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -220,9 +221,10 @@ function Register({ onClose, onSuccess }) {
         },
         body: JSON.stringify(registrationData)
       });
-      
+
       const result = await response.json();
-      
+      console.log('[ALARA][Register] Respuesta fetch:', result);
+
       if (!response.ok) {
         if (response.status === 409 && result.field === 'email') {
           setErrors({ email: 'Este email ya está registrado' });
@@ -231,31 +233,37 @@ function Register({ onClose, onSuccess }) {
         }
         throw new Error(result.message || 'Error en el registro');
       }
-      
+
       // Registro exitoso
-      console.log('Registro exitoso:', result);
       alert('¡Registro exitoso! Bienvenido a ALARA Simulador');
-      
+
       // Llamar callback de éxito
-      if (onSuccess) {
-        onSuccess({
-          ...result.user,
-          token: result.user.token || result.token // token JWT si está disponible
+      if (onSuccess && result.data) {
+        // Log para ver la estructura
+        console.log('[ALARA][Register] Antes de llamar a onSuccess:', {
+          ...result.data.user,
+          token: result.data.token
         });
+        onSuccess({
+          ...result.data.user,
+          token: result.data.token
+        });
+        console.log('[ALARA][Register] Después de llamar a onSuccess');
       }
-      
+
       // Cerrar modal
       if (onClose) {
         onClose();
       }
-      
+
     } catch (error) {
-      console.error('Error en registro:', error);
+      console.error('[ALARA][Register] Error en registro:', error);
       setErrors({ 
         general: 'Error al procesar el registro. Intenta nuevamente.' 
       });
     } finally {
       setIsLoading(false);
+      console.log('[ALARA][Register] handleSubmit finalizado');
     }
   };
 

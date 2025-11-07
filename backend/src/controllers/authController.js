@@ -84,13 +84,28 @@ class AuthController {
             };
 
             const newUser = await User.create(userData);
+            console.log('[REGISTER] Usuario creado:', newUser);
 
-            // 9. RESPUESTA EXITOSA (sin contraseña)
+            // 9. GENERAR TOKEN JWT
+            const { signToken } = require('../utils/jwt');
+            const jwtToken = signToken({ id: newUser.id, email: newUser.email });
+            console.log('[REGISTER] Token generado:', jwtToken);
+
+            // 10. RESPUESTA EXITOSA CON TOKEN
             res.status(201).json({
                 success: true,
                 message: 'Usuario registrado exitosamente',
                 data: {
-                    user: newUser.toJSON()
+                    user: newUser.toJSON(),
+                    token: jwtToken
+                }
+            });
+            console.log('[REGISTER] Respuesta enviada:', {
+                success: true,
+                message: 'Usuario registrado exitosamente',
+                data: {
+                    user: newUser.toJSON(),
+                    token: jwtToken
                 }
             });
 

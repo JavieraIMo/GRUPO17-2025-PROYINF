@@ -45,29 +45,42 @@ const AdvancedLoanSimulator = ({ user }) => {
     if (tipoObj && monto > 0 && plazo > 0) {
       const { cuota, tabla } = calculateAmortization(monto, plazo, tipoObj.rate);
       setResultados({ cuota, tabla, tasa: tipoObj.rate });
+      // Guardado automático al simular
+      if (user) {
+        handleGuardarSimulacion({ tipo, monto, plazo, tasa: tipoObj.rate, cuota, tabla });
+      }
     }
   };
 
-  useEffect(() => {
-    if (resultados && user) {
-      // Guardado automático en backend
-      fetch('http://localhost:3100/api/simulaciones', {
+  const [guardando, setGuardando] = useState(false);
+  const [mensaje, setMensaje] = useState(null);
+
+  const handleGuardarSimulacion = async () => {
+    // Recibe los datos como argumento para guardado automático
+    if (!user) return;
+    setGuardando(true);
+    setMensaje(null);
+    try {
+      const response = await fetch('http://localhost:3100/api/simulaciones', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${user.token}`,
         },
-        body: JSON.stringify({
-          tipo,
-          monto,
-          plazo,
-          tasa: resultados.tasa,
-          cuota: resultados.cuota,
-          tabla: resultados.tabla,
-        }),
+        body: JSON.stringify(arguments[0]),
       });
+      const data = await response.json();
+      if (response.ok && data.ok) {
+        setMensaje('Simulación guardada exitosamente.');
+      } else {
+        setMensaje('Error al guardar la simulación.');
+      }
+    } catch (error) {
+      setMensaje('Error de conexión al guardar.');
+    } finally {
+      setGuardando(false);
     }
-  }, [resultados, user, tipo, monto, plazo]);
+  };
 
   return (
     <div className="advanced-simulator">
@@ -89,8 +102,8 @@ const AdvancedLoanSimulator = ({ user }) => {
       {resultados && (
         <div className="sim-results">
           <h3>Resultados</h3>
-          <p><strong>Cuota mensual:</strong> {formatCLP(resultados.cuota)}</p>
-          <p><strong>Tasa anual:</strong> {(resultados.tasa * 100).toFixed(2)}%</p>
+          <p><strong>Cuota mensual:</strong> {typeof resultados.cuota === 'number' ? formatCLP(resultados.cuota) : JSON.stringify(resultados.cuota)}</p>
+          <p><strong>Tasa anual:</strong> {typeof resultados.tasa === 'number' ? (resultados.tasa * 100).toFixed(2) + '%' : JSON.stringify(resultados.tasa)}</p>
           <h4>Tabla de Amortización (12 meses)</h4>
           <table>
             <thead>
@@ -103,17 +116,20 @@ const AdvancedLoanSimulator = ({ user }) => {
               </tr>
             </thead>
             <tbody>
-              {resultados.tabla.map(row => (
+              {Array.isArray(resultados.tabla) && resultados.tabla.map(row => (
                 <tr key={row.mes}>
-                  <td>{row.mes}</td>
-                  <td>{formatCLP(row.cuota)}</td>
-                  <td>{formatCLP(row.capital)}</td>
-                  <td>{formatCLP(row.interes)}</td>
-                  <td>{formatCLP(row.saldo)}</td>
+                  <td>{typeof row.mes === 'number' ? row.mes : JSON.stringify(row.mes)}</td>
+                  <td>{typeof row.cuota === 'number' ? formatCLP(row.cuota) : JSON.stringify(row.cuota)}</td>
+                  <td>{typeof row.capital === 'number' ? formatCLP(row.capital) : JSON.stringify(row.capital)}</td>
+                  <td>{typeof row.interes === 'number' ? formatCLP(row.interes) : JSON.stringify(row.interes)}</td>
+                  <td>{typeof row.saldo === 'number' ? formatCLP(row.saldo) : JSON.stringify(row.saldo)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {mensaje && (
+            <div style={{marginTop:'10px',color:mensaje.includes('exitosamente')?'#059669':'#b91c1c',fontWeight:500}}>{mensaje}</div>
+          )}
         </div>
       )}
       <div style={{textAlign: 'center', marginTop: '18px'}}>

@@ -14,6 +14,18 @@ import Register from './components/Register/Register';
 import './App.css';
 
 function App() {
+  // Manejar éxito de login/registro
+  const handleAuthSuccess = (userData) => {
+    // Forzar que el token se guarde correctamente
+    let token = userData.token;
+    // Si el token viene anidado, intenta extraerlo
+    if (!token && userData.data && userData.data.token) {
+      token = userData.data.token;
+    }
+    const userToSave = { ...userData, token };
+    console.log('[ALARA] handleAuthSuccess userData:', userToSave);
+    setUser(userToSave);
+  };
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem('alara_user');
     return stored ? JSON.parse(stored) : null;
@@ -22,8 +34,10 @@ function App() {
   // Guardar usuario en localStorage cuando cambie
   useEffect(() => {
     if (user) {
+      console.log('[ALARA] Guardando en localStorage:', user);
       localStorage.setItem('alara_user', JSON.stringify(user));
     } else {
+      console.log('[ALARA] Eliminando alara_user de localStorage');
       localStorage.removeItem('alara_user');
     }
   }, [user]);
@@ -62,14 +76,14 @@ function App() {
   return (
     <Router>
       <div className="App">
-  <Header user={user} setUser={setUser} />
+        <Header user={user} setUser={setUser} />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home user={user} />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login onSuccess={handleAuthSuccess} />} />
+            <Route path="/register" element={<Register onSuccess={handleAuthSuccess} />} />
             <Route path="/simulador" element={<LoanSimulator />} />
-            <Route path="/simulador-avanzado" element={user ? <AdvancedLoanSimulator user={user} /> : <Login />} />
+            <Route path="/simulador-avanzado" element={user ? <AdvancedLoanSimulator user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
             <Route path="/logica-simulador" element={<LoanLogic />} />
             <Route path="/logica-simulador-basico" element={<BasicLoanLogic />} />
             <Route path="/historial" element={<HistorialSimulaciones user={user} />} />

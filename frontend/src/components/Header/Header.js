@@ -21,18 +21,21 @@ function Header({ user, setUser }) {
   };
 
   const handleLogin = (userData) => {
+    console.log('[ALARA][Header] handleLogin', userData);
     setUser(userData);
     setShowLogin(false);
     closeMenu();
   };
 
   const handleRegister = (userData) => {
+    console.log('[ALARA][Header] handleRegister', userData);
     setUser(userData);
     setShowRegister(false);
     closeMenu();
   };
 
   const handleLogout = () => {
+    console.log('[ALARA][Header] handleLogout');
     setUser(null);
     localStorage.removeItem('alara_user');
     closeMenu();

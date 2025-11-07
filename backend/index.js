@@ -13,7 +13,7 @@ const simulacionesRoutes = require('./src/routes/simulaciones');
 
 // Inicializar aplicación Express
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3100;
 
 // =====================================================
 // MIDDLEWARES GLOBALES
@@ -21,7 +21,10 @@ const port = process.env.PORT || 3000;
 
 // CORS - Permite comunicación con React
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3101',
+  origin: [
+    'http://localhost:3000',
+    process.env.FRONTEND_URL || 'http://localhost:3101'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
