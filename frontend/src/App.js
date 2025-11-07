@@ -1,17 +1,20 @@
 
-import LoanLogic from './pages/LoanLogic';
-import BasicLoanLogic from './pages/BasicLoanLogic';
-import LoanSimulator from './components/LoanSimulator/LoanSimulator';
-import AdvancedLoanSimulator from './components/AdvancedLoanSimulator/AdvancedLoanSimulator';
-import HistorialSimulaciones from './pages/HistorialSimulaciones';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import Home from './pages/Home';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
 import './App.css';
+// Público
+import Home from './Rols/Public/Pages/Home/Home';
+import LoanSimulator from './Rols/Public/Pages/Simulador_Basico/LoanSimulator';
+import BasicLoanLogic from './Rols/Public/Pages/Simulador_Basico/Logica_de_simulacion/BasicLoanLogic';
+import HeaderPublico from './Rols/Public/Components/HeaderPublico/Header';
+import FooterPublico from './Rols/Public/Components/Footer/Footer';
+import Login from './Rols/Public/Components/Registro_Login/Login/Login';
+import Register from './Rols/Public/Components/Registro_Login/Registro/Register';
+// Usuario logeado
+import AdvancedLoanSimulator from './Rols/User/Pages/Simulador_avanzado/AdvancedLoanSimulator';
+import LoanLogic from './Rols/User/Pages/Simulador_avanzado/Logica_de_simulacion/LoanLogic';
+import HistorialSimulaciones from './Rols/User/Pages/Historial_simulaciones/HistorialSimulaciones';
+import HeaderUsuario from './Rols/User/Components/HeaderUsuario/Header';
 
 function App() {
   // Manejar éxito de login/registro
@@ -76,7 +79,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header user={user} setUser={setUser} />
+  {user ? <HeaderUsuario user={user} setUser={setUser} /> : <HeaderPublico user={user} setUser={setUser} />}
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home user={user} />} />
@@ -84,13 +87,13 @@ function App() {
             <Route path="/register" element={<Register onSuccess={handleAuthSuccess} />} />
             <Route path="/simulador" element={<LoanSimulator />} />
             <Route path="/simulador-avanzado" element={user ? <AdvancedLoanSimulator user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
-            <Route path="/logica-simulador" element={<LoanLogic />} />
+            <Route path="/logica-simulador" element={user ? <LoanLogic /> : <BasicLoanLogic />} />
             <Route path="/logica-simulador-basico" element={<BasicLoanLogic />} />
-            <Route path="/historial" element={<HistorialSimulaciones user={user} />} />
+            <Route path="/historial" element={user ? <HistorialSimulaciones user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>
         </main>
-        <Footer />
+  <FooterPublico />
       </div>
     </Router>
   );

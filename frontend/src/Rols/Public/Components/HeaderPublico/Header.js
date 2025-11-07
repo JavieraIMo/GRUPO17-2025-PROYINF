@@ -2,8 +2,8 @@
               <Link to="/logica-simulador" className="nav-link">¿Cómo se calcula?</Link>
             </li>
 import React, { useState } from 'react';
-import Login from '../Login';
-import Register from '../Register';
+import Login from '../Registro_Login/Login/Login';
+import Register from '../Registro_Login/Registro';
 import './Header.css';
 import { Link } from 'react-router-dom';
 

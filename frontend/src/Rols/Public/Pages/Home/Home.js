@@ -15,8 +15,8 @@
 
 import React from 'react';
 import './Home.css';
-import LoanSimulator from '../components/LoanSimulator/LoanSimulator';
-import AdvancedLoanSimulator from '../components/AdvancedLoanSimulator/AdvancedLoanSimulator';
+import LoanSimulator from '../Simulador_Basico/LoanSimulator';
+import AdvancedLoanSimulator from '../../../User/Pages/Simulador_avanzado/AdvancedLoanSimulator';
 
 function Home({ user }) {
   return (

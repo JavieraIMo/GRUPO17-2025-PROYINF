@@ -1,0 +1,1 @@
+export { default } from '../../Rols/Public/Components/Registro_Login/Login/Login';
