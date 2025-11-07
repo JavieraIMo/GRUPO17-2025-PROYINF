@@ -14,10 +14,10 @@ const ModalDetalleSimulacion = ({ simulacion, onClose, onDelete }) => {
         <h2 style={{marginBottom:'1rem'}}>Detalle de Simulación</h2>
         <div style={{marginBottom:'1.2rem'}}>
           <strong>Tipo:</strong> {simulacion.tipo_prestamo}<br/>
-          <strong>Monto:</strong> {formatCLP(simulacion.monto_simulado)}<br/>
+          <strong>Monto:</strong> {formatCLP(Number(simulacion.monto_simulado))}<br/>
           <strong>Plazo:</strong> {simulacion.plazo_simulado} meses<br/>
           <strong>Tasa:</strong> {(simulacion.tasa_aplicada * 100).toFixed(2)}%<br/>
-          <strong>Cuota:</strong> {formatCLP(simulacion.cuota_calculada)}<br/>
+          <strong>Cuota:</strong> {formatCLP(Number(simulacion.cuota_calculada))}<br/>
           <strong>Fecha:</strong> {simulacion.fecha_simulacion ? new Date(simulacion.fecha_simulacion).toLocaleDateString('es-CL') : ''}<br/>
         </div>
         {simulacion.datos_adicionales && Array.isArray(simulacion.datos_adicionales) && (

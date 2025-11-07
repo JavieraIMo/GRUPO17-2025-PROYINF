@@ -33,33 +33,43 @@ function calculateAmortization(monto, plazo, tasa) {
 }
 
 const AdvancedLoanSimulator = ({ user }) => {
+  const [plazoManual, setPlazoManual] = useState('');
+  const [usarPlazoManual, setUsarPlazoManual] = useState(false);
+  const [plazoError, setPlazoError] = useState('');
   const navigate = useNavigate();
+  const MIN_AMOUNT = 100000;
+  const MAX_AMOUNT = 50000000;
+  const COMMON_TERMS = [12, 24, 36, 48, 60];
   const [tipo, setTipo] = useState('personal');
-  const [monto, setMonto] = useState(1000000);
-  const [plazo, setPlazo] = useState(12);
+  const [monto, setMonto] = useState(MIN_AMOUNT);
+  const [plazo, setPlazo] = useState(COMMON_TERMS[0]);
   const [resultados, setResultados] = useState(null);
 
   const handleSimulate = (e) => {
     e.preventDefault();
     const tipoObj = LOAN_TYPES.find(t => t.value === tipo);
-    if (tipoObj && monto > 0 && plazo > 0) {
-      const { cuota, tabla } = calculateAmortization(monto, plazo, tipoObj.rate);
+    let plazoNum = usarPlazoManual ? Number(plazoManual) : Number(plazo);
+    if (tipoObj && monto > 0 && plazoNum >= 6 && plazoNum <= 360) {
+      const { cuota, tabla } = calculateAmortization(monto, plazoNum, tipoObj.rate);
       setResultados({ cuota, tabla, tasa: tipoObj.rate });
       // Guardado automático al simular
       if (user) {
-        handleGuardarSimulacion({ tipo, monto, plazo, tasa: tipoObj.rate, cuota, tabla });
+        handleGuardarSimulacion({ tipo, monto, plazo: plazoNum, tasa: tipoObj.rate, cuota, tabla });
       }
+    } else if (plazoNum < 6) {
+      setPlazoError('No es posible el cálculo con menos de 6 meses de plazo.');
     }
   };
 
   const [guardando, setGuardando] = useState(false);
   const [mensaje, setMensaje] = useState(null);
 
-  const handleGuardarSimulacion = async () => {
+  const handleGuardarSimulacion = async (simData) => {
     // Recibe los datos como argumento para guardado automático
     if (!user) return;
     setGuardando(true);
     setMensaje(null);
+    console.log('[ALARA][Frontend] Enviando simulación:', simData);
     try {
       const response = await fetch('http://localhost:3100/api/simulaciones', {
         method: 'POST',
@@ -67,9 +77,10 @@ const AdvancedLoanSimulator = ({ user }) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${user.token}`,
         },
-        body: JSON.stringify(arguments[0]),
+        body: JSON.stringify(simData),
       });
       const data = await response.json();
+      console.log('[ALARA][Frontend] Respuesta backend:', data);
       if (response.ok && data.ok) {
         setMensaje('Simulación guardada exitosamente.');
       } else {
@@ -77,6 +88,7 @@ const AdvancedLoanSimulator = ({ user }) => {
       }
     } catch (error) {
       setMensaje('Error de conexión al guardar.');
+      console.error('[ALARA][Frontend] Error al guardar simulación:', error);
     } finally {
       setGuardando(false);
     }
@@ -85,7 +97,6 @@ const AdvancedLoanSimulator = ({ user }) => {
   return (
     <div className="advanced-simulator">
       <h2>Simulador Avanzado de Préstamos</h2>
-      {/* Botón eliminado, el link se muestra al final */}
       <form className="sim-form" onSubmit={handleSimulate}>
         <label>Tipo de préstamo:</label>
         <select value={tipo} onChange={e => setTipo(e.target.value)}>
@@ -94,14 +105,84 @@ const AdvancedLoanSimulator = ({ user }) => {
           ))}
         </select>
         <label>Monto (CLP):</label>
-        <input type="number" min="100000" max="100000000" value={monto} onChange={e => setMonto(Number(e.target.value))} />
-        <label>Plazo (meses):</label>
-        <input type="number" min="6" max="360" value={plazo} onChange={e => setPlazo(Number(e.target.value))} />
+        <input
+          type="range"
+          min={MIN_AMOUNT}
+          max={MAX_AMOUNT}
+          step={10000}
+          value={monto}
+          onChange={e => setMonto(Number(e.target.value))}
+          style={{marginBottom: '8px'}}
+        />
+        <input
+          type="number"
+          min={MIN_AMOUNT}
+          max={MAX_AMOUNT}
+          step={10000}
+          value={monto}
+          onChange={e => {
+            let val = Number(e.target.value);
+            if (val < MIN_AMOUNT) val = MIN_AMOUNT;
+            if (val > MAX_AMOUNT) val = MAX_AMOUNT;
+            setMonto(val);
+          }}
+          style={{width: '100%', marginBottom: '4px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '1rem'}}
+        />
+        <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem', color: '#6b7280', marginTop: '2px'}}>
+          <span>Mín: {formatCLP(MIN_AMOUNT)}</span>
+          <span>Máx: {formatCLP(MAX_AMOUNT)}</span>
+        </div>
+        <div style={{marginTop: '8px', fontWeight: 'bold', color: '#001763', fontSize: '1.1rem'}}>Monto seleccionado: {formatCLP(monto)}</div>
+        <label>Plazo (meses): <span style={{color:'#6b7280',fontWeight:400}}>(entre 6 y 360 meses)</span></label>
+        <select
+          value={usarPlazoManual ? 'otro' : plazo}
+          onChange={e => {
+            if (e.target.value === 'otro') {
+              setUsarPlazoManual(true);
+              setPlazoManual('');
+              setPlazoError('');
+            } else {
+              setUsarPlazoManual(false);
+              setPlazo(Number(e.target.value));
+              setPlazoError('');
+            }
+          }}
+          style={{width: '100%', marginBottom: '8px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '1rem'}}
+        >
+          {COMMON_TERMS.map(t => <option key={t} value={t}>{t} meses</option>)}
+          <option value="otro">Otro</option>
+        </select>
+        {usarPlazoManual && (
+          <input
+            type="number"
+            min={6}
+            max={360}
+            value={plazoManual}
+            placeholder="Escribe el plazo (6-360)"
+            onChange={e => {
+              const val = e.target.value;
+              setPlazoManual(val);
+              if (val !== '' && Number(val) < 6) {
+                setPlazoError('No es posible el cálculo con menos de 6 meses de plazo.');
+              } else {
+                setPlazoError('');
+              }
+            }}
+            style={{width: '100%', marginBottom: '8px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '1rem'}}
+          />
+        )}
+        {plazoError && (
+          <div style={{color:'#b91c1c',fontWeight:500,marginBottom:'8px'}}>{plazoError}</div>
+        )}
+        <datalist id="plazo-sugerencias">
+          {COMMON_TERMS.map(t => <option key={t} value={t} />)}
+        </datalist>
         <button type="submit" style={{width: '100%', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.7rem 0', fontWeight: 700, fontSize: '1.08rem', cursor: 'pointer', marginTop: '8px'}}>Simular</button>
       </form>
       {resultados && (
         <div className="sim-results">
           <h3>Resultados</h3>
+          <p><strong>Plazo simulado:</strong> {usarPlazoManual ? plazoManual : plazo} meses</p>
           <p><strong>Cuota mensual:</strong> {typeof resultados.cuota === 'number' ? formatCLP(resultados.cuota) : JSON.stringify(resultados.cuota)}</p>
           <p><strong>Tasa anual:</strong> {typeof resultados.tasa === 'number' ? (resultados.tasa * 100).toFixed(2) + '%' : JSON.stringify(resultados.tasa)}</p>
           <h4>Tabla de Amortización (12 meses)</h4>

@@ -15,20 +15,19 @@
 
 import React from 'react';
 import './Home.css';
+import { useNavigate } from 'react-router-dom';
 import LoanSimulator from '../Simulador_Basico/LoanSimulator';
-import AdvancedLoanSimulator from '../../../User/Pages/Simulador_avanzado/AdvancedLoanSimulator';
 
 function Home({ user }) {
+  const navigate = useNavigate();
   return (
     <div className="home">
       <section className="hero">
         <h1>Bienvenido a Alara Simulador</h1>
         <p>Calcula tus préstamos de consumo de manera fácil y rápida.</p>
-        <button className="btn-comenzar">Comenzar</button>
+        <button className="btn-comenzar" onClick={() => navigate('/simulador')}>Comenzar</button>
       </section>
-      <section>
-        {user ? <AdvancedLoanSimulator user={user} /> : <LoanSimulator />}
-      </section>
+      {/* Solo mostrar el simulador básico público en Home */}
     </div>
   );
 }

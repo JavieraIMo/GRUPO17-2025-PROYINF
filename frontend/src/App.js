@@ -15,6 +15,8 @@ import AdvancedLoanSimulator from './Rols/User/Pages/Simulador_avanzado/Advanced
 import LoanLogic from './Rols/User/Pages/Simulador_avanzado/Logica_de_simulacion/LoanLogic';
 import HistorialSimulaciones from './Rols/User/Pages/Historial_simulaciones/HistorialSimulaciones';
 import HeaderUsuario from './Rols/User/Components/HeaderUsuario/Header';
+import UserLoanSimulator from './Rols/User/Pages/Simulador_basico/LoanSimulator';
+import UserBasicLoanLogic from './Rols/User/Pages/Simulador_basico/Logica_simulador/BasicLoanLogic';
 
 function App() {
   // Manejar éxito de login/registro
@@ -85,10 +87,10 @@ function App() {
             <Route path="/" element={<Home user={user} />} />
             <Route path="/login" element={<Login onSuccess={handleAuthSuccess} />} />
             <Route path="/register" element={<Register onSuccess={handleAuthSuccess} />} />
-            <Route path="/simulador" element={<LoanSimulator />} />
+            <Route path="/simulador" element={user ? <UserLoanSimulator /> : <LoanSimulator />} />
             <Route path="/simulador-avanzado" element={user ? <AdvancedLoanSimulator user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
             <Route path="/logica-simulador" element={user ? <LoanLogic /> : <BasicLoanLogic />} />
-            <Route path="/logica-simulador-basico" element={<BasicLoanLogic />} />
+            <Route path="/logica-simulador-basico" element={user ? <UserBasicLoanLogic /> : <BasicLoanLogic />} />
             <Route path="/historial" element={user ? <HistorialSimulaciones user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>

@@ -1,0 +1,29 @@
+/* Copia de estilos del simulador básico público */
+.loan-simulator {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px #0001;
+  padding: 2rem;
+  max-width: 480px;
+  margin: 2rem auto;
+}
+.loan-simulator h2 {
+  color: #001763;
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+}
+.loan-simulator label {
+  font-weight: 600;
+  color: #2563eb;
+}
+.loan-results {
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.2rem;
+}
+.loan-results h3 {
+  color: #2563eb;
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+}

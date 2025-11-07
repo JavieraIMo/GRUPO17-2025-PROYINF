@@ -6,6 +6,9 @@ const formulaLatex = `M = \frac{P \cdot r \cdot (1 + r)^n}{(1 + r)^n - 1}`;
 function LoanLogic() {
   return (
     <div className="loan-logic-page">
+      <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center',marginBottom:'1.5rem'}}>
+        <a href="/simulador-avanzado" style={{background:'#2563eb',color:'#fff',padding:'0.7rem 1.5rem',borderRadius:'8px',textDecoration:'none',fontWeight:600}}>Volver a Simulador Avanzado</a>
+      </div>
       <h1>Lógica del Simulador de Préstamos</h1>
       <section className="logic-section">
         <h2>¿Cómo se calcula la cuota mensual?</h2>

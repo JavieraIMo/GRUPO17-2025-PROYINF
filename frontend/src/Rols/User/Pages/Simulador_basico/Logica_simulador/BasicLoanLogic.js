@@ -1,11 +1,21 @@
 import React from 'react';
-import './LoanLogic.css';
 
 function BasicLoanLogic() {
   return (
     <div className="loan-logic-page">
       <div style={{display:'flex',justifyContent:'flex-start',alignItems:'center',marginBottom:'1.5rem'}}>
-        <a href="/simulador" style={{background:'#2563eb',color:'#fff',padding:'0.7rem 1.5rem',borderRadius:'8px',textDecoration:'none',fontWeight:600}}>Volver a Simulador Básico</a>
+        <a href="/simulador" style={{background:'linear-gradient(90deg, #2563eb 0%, #1e40af 100%)',color:'#fff',padding:'0.7rem 1.5rem',borderRadius:'8px',textDecoration:'none',fontWeight:600,fontFamily:'Montserrat, Arial, sans-serif',boxShadow:'0 2px 8px rgba(37,99,235,0.12)',border:'none',transition:'background 0.2s, box-shadow 0.2s',letterSpacing:'0.5px',position:'relative',cursor:'pointer'}}
+          onMouseOver={e => {
+            e.currentTarget.style.background = 'linear-gradient(90deg, #1e40af 0%, #2563eb 100%)';
+            e.currentTarget.style.boxShadow = '0 4px 16px rgba(37,99,235,0.18)';
+          }}
+          onMouseOut={e => {
+            e.currentTarget.style.background = 'linear-gradient(90deg, #2563eb 0%, #1e40af 100%)';
+            e.currentTarget.style.boxShadow = '0 2px 8px rgba(37,99,235,0.12)';
+          }}
+        >
+          ← Volver a Simulador Básico
+        </a>
       </div>
       <h1>Lógica del Simulador Básico</h1>
       <section className="logic-section">
@@ -37,9 +47,9 @@ function BasicLoanLogic() {
         <h3>Notas</h3>
         <ul>
           <li>La simulación es referencial y no considera seguros ni otros gastos asociados.</li>
-          <li>Para condiciones personalizadas, <strong>regístrate</strong> y usa el simulador avanzado.</li>
         </ul>
       </section>
+      {/* Botón movido arriba */}
     </div>
   );
 }

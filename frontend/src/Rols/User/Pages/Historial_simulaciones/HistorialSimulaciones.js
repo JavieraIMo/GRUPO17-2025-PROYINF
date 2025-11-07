@@ -11,6 +11,9 @@ const HistorialSimulaciones = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
+  const [filtroMonto, setFiltroMonto] = useState('');
+  const [filtroTipo, setFiltroTipo] = useState('');
+  const [filtroFecha, setFiltroFecha] = useState('');
   const PAGE_SIZE = 10;
 
   const handleDeleteSimulacion = async (id) => {
@@ -39,7 +42,9 @@ const HistorialSimulaciones = ({ user }) => {
       .then(res => res.json())
       .then(data => {
         if (data.ok) {
-          setSimulaciones(data.simulaciones);
+          // Ordenar por fecha descendente
+          const ordenadas = [...data.simulaciones].sort((a, b) => new Date(b.fecha_simulacion) - new Date(a.fecha_simulacion));
+          setSimulaciones(ordenadas);
         } else {
           setError(data.error || 'Error al cargar historial');
         }
@@ -55,20 +60,65 @@ const HistorialSimulaciones = ({ user }) => {
   if (loading) return <div style={{textAlign:'center',marginTop:'2rem'}}>Cargando historial...</div>;
   if (error) return <div style={{textAlign:'center',marginTop:'2rem',color:'#b91c1c'}}>{error}</div>;
 
+  // Filtros
+  const simulacionesFiltradas = simulaciones.filter(sim => {
+    let ok = true;
+    if (filtroMonto && filtroMonto.trim() !== '') {
+      ok = ok && sim.monto_simulado >= parseInt(filtroMonto);
+    }
+    if (filtroTipo && filtroTipo !== '') {
+      // Normalizar ambos valores para evitar problemas de mayúsculas/minúsculas
+      ok = ok && sim.tipo_prestamo.toLowerCase() === filtroTipo.toLowerCase();
+    }
+    if (filtroFecha && filtroFecha !== '') {
+      // Comparar solo la fecha (YYYY-MM-DD)
+      const fechaSim = new Date(sim.fecha_simulacion).toISOString().slice(0,10);
+      ok = ok && fechaSim === filtroFecha;
+    }
+    return ok;
+  });
   // Paginación
-  const totalPages = Math.ceil(simulaciones.length / PAGE_SIZE);
-  const simulacionesPagina = simulaciones.slice((page-1)*PAGE_SIZE, page*PAGE_SIZE);
+  const totalPages = Math.ceil(simulacionesFiltradas.length / PAGE_SIZE);
+  const simulacionesPagina = simulacionesFiltradas.slice((page-1)*PAGE_SIZE, page*PAGE_SIZE);
 
   return (
     <div className="advanced-simulator">
       <h2>Historial de Simulaciones</h2>
-      {simulaciones.length === 0 ? (
-        <div style={{textAlign:'center',marginTop:'2rem'}}>No tienes simulaciones guardadas.</div>
+      <div style={{display:'flex',gap:'1rem',margin:'1rem 0',flexWrap:'wrap'}}>
+        <div>
+          <label style={{fontWeight:500}}>Monto mínimo:&nbsp;</label>
+          <input type="number" min="0" value={filtroMonto} onChange={e=>{setFiltroMonto(e.target.value);setPage(1);}} style={{padding:'4px 8px',borderRadius:'4px',border:'1px solid #d1d5db'}} placeholder="Ej: 1000000" />
+        </div>
+        <div>
+          <label style={{fontWeight:500}}>Tipo de préstamo:&nbsp;</label>
+          <select value={filtroTipo} onChange={e=>{setFiltroTipo(e.target.value);setPage(1);}} style={{padding:'4px 8px',borderRadius:'4px',border:'1px solid #d1d5db'}}>
+            <option value="">Todos</option>
+            <option value="personal">Personal</option>
+            <option value="automotriz">Automotriz</option>
+            <option value="hipotecario">Hipotecario</option>
+            <option value="empresarial">Empresarial</option>
+          </select>
+        </div>
+        <div>
+          <label style={{fontWeight:500}}>Fecha:&nbsp;</label>
+          <input type="date" value={filtroFecha} onChange={e=>{setFiltroFecha(e.target.value);setPage(1);}} style={{padding:'4px 8px',borderRadius:'4px',border:'1px solid #d1d5db'}} />
+        </div>
+      </div>
+      <div style={{margin:'0.5rem 0',fontWeight:500,fontSize:'1rem',color:'#2563eb',display:'flex',gap:'2rem',alignItems:'center'}}>
+        <span>Total de simulaciones registradas: {simulaciones.length}</span>
+        <span>Total encontradas con filtros: {simulacionesFiltradas.length}</span>
+      </div>
+      {simulacionesFiltradas.length === 0 ? (
+        <div style={{textAlign:'center',marginTop:'2rem',color:'#b91c1c',fontWeight:500,padding:'1.5rem 0'}}>
+          <span style={{fontSize:'2.2rem',display:'block',marginBottom:'0.5rem'}}>🔎</span>
+          <span style={{fontSize:'1.1rem'}}>No se han encontrado simulaciones que coincidan con los filtros seleccionados.</span><br/>
+          <span style={{fontWeight:400,color:'#444'}}>Revisa los valores ingresados o prueba eliminando algún filtro para ver más resultados.</span>
+        </div>
       ) : (
         <>
         <table style={{width:'100%',marginTop:'1.5rem',borderCollapse:'collapse'}}>
           <thead>
-            <tr>
+            <tr style={{background:'#f3f4f6',color:'#2563eb',fontWeight:600}}>
               <th>Fecha</th>
               <th>Tipo</th>
               <th>Monto</th>
@@ -83,10 +133,10 @@ const HistorialSimulaciones = ({ user }) => {
               <tr key={sim.id}>
                 <td>{sim.fecha_simulacion ? new Date(sim.fecha_simulacion).toLocaleDateString('es-CL') : ''}</td>
                 <td>{sim.tipo_prestamo}</td>
-                <td>{formatCLP(sim.monto_simulado)}</td>
+                <td>{formatCLP(Number(sim.monto_simulado))}</td>
                 <td>{sim.plazo_simulado} meses</td>
                 <td>{(sim.tasa_aplicada * 100).toFixed(2)}%</td>
-                <td>{formatCLP(sim.cuota_calculada)}</td>
+                <td>{formatCLP(Number(sim.cuota_calculada))}</td>
                 <td>
                   <button onClick={() => setDetalleSim(sim)} style={{background:'#2563eb',color:'#fff',border:'none',borderRadius:'6px',padding:'0.3rem 0.7rem',fontWeight:500,cursor:'pointer'}}>Ver detalle</button>
                 </td>
