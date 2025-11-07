@@ -32,18 +32,27 @@ function App() {
     setUser(userToSave);
   };
   const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem('alara_user');
-    return stored ? JSON.parse(stored) : null;
+    try {
+      const stored = localStorage.getItem('alara_user');
+      return stored ? JSON.parse(stored) : null;
+    } catch (err) {
+      console.error('[ALARA] Error accediendo a localStorage:', err);
+      return null;
+    }
   });
 
   // Guardar usuario en localStorage cuando cambie
   useEffect(() => {
-    if (user) {
-      console.log('[ALARA] Guardando en localStorage:', user);
-      localStorage.setItem('alara_user', JSON.stringify(user));
-    } else {
-      console.log('[ALARA] Eliminando alara_user de localStorage');
-      localStorage.removeItem('alara_user');
+    try {
+      if (user) {
+        console.log('[ALARA] Guardando en localStorage:', user);
+        localStorage.setItem('alara_user', JSON.stringify(user));
+      } else {
+        console.log('[ALARA] Eliminando alara_user de localStorage');
+        localStorage.removeItem('alara_user');
+      }
+    } catch (err) {
+      console.error('[ALARA] Error accediendo a localStorage:', err);
     }
   }, [user]);
 

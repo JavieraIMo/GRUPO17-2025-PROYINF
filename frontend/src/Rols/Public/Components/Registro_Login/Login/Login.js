@@ -5,6 +5,7 @@ function Login({ onClose, onSuccess, onSwitchToRegister }) {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -85,69 +86,97 @@ function Login({ onClose, onSuccess, onSwitchToRegister }) {
     }
   };
   return (
-    <div className="login-modal">
-      <div className="login-container">
-        <button className="close-btn" onClick={onClose}>&times;</button>
-        <h2 className="login-title">Iniciar Sesión</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
-          {errors.general && (
-            <div className="error-message">{errors.general}</div>
-          )}
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">Correo Electrónico</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className={`form-input ${errors.email ? 'error' : ''}`}
-              placeholder="ejemplo@correo.com"
-            />
-            {errors.email && <span className="error-message">{errors.email}</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="password" className="form-label">Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className={`form-input ${errors.password ? 'error' : ''}`}
-              placeholder="Tu contraseña"
-            />
-            {errors.password && <span className="error-message">{errors.password}</span>}
-          </div>
-          <div className="form-options">
-            <label className="remember-label">
-              <input type="checkbox" className="remember-checkbox" />
-              <span className="remember-text">Recordarme</span>
-            </label>
-            <a href="#forgot" className="forgot-link">¿Olvidaste tu contraseña?</a>
-          </div>
-          <button
-            type="submit"
-            className={`login-btn ${isLoading ? 'loading' : ''}`}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <span className="spinner"></span>
-                Iniciando sesión...
-              </>
-            ) : (
-              'Iniciar Sesión'
+    <div className="login-overlay" onClick={onClose}>
+      <div className="login-modal" onClick={e => e.stopPropagation()}>
+        <div className="login-container">
+          <button className="close-btn" onClick={onClose}>&times;</button>
+          <h2 className="login-title">Iniciar Sesión</h2>
+          <form className="login-form" onSubmit={handleSubmit}>
+            {errors.general && (
+              <div className="error-message">{errors.general}</div>
             )}
-          </button>
-        </form>
-        <div className="login-footer">
-          <p className="register-prompt">
-            ¿No tienes cuenta?{' '}
-            <button onClick={onSwitchToRegister} className="register-link">
-              Regístrate aquí
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">Correo Electrónico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={`form-input ${errors.email ? 'error' : ''}`}
+                placeholder="ejemplo@correo.com"
+              />
+              {errors.email && <span className="error-message">{errors.email}</span>}
+            </div>
+            <div className="form-group" style={{position: 'relative'}}>
+              <label htmlFor="password" className="form-label">Contraseña</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                className={`form-input ${errors.password ? 'error' : ''}`}
+                placeholder="Tu contraseña"
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                className="show-password-btn"
+                onClick={() => setShowPassword((prev) => !prev)}
+                tabIndex={-1}
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                style={{position: 'absolute', right: '1rem', top: '2.2rem', background: 'none', border: 'none', cursor: 'pointer', padding: 0}}
+              >
+                {showPassword ? (
+                  // SVG ojo abierto
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 11C3.5 7 7 4 11 4C15 4 18.5 7 20 11" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 11C3.5 15 7 18 11 18C15 18 18.5 15 20 11" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="11" cy="11" r="3" stroke="#374151" strokeWidth="2"/>
+                  </svg>
+                ) : (
+                  // SVG ojo cerrado
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 11C3.5 7 7 4 11 4C15 4 18.5 7 20 11" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 11C3.5 15 7 18 11 18C15 18 18.5 15 20 11" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M7 11C7 13.2091 8.79086 15 11 15C13.2091 15 15 13.2091 15 11C15 8.79086 13.2091 7 11 7C8.79086 7 7 8.79086 7 11Z" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <line x1="4" y1="18" x2="18" y2="4" stroke="#dc2626" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                )}
+              </button>
+              {errors.password && <span className="error-message">{errors.password}</span>}
+            </div>
+            <div className="form-options">
+              <label className="remember-label">
+                <input type="checkbox" className="remember-checkbox" />
+                <span className="remember-text">Recordarme</span>
+              </label>
+              <a href="#forgot" className="forgot-link">¿Olvidaste tu contraseña?</a>
+            </div>
+            <button
+              type="submit"
+              className={`login-btn ${isLoading ? 'loading' : ''}`}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <span className="spinner"></span>
+                  Iniciando sesión...
+                </>
+              ) : (
+                'Iniciar Sesión'
+              )}
             </button>
-          </p>
+          </form>
+          <div className="login-footer">
+            <p className="register-prompt">
+              ¿No tienes cuenta?{' '}
+              <button onClick={onSwitchToRegister} className="register-link">
+                Regístrate aquí
+              </button>
+            </p>
+          </div>
         </div>
       </div>
     </div>

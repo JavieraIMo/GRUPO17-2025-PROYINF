@@ -1,1 +1,251 @@
+.show-password-btn {
+	position: absolute;
+	right: 1rem;
+	top: 0;
+	height: 50%;
+	display: flex;
+	align-items: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1.3rem;
+	color: #374151;
+	padding: 0;
+	z-index: 2;
+}
+.show-password-btn:focus {
+	outline: 2px solid #001763;
+}
+/* Modal overlay similar a Register */
+.login-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2000;
+	padding: 1rem;
+}
+
+
+.login-modal {
+	background: #fff;
+	border-radius: 1.25rem;
+	box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+	width: 100%;
+	max-width: 420px;
+	max-height: 92vh;
+	overflow-y: auto;
+	position: relative;
+	animation: slideUp 0.3s ease-out;
+	font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+.login-container {
+	padding: 2.5rem 2rem 1.5rem 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.login-title {
+	font-size: 2rem;
+	font-weight: bold;
+	color: #001763;
+	margin-bottom: 1.2rem;
+	font-family: 'Times New Roman', 'Georgia', serif;
+	text-align: left;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.form-label {
+	font-weight: 600;
+	color: #374151;
+	font-size: 1rem;
+	margin-bottom: 0.2rem;
+}
+
+.form-input {
+	padding: 0.7rem 1rem;
+	border: 2px solid #d1d5db;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	transition: all 0.3s ease;
+	background: #f9fafb;
+}
+.form-input:focus {
+	outline: none;
+	border-color: #001763;
+	background: #fff;
+}
+.error-message {
+	color: #dc2626;
+	font-size: 0.92rem;
+	margin-top: 0.2rem;
+}
+
+.form-options {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+	font-size: 0.97rem;
+}
+.remember-label {
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+	font-size: 0.97rem;
+	color: #374151;
+}
+.forgot-link {
+	color: #4f46e5;
+	text-decoration: underline;
+	font-size: 0.97rem;
+	margin-left: 0.5rem;
+}
+.forgot-link:hover {
+	color: #001763;
+}
+
+.login-btn {
+	background-color: #001763;
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	padding: 0.85rem 1.5rem;
+	font-size: 1.08rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background 0.3s ease;
+	margin-top: 0.5rem;
+}
+.login-btn:hover {
+	background-color: #003399;
+}
+
+.login-footer {
+	text-align: center;
+	margin-top: 1.2rem;
+}
+.register-prompt {
+	font-size: 1rem;
+	color: #374151;
+}
+.register-link {
+	background: none;
+	border: none;
+	color: #001763;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: underline;
+	font-size: 1rem;
+	margin-left: 0.2rem;
+}
+.register-link:hover {
+	color: #003399;
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.login-container {
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.close-btn {
+	background: none;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+	color: #6b7280;
+	padding: 0.25rem;
+	border-radius: 0.25rem;
+	transition: color 0.3s ease;
+}
+.close-btn:hover {
+	color: #1f2937;
+	background-color: #f3f4f6;
+}
+.login-title {
+	font-size: 1.75rem;
+	font-weight: bold;
+	color: #001763;
+	margin: 0;
+	font-family: 'Times New Roman', 'Georgia', serif;
+}
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.form-label {
+	font-weight: 600;
+	color: #374151;
+	font-size: 0.9rem;
+}
+.form-input {
+	padding: 0.75rem 1rem;
+	border: 2px solid #d1d5db;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	transition: all 0.3s ease;
+	background: white;
+}
+.form-input:focus {
+	outline: none;
+	border-color: #001763;
+}
+.error-message {
+	color: #dc2626;
+	font-size: 0.9rem;
+}
+.login-btn {
+	background-color: #001763;
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	padding: 0.75rem 1.5rem;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background 0.3s ease;
+}
+.login-btn:hover {
+	background-color: #003399;
+}
+.login-footer {
+	text-align: center;
+	margin-top: 1rem;
+}
+.register-link {
+	background: none;
+	border: none;
+	color: #001763;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: underline;
+	font-size: 1rem;
+}
 /* Login.css */
