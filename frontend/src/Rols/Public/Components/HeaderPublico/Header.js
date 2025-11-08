@@ -37,7 +37,11 @@ function Header({ user, setUser }) {
   const handleLogout = () => {
     console.log('[ALARA][Header] handleLogout');
     setUser(null);
-    localStorage.removeItem('alara_user');
+    try {
+      localStorage.removeItem('alara_user');
+    } catch (err) {
+      console.error('[ALARA] Error accediendo a localStorage:', err);
+    }
     closeMenu();
   };
 
