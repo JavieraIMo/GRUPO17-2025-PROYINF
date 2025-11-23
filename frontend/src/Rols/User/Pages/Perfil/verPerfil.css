@@ -1,0 +1,87 @@
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 0;
+}
+
+.perfil-container {
+  max-width: 800px;
+  margin: 60px auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 31, 84, 0.15);
+  padding: 40px 50px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.perfil-container h2 {
+  text-align: center;
+  color: #001f54;
+  font-size: 1.9rem;
+  margin-bottom: 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.perfil-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.perfil-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e9ef;
+  padding-bottom: 10px;
+}
+
+.label {
+  font-weight: 600;
+  color: #001f54;
+}
+
+.perfil-item span:last-child {
+  color: #333;
+}
+
+/* Estado sin datos */
+.sin-datos {
+  text-align: center;
+  padding: 60px;
+  color: #555;
+  font-size: 1.2rem;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Adaptación móvil */
+@media (max-width: 600px) {
+  .perfil-container {
+    margin: 30px 10px;
+    padding: 25px 20px;
+  }
+
+  .perfil-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .perfil-item span:last-child {
+    margin-top: 5px;
+  }
+}

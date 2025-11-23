@@ -17,6 +17,9 @@ import HistorialSimulaciones from './Rols/User/Pages/Historial_simulaciones/Hist
 import HeaderUsuario from './Rols/User/Components/HeaderUsuario/Header';
 import UserLoanSimulator from './Rols/User/Pages/Simulador_basico/LoanSimulator';
 import UserBasicLoanLogic from './Rols/User/Pages/Simulador_basico/Logica_simulador/BasicLoanLogic';
+import VerPerfil from './Rols/User/Pages/Perfil/verPerfil';
+import EditarPerfil from './Rols/User/Pages/Perfil/editarPerfil';
+
 
 function App() {
   // Manejar éxito de login/registro
@@ -101,6 +104,11 @@ function App() {
             <Route path="/logica-simulador" element={user ? <LoanLogic /> : <BasicLoanLogic />} />
             <Route path="/logica-simulador-basico" element={user ? <UserBasicLoanLogic /> : <BasicLoanLogic />} />
             <Route path="/historial" element={user ? <HistorialSimulaciones user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
+            <Route path="/perfil" element={user ? <VerPerfil user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
+            <Route path="/perfil/editar" element={user ? <EditarPerfil user={user} onGuardar={(data) => {
+              // Actualizar datos del usuario después de editar el perfil
+              setUser({ ...user, ...data });
+            }} /> : <Login onSuccess={handleAuthSuccess} />} />
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>
         </main>
