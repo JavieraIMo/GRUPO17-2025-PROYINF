@@ -47,7 +47,7 @@ function HeaderUsuario({ user, setUser }) {
 									<div className="nav-cta desktop-cta">
 										<button className="btn-profile">
 											<span className="profile-icon">👤</span>
-											Perfil
+											Mi Perfil
 										</button>
 									</div>
 						<button className="hamburger-btn" onClick={toggleMenu}>
@@ -70,7 +70,7 @@ function HeaderUsuario({ user, setUser }) {
 									<li className="side-menu-item">
 										<button className="btn-profile side-menu-cta">
 											<span className="profile-icon">👤</span>
-											Editar Perfil
+											Mi Perfil
 										</button>
 									</li>
 									<li className="side-menu-item">

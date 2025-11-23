@@ -41,7 +41,7 @@ const LoanSimulator = () => {
 
   return (
     <div className="loan-simulator">
-      <h2>Simulador de Préstamos</h2>
+      <h2>Simulador de Préstamos - Básico</h2>
       {/* Botón eliminado, el link de abajo ahora lleva a la explicación básica */}
       <div style={{
         background: '#f3f4f6',
