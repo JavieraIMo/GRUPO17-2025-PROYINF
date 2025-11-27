@@ -47,6 +47,7 @@ function Login({ onClose, onSuccess, onSwitchToRegister }) {
           });
           onSuccess({
             ...result.data.user,
+            nombre: result.data.user.nombre || result.data.user.nombre_completo || result.data.user.name || '',
             token: result.data.token
           });
           console.log('[ALARA][Login] Después de llamar a onSuccess');

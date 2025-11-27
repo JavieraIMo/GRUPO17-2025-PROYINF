@@ -1,0 +1,44 @@
+.consentimiento-form {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.consentimiento-form h2 {
+  color: #001763;
+  margin-bottom: 0.7rem;
+}
+.consentimiento-form p {
+  color: #374151;
+  font-size: 1rem;
+}
+.consent-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1rem;
+  color: #001763;
+}
+.error-message {
+  color: #dc2626;
+  font-size: 0.95rem;
+}
+.consentimiento-form button {
+  background: #001763;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.consentimiento-form button:hover {
+  background: #003399;
+}

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 // Público
 import Home from './Rols/Public/Pages/Home/Home';
+import Dashboard from './Rols/User/Pages/Dashboard/Dashboard';
 import LoanSimulator from './Rols/Public/Pages/Simulador_Basico/LoanSimulator';
 import BasicLoanLogic from './Rols/Public/Pages/Simulador_Basico/Logica_de_simulacion/BasicLoanLogic';
 import HeaderPublico from './Rols/Public/Components/HeaderPublico/Header';
@@ -12,6 +13,8 @@ import Login from './Rols/Public/Components/Registro_Login/Login/Login';
 import Register from './Rols/Public/Components/Registro_Login/Registro/Register';
 // Usuario logeado
 import AdvancedLoanSimulator from './Rols/User/Pages/Simulador_avanzado/AdvancedLoanSimulator';
+import Configuracion from './Rols/User/Components/HeaderUsuario/Configuracion';
+import SeleccionarTipoPrestamo from './Rols/User/Pages/SeleccionarTipoPrestamo';
 import LoanLogic from './Rols/User/Pages/Simulador_avanzado/Logica_de_simulacion/LoanLogic';
 import HistorialSimulaciones from './Rols/User/Pages/Historial_simulaciones/HistorialSimulaciones';
 import HeaderUsuario from './Rols/User/Components/HeaderUsuario/Header';
@@ -96,7 +99,7 @@ function App() {
   {user ? <HeaderUsuario user={user} setUser={setUser} /> : <HeaderPublico user={user} setUser={setUser} />}
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Home user={user} />} />
+            <Route path="/" element={user ? <Dashboard user={user} /> : <Home user={user} />} />
             <Route path="/login" element={<Login onSuccess={handleAuthSuccess} />} />
             <Route path="/register" element={<Register onSuccess={handleAuthSuccess} />} />
             <Route path="/simulador" element={user ? <UserLoanSimulator /> : <LoanSimulator />} />
@@ -104,11 +107,6 @@ function App() {
             <Route path="/logica-simulador" element={user ? <LoanLogic /> : <BasicLoanLogic />} />
             <Route path="/logica-simulador-basico" element={user ? <UserBasicLoanLogic /> : <BasicLoanLogic />} />
             <Route path="/historial" element={user ? <HistorialSimulaciones user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
-            <Route path="/perfil" element={user ? <VerPerfil user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
-            <Route path="/perfil/editar" element={user ? <EditarPerfil user={user} onGuardar={(data) => {
-              // Actualizar datos del usuario después de editar el perfil
-              setUser({ ...user, ...data });
-            }} /> : <Login onSuccess={handleAuthSuccess} />} />
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>
         </main>

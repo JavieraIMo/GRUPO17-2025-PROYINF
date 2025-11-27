@@ -1,3 +1,22 @@
+// Eliminar simulación por id y usuario autenticado
+exports.eliminarSimulacion = async (req, res) => {
+  try {
+    const cliente_id = req.user.id;
+    const simulacion_id = req.params.id;
+    // Solo permite borrar si la simulación pertenece al usuario autenticado
+    const result = await db.query(
+      `DELETE FROM simulaciones WHERE id = $1 AND cliente_id = $2 RETURNING id`,
+      [simulacion_id, cliente_id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ ok: false, error: 'Simulación no encontrada o no autorizada' });
+    }
+    res.json({ ok: true, mensaje: 'Simulación eliminada correctamente' });
+  } catch (error) {
+    console.error('[ALARA][Backend] Error al eliminar simulación:', error);
+    res.status(500).json({ ok: false, error: 'Error al eliminar simulación' });
+  }
+};
 // Obtener historial de simulaciones del usuario autenticado
 exports.obtenerHistorialSimulaciones = async (req, res) => {
   try {
