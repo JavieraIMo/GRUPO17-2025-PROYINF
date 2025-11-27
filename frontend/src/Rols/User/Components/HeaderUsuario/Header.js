@@ -42,7 +42,7 @@ function HeaderUsuario({ user, setUser }) {
 					</ul>
 					<div className="right-container">
 						<div className="user-greeting desktop-cta">
-							<span className="user-name">Hola, {user?.firstName}</span>
+							<span className="user-name">Hola, {user?.nombre || user?.firstName || 'Usuario'}</span>
 						</div>
 									<div className="nav-cta desktop-cta">
 										<button className="btn-profile">
@@ -72,6 +72,12 @@ function HeaderUsuario({ user, setUser }) {
 											<span className="profile-icon">👤</span>
 											Editar Perfil
 										</button>
+									</li>
+									<li className="side-menu-item">
+										<Link to="/configuracion" className="side-menu-link" onClick={closeMenu}>
+											<span className="profile-icon">⚙️</span>
+											Configuración
+										</Link>
 									</li>
 									<li className="side-menu-item">
 										<button className="btn-logout side-menu-cta" onClick={handleLogout}>Cerrar Sesión</button>
