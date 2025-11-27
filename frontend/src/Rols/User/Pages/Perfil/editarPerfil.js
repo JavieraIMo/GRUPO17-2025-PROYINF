@@ -115,18 +115,10 @@ const EditarPerfil = ({ usuario, onGuardar, onCancelar }) => {
         </div>
 
         <div className="form-buttons">
-          <button
-            type="button"
-            className="btn-guardar"
-            onClick={handleGuardar}
-          >
+          <button type="button" className="btn-guardar" onClick={handleGuardar}>
             Guardar
           </button>
-          <button
-            type="button"
-            className="btn-cancelar"
-            onClick={onCancelar}
-          >
+          <button type="button" className="btn-cancelar" onClick={onCancelar}>
             Cancelar
           </button>
         </div>
@@ -134,3 +126,5 @@ const EditarPerfil = ({ usuario, onGuardar, onCancelar }) => {
     </div>
   );
 };
+
+export default EditarPerfil;
