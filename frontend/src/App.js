@@ -20,6 +20,9 @@ import HistorialSimulaciones from './Rols/User/Pages/Historial_simulaciones/Hist
 import HeaderUsuario from './Rols/User/Components/HeaderUsuario/Header';
 import UserLoanSimulator from './Rols/User/Pages/Simulador_basico/LoanSimulator';
 import UserBasicLoanLogic from './Rols/User/Pages/Simulador_basico/Logica_simulador/BasicLoanLogic';
+import VerPerfil from './Rols/User/Pages/Perfil/verPerfil';
+import EditarPerfil from './Rols/User/Pages/Perfil/editarPerfil';
+
 
 function App() {
   // Manejar éxito de login/registro
@@ -104,8 +107,6 @@ function App() {
             <Route path="/logica-simulador" element={user ? <LoanLogic /> : <BasicLoanLogic />} />
             <Route path="/logica-simulador-basico" element={user ? <UserBasicLoanLogic /> : <BasicLoanLogic />} />
             <Route path="/historial" element={user ? <HistorialSimulaciones user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
-            <Route path="/configuracion" element={user ? <Configuracion /> : <Login onSuccess={handleAuthSuccess} />} />
-            <Route path="/seleccionar-tipo-prestamo" element={user ? <SeleccionarTipoPrestamo /> : <Login onSuccess={handleAuthSuccess} />} />
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>
         </main>

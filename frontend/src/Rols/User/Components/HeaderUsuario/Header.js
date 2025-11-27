@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function HeaderUsuario({ user, setUser }) {
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-	const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-	const closeMenu = () => setIsMenuOpen(false);
-	const handleLogout = () => {
-		setUser(null);
-		try {
-			localStorage.removeItem('alara_user');
-		} catch (err) {
-			console.error('[ALARA] Error accediendo a localStorage:', err);
-		}
-		closeMenu();
-	};
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const handleLogout = () => {
+    setUser(null);
+    try {
+      localStorage.removeItem('alara_user');
+    } catch (err) {
+      console.error('[ALARA] Error accediendo a localStorage:', err);
+    }
+    closeMenu();
+  };
+
+  const handleVerPerfil = () => {
+    navigate('/perfil'); // ✅ redirige correctamente
+  };
 
 	return (
 		<header className="header">
@@ -42,7 +48,7 @@ function HeaderUsuario({ user, setUser }) {
 					</ul>
 					<div className="right-container">
 						<div className="user-greeting desktop-cta">
-							<span className="user-name">Hola, {user?.nombre || user?.firstName || 'Usuario'}</span>
+							<span className="user-name">Hola, {user?.firstName}</span>
 						</div>
 									<div className="nav-cta desktop-cta">
 										<button className="btn-profile">
@@ -74,12 +80,6 @@ function HeaderUsuario({ user, setUser }) {
 										</button>
 									</li>
 									<li className="side-menu-item">
-										<Link to="/configuracion" className="side-menu-link" onClick={closeMenu}>
-											<span className="profile-icon">⚙️</span>
-											Configuración
-										</Link>
-									</li>
-									<li className="side-menu-item">
 										<button className="btn-logout side-menu-cta" onClick={handleLogout}>Cerrar Sesión</button>
 									</li>
 					</ul>
@@ -88,4 +88,5 @@ function HeaderUsuario({ user, setUser }) {
 		</header>
 	);
 }
+
 export default HeaderUsuario;

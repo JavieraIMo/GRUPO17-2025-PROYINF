@@ -19,6 +19,8 @@ CREATE TABLE clientes (
     fecha_nacimiento DATE,
     email VARCHAR(320) UNIQUE NOT NULL,
     telefono VARCHAR(15),
+    region TEXT,
+    comuna TEXT,
     direccion TEXT,
     ingresos DECIMAL(12,2),
     historial_crediticio TEXT,
