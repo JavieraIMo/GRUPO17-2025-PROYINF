@@ -7,13 +7,44 @@ function Notificaciones({ user }) {
   const [notificaciones, setNotificaciones] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Llamada al backend
+  // === NUEVO: Función para crear notificación de bienvenida ===
+  const crearNotificacionBienvenida = async () => {
+    try {
+      await fetch(`http://localhost:3100/api/notificaciones/bienvenida/${user.id}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log("Notificación de bienvenida creada");
+    } catch (error) {
+      console.error("Error creando notificación de bienvenida:", error);
+    }
+  };
+
+  // === NUEVO: Función para verificar si necesita bienvenida ===
+  const necesitaBienvenida = (notificaciones) => {
+    return notificaciones.length === 0;
+  };
+
+  // === MODIFICAR: Este useEffect existente ===
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await fetch(`http://localhost:4000/api/notificaciones/${user.id}`);
+        const resp = await fetch(`http://localhost:3100/api/notificaciones/${user.id}`);
         const data = await resp.json();
-        setNotificaciones(data);
+        
+        // === NUEVA LÓGICA: Crear bienvenida si no hay notificaciones ===
+        if (necesitaBienvenida(data)) {
+          await crearNotificacionBienvenida();
+          // Recargar notificaciones después de crear la bienvenida
+          const respNuevo = await fetch(`http://localhost:3100/api/notificaciones/${user.id}`);
+          const nuevasNotificaciones = await respNuevo.json();
+          setNotificaciones(nuevasNotificaciones);
+        } else {
+          setNotificaciones(data);
+        }
+        
       } catch (err) {
         console.error("Error cargando notificaciones:", err);
       } finally {
@@ -24,8 +55,9 @@ function Notificaciones({ user }) {
     fetchData();
   }, [user]);
 
+  // === EL RESTO DE TU CÓDIGO PERMANECE IGUAL ===
   const marcarComoLeidas = async () => {
-    await fetch(`http://localhost:4000/api/notificaciones/marcar_leidas/${user.id}`, {
+    await fetch(`http://localhost:3100/api/notificaciones/marcar_leidas/${user.id}`, {
       method: "PUT"
     });
 
