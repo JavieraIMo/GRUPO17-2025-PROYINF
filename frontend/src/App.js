@@ -23,6 +23,8 @@ import UserBasicLoanLogic from './Rols/User/Pages/Simulador_basico/Logica_simula
 import VerPerfil from './Rols/User/Pages/Perfil/verPerfil';
 import EditarPerfil from './Rols/User/Pages/Perfil/editarPerfil';
 
+import Notificaciones from './Rols/User/Pages/Notificaciones/Notificaciones';
+
 
 function App() {
   // Manejar éxito de login/registro

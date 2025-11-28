@@ -23,6 +23,21 @@ function HeaderUsuario({ user, setUser }) {
     navigate('/perfil'); // ✅ redirige correctamente
   };
 
+	// Calcular número de notificaciones no leídas de forma segura
+	const numNotificaciones = (() => {
+		try {
+			if (!user) return 0;
+			if (Array.isArray(user.notificaciones)) {
+				return user.notificaciones.filter(n => !n.leida).length;
+			}
+			if (typeof user.numNotificaciones === 'number') return user.numNotificaciones;
+			return 0;
+		} catch (err) {
+			console.error('[ALARA] Error contando notificaciones:', err);
+			return 0;
+		}
+	})();
+
 	return (
 		<header className="header">
 			<nav className="navbar">
@@ -48,12 +63,15 @@ function HeaderUsuario({ user, setUser }) {
 					</ul>
 					<div className="right-container">
 
-									<div className="nav-cta desktop-cta">
-										<button className="btn-profile">
-											<span className="profile-icon">👤</span>
-											Perfil
-										</button>
-									</div>
+									
+
+									<button className="noti-icon" onClick={() => navigate("/notificaciones") } aria-label="Notificaciones">
+										<span className="bell-icon" aria-hidden="true">🔔</span>
+										{numNotificaciones > 0 && (
+											<span className="badge">{numNotificaciones}</span>
+										)}
+									</button>
+
 						<button className="hamburger-btn" onClick={toggleMenu}>
 							<span className="hamburger-line"></span>
 							<span className="hamburger-line"></span>

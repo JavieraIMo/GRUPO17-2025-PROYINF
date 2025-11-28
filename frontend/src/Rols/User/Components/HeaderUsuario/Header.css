@@ -1,1 +1,51 @@
-/* ...existing code... */
+/* Header usuario - estilos adicionales para icono de notificaciones */
+
+.noti-icon {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	border-radius: 8px;
+	transition: background-color 0.15s ease;
+}
+
+.noti-icon:hover {
+	background: rgba(37, 99, 235, 0.06);
+}
+
+.bell-icon {
+	font-size: 1.1rem;
+	line-height: 1;
+}
+
+.badge {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 5px;
+	background: #ef4444;
+	color: white;
+	font-size: 0.75rem;
+	font-weight: 700;
+	border-radius: 999px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.dot {
+	width: 10px;
+	height: 10px;
+	background: #ef4444;
+	border-radius: 50%;
+}
+
+/* Keep rest of user header styles intact below this line if present */
