@@ -63,7 +63,11 @@ function HeaderUsuario({ user, setUser }) {
 					</ul>
 					<div className="right-container">
 
-									
+
+									<button className="config-icon" onClick={() => navigate("/configuracion")} aria-label="Configuración">
+									<span className="gear-icon" aria-hidden="true">⚙️</span>
+									</button>
+
 
 									<button className="noti-icon" onClick={() => navigate("/notificaciones") } aria-label="Notificaciones">
 										<span className="bell-icon" aria-hidden="true">🔔</span>
