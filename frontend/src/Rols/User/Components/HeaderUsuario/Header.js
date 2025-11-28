@@ -47,9 +47,7 @@ function HeaderUsuario({ user, setUser }) {
 						<li className="nav-item"><Link to="/historial" className="nav-link">Historial</Link></li>
 					</ul>
 					<div className="right-container">
-						<div className="user-greeting desktop-cta">
-							<span className="user-name">Hola, {user?.firstName}</span>
-						</div>
+
 									<div className="nav-cta desktop-cta">
 										<button className="btn-profile">
 											<span className="profile-icon">👤</span>
