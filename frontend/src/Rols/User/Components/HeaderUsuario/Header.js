@@ -57,7 +57,7 @@ function HeaderUsuario({ user, setUser }) {
 					</div>
 					<ul className="nav-menu desktop-menu">
 						<li className="nav-item"><Link to="/" className="nav-link">Inicio</Link></li>
-						<li className="nav-item"><Link to="/simulador" className="nav-link">Simulador</Link></li>
+						{/* <li className="nav-item"><Link to="/simulador" className="nav-link">Simulador</Link></li> */}
 						<li className="nav-item"><Link to="/simulador-avanzado" className="nav-link">Simulador Avanzado</Link></li>
 						<li className="nav-item"><Link to="/historial" className="nav-link">Historial</Link></li>
 					</ul>
@@ -86,7 +86,7 @@ function HeaderUsuario({ user, setUser }) {
 					</div>
 					<ul className="side-menu-items">
 						<li className="side-menu-item"><Link to="/" className="side-menu-link" onClick={closeMenu}>Inicio</Link></li>
-						<li className="side-menu-item"><Link to="/simulador" className="side-menu-link" onClick={closeMenu}>Simulador</Link></li>
+						{/* <li className="side-menu-item"><Link to="/simulador" className="side-menu-link" onClick={closeMenu}>Simulador</Link></li> */}
 						<li className="side-menu-item"><Link to="/simulador-avanzado" className="side-menu-link" onClick={closeMenu}>Simulador Avanzado</Link></li>
 						<li className="side-menu-item"><Link to="/historial" className="side-menu-link" onClick={closeMenu}>Historial</Link></li>
 									<li className="side-menu-item">

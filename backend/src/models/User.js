@@ -16,6 +16,7 @@ class User {
         this.password_hash = data.password_hash;
         this.fecha_registro = data.fecha_registro;
         this.activo = data.activo;
+        this.claveunica_verificada = data.claveunica_verificada || false;
     }
 
     // ==========================================
@@ -27,16 +28,19 @@ class User {
      */
     static async create(userData) {
         try {
+            // 1. Si existe una cuenta con ese RUT y claveunica_verificada=true, rechazar
+            const check = await db.query('SELECT 1 FROM clientes WHERE rut = $1 AND claveunica_verificada = true AND activo = true', [userData.rut]);
+            if (check.rows.length > 0) {
+                throw new Error('Ya existe una cuenta verificada con este RUT. No es posible crear otra.');
+            }
             // Encriptar contraseña
             const saltRounds = 10;
             const password_hash = await bcrypt.hash(userData.password, saltRounds);
-
             const query = `
                 INSERT INTO clientes (rut, nombre_completo, email, telefono, password_hash)
                 VALUES ($1, $2, $3, $4, $5)
-                RETURNING id, rut, nombre_completo, email, telefono, fecha_registro, activo
+                RETURNING id, rut, nombre_completo, email, telefono, fecha_registro, activo, claveunica_verificada
             `;
-
             const values = [
                 userData.rut,
                 userData.nombre_completo,
@@ -44,12 +48,26 @@ class User {
                 userData.telefono || null,
                 password_hash
             ];
-
             const result = await db.query(query, values);
             return new User(result.rows[0]);
-            
         } catch (error) {
             throw new Error(`Error creating user: ${error.message}`);
+        }
+    }
+
+    /**
+     * Marcar cuenta como verificada con ClaveÚnica y eliminar/desactivar duplicados
+     */
+    async verificarClaveUnicaYLimpiarDuplicados() {
+        try {
+            // Marcar esta cuenta como verificada
+            await db.query('UPDATE clientes SET claveunica_verificada = true WHERE id = $1', [this.id]);
+            this.claveunica_verificada = true;
+            // Desactivar todas las demás cuentas con el mismo RUT (excepto esta)
+            await db.query('UPDATE clientes SET activo = false WHERE rut = $1 AND id <> $2', [this.rut, this.id]);
+            return true;
+        } catch (error) {
+            throw new Error(`Error al verificar ClaveÚnica y limpiar duplicados: ${error.message}`);
         }
     }
 

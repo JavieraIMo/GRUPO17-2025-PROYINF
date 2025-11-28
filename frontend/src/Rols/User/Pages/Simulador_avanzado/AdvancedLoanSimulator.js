@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DatosScoringForm from './DatosScoringForm';
 import { useNavigate } from 'react-router-dom';
 import './AdvancedLoanSimulator.css';
 
@@ -44,20 +45,78 @@ const AdvancedLoanSimulator = ({ user }) => {
   const [monto, setMonto] = useState(MIN_AMOUNT);
   const [plazo, setPlazo] = useState(COMMON_TERMS[0]);
   const [resultados, setResultados] = useState(null);
+  const [showScoringForm, setShowScoringForm] = useState(false);
+  const [scoringResult, setScoringResult] = useState(null);
+  const [scoringLoading, setScoringLoading] = useState(false);
+  const [scoringError, setScoringError] = useState('');
 
   const handleSimulate = (e) => {
     e.preventDefault();
-    const tipoObj = LOAN_TYPES.find(t => t.value === tipo);
-    let plazoNum = usarPlazoManual ? Number(plazoManual) : Number(plazo);
-    if (tipoObj && monto > 0 && plazoNum >= 6 && plazoNum <= 360) {
-      const { cuota, tabla } = calculateAmortization(monto, plazoNum, tipoObj.rate);
-      setResultados({ cuota, tabla, tasa: tipoObj.rate });
-      // Guardado automático al simular
-      if (user) {
-        handleGuardarSimulacion({ tipo, monto, plazo: plazoNum, tasa: tipoObj.rate, cuota, tabla });
+    setShowScoringForm(true);
+  };
+
+  // Lógica para consumir el endpoint de scoring
+  // --- FUNCIÓN REEMPLAZADA SEGÚN INSTRUCCIÓN ---
+  const handleScoringSubmit = async (scoringData) => {
+    setScoringLoading(true);
+    setScoringError('');
+    setScoringResult(null);
+
+    try {
+      // Mapeo correcto a los nombres que usa scoringController.js
+      const payload = {
+        dicom: scoringData.dicom,                        // boolean
+        pensionAlimenticia: scoringData.pensionAlimenticia, // boolean
+        ingresos: scoringData.ingresos,                  // number
+        historial: scoringData.historial,                // string
+        antiguedad: scoringData.antiguedad,              // number
+        endeudamiento: scoringData.endeudamiento,        // number
+        montoSolicitado: monto                           // number
+      };
+
+      console.log("[ALARA] Payload enviado al backend:", payload);
+
+      const res = await fetch('http://localhost:3100/api/scoring', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(user?.token ? { 'Authorization': `Bearer ${user.token}` } : {})
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      console.log("[ALARA] Respuesta del backend:", data);
+
+      if (data.ok) {
+        setScoringResult(data);
+
+        let tasaAjustada = LOAN_TYPES.find(t => t.value === tipo)?.rate || 0.12;
+        let plazoNum = usarPlazoManual ? Number(plazoManual) : Number(plazo);
+
+        if (data.estado === 'aprobado') {
+          // tasa normal
+        } else if (data.estado === 'condicionado') {
+          tasaAjustada *= 1.2;      // +20% tasa
+          plazoNum = Math.min(plazoNum, 24);
+        } else {
+          // rechazado → no simula cuotas
+          setResultados(null);
+          return;
+        }
+
+        const { cuota, tabla } = calculateAmortization(monto, plazoNum, tasaAjustada);
+        setResultados({ cuota, tabla, tasa: tasaAjustada, plazoNum });
+
+      } else {
+        setScoringError(data.error || 'No se pudo calcular el scoring.');
       }
-    } else if (plazoNum < 6) {
-      setPlazoError('No es posible el cálculo con menos de 6 meses de plazo.');
+
+    } catch (err) {
+      console.error(err);
+      setScoringError('Error de conexión al calcular scoring.');
+    } finally {
+      setScoringLoading(false);
     }
   };
 
@@ -97,94 +156,143 @@ const AdvancedLoanSimulator = ({ user }) => {
   return (
     <div className="advanced-simulator">
       <h2>Simulador Avanzado de Préstamos</h2>
-      <form className="sim-form" onSubmit={handleSimulate}>
-        <label>Tipo de préstamo:</label>
-        <select value={tipo} onChange={e => setTipo(e.target.value)}>
-          {LOAN_TYPES.map(t => (
-            <option key={t.value} value={t.value}>{t.label}</option>
-          ))}
-        </select>
-        <label>Monto (CLP):</label>
-        <input
-          type="range"
-          min={MIN_AMOUNT}
-          max={MAX_AMOUNT}
-          step={10000}
-          value={monto}
-          onChange={e => setMonto(Number(e.target.value))}
-          style={{marginBottom: '8px'}}
-        />
-        <input
-          type="number"
-          min={MIN_AMOUNT}
-          max={MAX_AMOUNT}
-          step={10000}
-          value={monto}
-          onChange={e => {
-            let val = Number(e.target.value);
-            if (val < MIN_AMOUNT) val = MIN_AMOUNT;
-            if (val > MAX_AMOUNT) val = MAX_AMOUNT;
-            setMonto(val);
-          }}
-          style={{width: '100%', marginBottom: '4px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '1rem'}}
-        />
-        <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem', color: '#6b7280', marginTop: '2px'}}>
-          <span>Mín: {formatCLP(MIN_AMOUNT)}</span>
-          <span>Máx: {formatCLP(MAX_AMOUNT)}</span>
-        </div>
-        <div style={{marginTop: '8px', fontWeight: 'bold', color: '#001763', fontSize: '1.1rem'}}>Monto seleccionado: {formatCLP(monto)}</div>
-        <label>Plazo (meses): <span style={{color:'#6b7280',fontWeight:400}}>(entre 6 y 360 meses)</span></label>
-        <select
-          value={usarPlazoManual ? 'otro' : plazo}
-          onChange={e => {
-            if (e.target.value === 'otro') {
-              setUsarPlazoManual(true);
-              setPlazoManual('');
-              setPlazoError('');
-            } else {
-              setUsarPlazoManual(false);
-              setPlazo(Number(e.target.value));
-              setPlazoError('');
-            }
-          }}
-          style={{width: '100%', marginBottom: '8px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '1rem'}}
-        >
-          {COMMON_TERMS.map(t => <option key={t} value={t}>{t} meses</option>)}
-          <option value="otro">Otro</option>
-        </select>
-        {usarPlazoManual && (
+      {!showScoringForm && (
+        <form className="sim-form" onSubmit={handleSimulate}>
+          <label>Tipo de préstamo:</label>
+          <select value={tipo} onChange={e => setTipo(e.target.value)}>
+            {LOAN_TYPES.map(t => (
+              <option key={t.value} value={t.value}>{t.label}</option>
+            ))}
+          </select>
+          <label>Monto (CLP):</label>
+          <input
+            type="range"
+            min={MIN_AMOUNT}
+            max={MAX_AMOUNT}
+            step={10000}
+            value={monto}
+            onChange={e => setMonto(Number(e.target.value))}
+            style={{marginBottom: '8px'}}
+          />
           <input
             type="number"
-            min={6}
-            max={360}
-            value={plazoManual}
-            placeholder="Escribe el plazo (6-360)"
+            min={MIN_AMOUNT}
+            max={MAX_AMOUNT}
+            step={10000}
+            value={monto}
             onChange={e => {
-              const val = e.target.value;
-              setPlazoManual(val);
-              if (val !== '' && Number(val) < 6) {
-                setPlazoError('No es posible el cálculo con menos de 6 meses de plazo.');
+              let val = Number(e.target.value);
+              if (val < MIN_AMOUNT) val = MIN_AMOUNT;
+              if (val > MAX_AMOUNT) val = MAX_AMOUNT;
+              setMonto(val);
+            }}
+            style={{width: '100%', marginBottom: '4px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '1rem'}}
+          />
+          <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem', color: '#6b7280', marginTop: '2px'}}>
+            <span>Mín: {formatCLP(MIN_AMOUNT)}</span>
+            <span>Máx: {formatCLP(MAX_AMOUNT)}</span>
+          </div>
+          <div style={{marginTop: '8px', fontWeight: 'bold', color: '#001763', fontSize: '1.1rem'}}>Monto seleccionado: {formatCLP(monto)}</div>
+          <label>Plazo (meses): <span style={{color:'#6b7280',fontWeight:400}}>(entre 6 y 360 meses)</span></label>
+          <select
+            value={usarPlazoManual ? 'otro' : plazo}
+            onChange={e => {
+              if (e.target.value === 'otro') {
+                setUsarPlazoManual(true);
+                setPlazoManual('');
+                setPlazoError('');
               } else {
+                setUsarPlazoManual(false);
+                setPlazo(Number(e.target.value));
                 setPlazoError('');
               }
             }}
             style={{width: '100%', marginBottom: '8px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '1rem'}}
-          />
-        )}
-        {plazoError && (
-          <div style={{color:'#b91c1c',fontWeight:500,marginBottom:'8px'}}>{plazoError}</div>
-        )}
-        <datalist id="plazo-sugerencias">
-          {COMMON_TERMS.map(t => <option key={t} value={t} />)}
-        </datalist>
-        <button type="submit" style={{width: '100%', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.7rem 0', fontWeight: 700, fontSize: '1.08rem', cursor: 'pointer', marginTop: '8px'}}>Simular</button>
-      </form>
-      {resultados && (
+          >
+            {COMMON_TERMS.map(t => <option key={t} value={t}>{t} meses</option>)}
+            <option value="otro">Otro</option>
+          </select>
+          {usarPlazoManual && (
+            <input
+              type="number"
+              min={6}
+              max={360}
+              value={plazoManual}
+              placeholder="Escribe el plazo (6-360)"
+              onChange={e => {
+                const val = e.target.value;
+                setPlazoManual(val);
+                if (val !== '' && Number(val) < 6) {
+                  setPlazoError('No es posible el cálculo con menos de 6 meses de plazo.');
+                } else {
+                  setPlazoError('');
+                }
+              }}
+              style={{width: '100%', marginBottom: '8px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '1rem'}}
+            />
+          )}
+          {plazoError && (
+            <div style={{color:'#b91c1c',fontWeight:500,marginBottom:'8px'}}>{plazoError}</div>
+          )}
+          <datalist id="plazo-sugerencias">
+            {COMMON_TERMS.map(t => <option key={t} value={t} />)}
+          </datalist>
+          <button type="submit" style={{width: '100%', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.7rem 0', fontWeight: 700, fontSize: '1.08rem', cursor: 'pointer', marginTop: '8px'}}>Simular</button>
+        </form>
+      )}
+      {showScoringForm && !scoringResult && (
+        <DatosScoringForm onSubmit={handleScoringSubmit} loading={scoringLoading} />
+      )}
+      {scoringError && <div style={{color:'#b91c1c',margin:'1rem 0',fontWeight:500}}>{scoringError}</div>}
+      {scoringResult && (
+        <div className="scoring-result" style={{background:'#f3f4f6',padding:'1.5rem',borderRadius:12,margin:'1.5rem 0',display:'flex',gap:'2rem',flexWrap:'wrap'}}>
+          <div style={{flex:'1 1 320px'}}>
+            <h3>Resultado de Scoring</h3>
+            <p><b>Tu puntaje crediticio:</b> <span style={{fontSize:'1.5rem',color:'#2563eb'}}>{scoringResult.scoring}</span> / 100</p>
+            <ul style={{margin:'1rem 0 0 0',padding:0,listStyle:'none'}}>
+              <li>DICOM: <b>{scoringResult.breakdown.scoreDICOM} / 30</b></li>
+              <li>Pensión alimenticia: <b>{scoringResult.breakdown.scorePension} / 15</b></li>
+              <li>Ingresos: <b>{scoringResult.breakdown.scoreIngresos} / 20</b></li>
+              <li>Historial: <b>{scoringResult.breakdown.scoreHistorial} / 20</b></li>
+              <li>Antigüedad: <b>{scoringResult.breakdown.scoreAntiguedad} / 10</b></li>
+              <li>Endeudamiento: <b>{scoringResult.breakdown.scoreEndeudamiento} / 5</b></li>
+            </ul>
+            <div style={{margin:'1rem 0',fontWeight:600,fontSize:'1.1rem'}}>
+              {scoringResult.estado === 'aprobado' && (
+                <span style={{color:'#059669'}}>¡Aprobado! Puedes continuar con la solicitud formal.</span>
+              )}
+              {scoringResult.estado === 'condicionado' && (
+                <span style={{color:'#eab308'}}>Condicionado. Un ejecutivo revisará tu caso y podría requerir más antecedentes.</span>
+              )}
+              {scoringResult.estado === 'rechazado' && (
+                <span style={{color:'#b91c1c'}}>Rechazado. No cumples con el mínimo requerido para este monto.</span>
+              )}
+            </div>
+          </div>
+          {/* Resumen de datos ingresados */}
+          <div style={{flex:'1 1 260px',background:'#fff',borderRadius:10,padding:'1rem',boxShadow:'0 2px 8px #0001',minWidth:220}}>
+            <h4 style={{marginTop:0,marginBottom:'0.7rem',color:'#001763'}}>Datos ingresados</h4>
+            <ul style={{listStyle:'none',padding:0,margin:0,fontSize:'1rem'}}>
+              <li><b>DICOM:</b> {scoringResult.dicom !== undefined ? (scoringResult.dicom ? 'Sí' : 'No') : '-'}</li>
+              <li><b>Pensión alimenticia:</b> {scoringResult.pensionAlimenticia !== undefined ? (scoringResult.pensionAlimenticia ? 'Sí' : 'No') : '-'}</li>
+              <li><b>Ingresos:</b> {scoringResult.ingresos !== undefined ? scoringResult.ingresos.toLocaleString('es-CL') : '-'}</li>
+              <li><b>Historial:</b> {scoringResult.historial || '-'}</li>
+              <li><b>Antigüedad:</b> {scoringResult.antiguedad !== undefined ? scoringResult.antiguedad + ' años' : '-'}</li>
+              <li><b>Endeudamiento:</b> {scoringResult.endeudamiento !== undefined ? scoringResult.endeudamiento + '%' : '-'}</li>
+              <li><b>Monto solicitado:</b> {scoringResult.monto !== undefined ? scoringResult.monto.toLocaleString('es-CL') : '-'}</li>
+            </ul>
+          </div>
+        </div>
+      )}
+      {resultados && scoringResult && scoringResult.estado !== 'rechazado' && (
         <div className="sim-results">
           <h3>Resultados</h3>
-          <p><strong>Plazo simulado:</strong> {usarPlazoManual ? plazoManual : plazo} meses</p>
+          <p><strong>Plazo simulado:</strong> {resultados.plazoNum || (usarPlazoManual ? plazoManual : plazo)} meses</p>
           <p><strong>Cuota mensual:</strong> {typeof resultados.cuota === 'number' ? formatCLP(resultados.cuota) : JSON.stringify(resultados.cuota)}</p>
           <p><strong>Tasa anual:</strong> {typeof resultados.tasa === 'number' ? (resultados.tasa * 100).toFixed(2) + '%' : JSON.stringify(resultados.tasa)}</p>
+          {scoringResult.estado === 'condicionado' && (
+            <div style={{color:'#eab308',fontWeight:500,marginBottom:'8px'}}>Por política de riesgo, el plazo máximo sugerido es 24 meses y la tasa es mayor.</div>
+          )}
           <h4>Tabla de Amortización (12 meses)</h4>
           <table>
             <thead>

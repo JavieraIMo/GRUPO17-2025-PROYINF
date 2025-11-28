@@ -23,7 +23,8 @@ import UserBasicLoanLogic from './Rols/User/Pages/Simulador_basico/Logica_simula
 import VerPerfil from './Rols/User/Pages/Perfil/verPerfil';
 import EditarPerfil from './Rols/User/Pages/Perfil/editarPerfil';
 
-import Notificaciones from './Rols/User/Pages/Notificaciones/Notificaciones';
+
+import PostulacionForm from './Rols/User/Pages/PostulacionForm';
 
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
             <Route path="/logica-simulador" element={user ? <LoanLogic /> : <BasicLoanLogic />} />
             <Route path="/logica-simulador-basico" element={user ? <UserBasicLoanLogic /> : <BasicLoanLogic />} />
             <Route path="/historial" element={user ? <HistorialSimulaciones user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
+            <Route path="/postulacion" element={user ? <PostulacionForm user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>
         </main>
