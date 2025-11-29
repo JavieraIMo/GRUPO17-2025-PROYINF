@@ -46,18 +46,21 @@ const LoanSimulator = () => {
     if (withScoring) {
       setShowScoringForm(true);
     } else {
-      // Simulación simple: guardar directo
-      handleSaveSimulacion(null);
+      // Simulación simple: guardar directo, asegurando que result esté actualizado
+      // Llamar a handleSaveSimulacion después de setResult puede causar que result esté desactualizado,
+      // así que pasamos el resultado directamente
+      handleSaveSimulacion(null, res);
     }
   };
 
-  const handleSaveSimulacion = async (scoringManual) => {
+  const handleSaveSimulacion = async (scoringManual, resArg) => {
+    const resToUse = resArg || result;
     const payload = {
       tipo: 'PERSONAL',
       monto: amount,
       plazo: term,
       tasa: ANNUAL_RATE,
-      cuota: result ? result.monthlyPayment : null,
+      cuota: resToUse ? resToUse.monthlyPayment : null,
       tabla: [],
       scoring_detalle: scoringManual || null
     };

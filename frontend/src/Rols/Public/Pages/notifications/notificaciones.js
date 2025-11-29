@@ -62,7 +62,7 @@ function Notificaciones({ user }) {
     });
 
     setNotificaciones(prev =>
-      prev.map(n => ({ ...n, leida: true }))
+      (Array.isArray(prev) ? prev : []).map(n => ({ ...n, leida: true }))
     );
   };
 
@@ -77,11 +77,11 @@ function Notificaciones({ user }) {
         Marcar todas como leídas
       </button>
 
-      {notificaciones.length === 0 ? (
+      {Array.isArray(notificaciones) && notificaciones.length === 0 ? (
         <p>No tienes notificaciones</p>
       ) : (
         <ul className="notif-list">
-          {notificaciones.map((n) => (
+          {(Array.isArray(notificaciones) ? notificaciones : []).map((n) => (
             <li key={n.id} className={`notif-item ${n.leida ? "leida" : "no-leida"}`}>
               <h4>{n.titulo}</h4>
               <p>{n.mensaje}</p>

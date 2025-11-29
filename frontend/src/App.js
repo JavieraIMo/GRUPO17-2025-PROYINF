@@ -9,6 +9,7 @@ import LoanSimulator from './Rols/Public/Pages/Simulador_Basico/LoanSimulator';
 import BasicLoanLogic from './Rols/Public/Pages/Simulador_Basico/Logica_de_simulacion/BasicLoanLogic';
 import HeaderPublico from './Rols/Public/Components/HeaderPublico/Header';
 import FooterPublico from './Rols/Public/Components/Footer/Footer';
+import Notificaciones from './Rols/User/Pages/Notificaciones/Notificaciones';
 import Login from './Rols/Public/Components/Registro_Login/Login/Login';
 import Register from './Rols/Public/Components/Registro_Login/Registro/Register';
 // Usuario logeado
