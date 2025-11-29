@@ -30,18 +30,65 @@ const LoanSimulator = () => {
   const [amount, setAmount] = useState(MIN_AMOUNT);
   const [term, setTerm] = useState(TERMS[0]);
   const [result, setResult] = useState(null);
+  const [withScoring, setWithScoring] = useState(false);
+  const [showScoringForm, setShowScoringForm] = useState(false);
+  const [scoring, setScoring] = useState({
+    endeudamiento: '',
+    dicom: '',
+    pensionAlimenticia: ''
+  });
 
   const handleSimulate = (e) => {
     e.preventDefault();
     if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) return;
     const res = calculateLoan(amount, term);
     setResult(res);
+    if (withScoring) {
+      setShowScoringForm(true);
+    } else {
+      // Simulación simple: guardar directo
+      handleSaveSimulacion(null);
+    }
+  };
+
+  const handleSaveSimulacion = async (scoringManual) => {
+    const payload = {
+      tipo: 'PERSONAL',
+      monto: amount,
+      plazo: term,
+      tasa: ANNUAL_RATE,
+      cuota: result ? result.monthlyPayment : null,
+      tabla: [],
+      scoring_detalle: scoringManual || null
+    };
+    try {
+      await fetch('/api/simulaciones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      navigate('/usuario/historial_simulaciones');
+    } catch (err) {
+      console.error('Error al guardar simulación', err);
+    }
   };
 
   return (
     <div className="loan-simulator">
       <h2>Simulador de Préstamos</h2>
       <form onSubmit={handleSimulate}>
+        <div style={{marginBottom: '18px', display: 'flex', alignItems: 'center', gap: '10px'}}>
+          <input
+            type="checkbox"
+            id="withScoringCheckbox"
+            checked={withScoring}
+            onChange={e => setWithScoring(e.target.checked)}
+            style={{width: '18px', height: '18px', accentColor: '#2563eb'}}
+          />
+          <label htmlFor="withScoringCheckbox" style={{fontSize: '1.08rem', fontWeight: 500, cursor: 'pointer', color: '#001763', margin: 0}}>
+            Simular con scoring avanzado
+          </label>
+        </div>
         <div>
           <label>Monto (CLP):</label>
           <input
@@ -81,6 +128,47 @@ const LoanSimulator = () => {
         </div>
         <button type="submit" style={{width: '100%', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.7rem 0', fontWeight: 700, fontSize: '1.08rem', cursor: 'pointer', marginTop: '8px'}}>Simular</button>
       </form>
+      {showScoringForm && (
+        <div style={{marginTop: '18px', border: '1px solid #d1d5db', borderRadius: '8px', padding: '16px', background: '#f9fafb'}}>
+          <h4 style={{margin: 0, marginBottom: '8px'}}>Datos para scoring</h4>
+          <div style={{marginBottom: '8px'}}>
+            <label>Endeudamiento (%): </label>
+            <input
+              type="number"
+              min={0}
+              max={100}
+              value={scoring.endeudamiento}
+              onChange={e => setScoring(s => ({...s, endeudamiento: e.target.value}))}
+              style={{width: '60px', marginLeft: '8px'}}
+            />
+          </div>
+          <div style={{marginBottom: '8px'}}>
+            <label>DICOM: </label>
+            <select
+              value={scoring.dicom}
+              onChange={e => setScoring(s => ({...s, dicom: e.target.value}))}
+              style={{marginLeft: '8px'}}
+            >
+              <option value="">Seleccione</option>
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div style={{marginBottom: '8px'}}>
+            <label>Pensión alimenticia: </label>
+            <select
+              value={scoring.pensionAlimenticia}
+              onChange={e => setScoring(s => ({...s, pensionAlimenticia: e.target.value}))}
+              style={{marginLeft: '8px'}}
+            >
+              <option value="">Seleccione</option>
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <button onClick={() => { handleSaveSimulacion(scoring); }} style={{marginTop:'10px', background:'#3b82f6', color:'#fff', border:'none', borderRadius:'6px', padding:'0.7rem 1.2rem', fontWeight:700, fontSize:'1.08rem', cursor:'pointer'}}>Guardar simulación con scoring</button>
+        </div>
+      )}
       <div style={{textAlign: 'center', marginTop: '10px'}}>
         <a href="/logica-simulador-basico" style={{color: '#001763', textDecoration: 'underline', fontWeight: 500}}>
           Ver cómo se calcula la cuota

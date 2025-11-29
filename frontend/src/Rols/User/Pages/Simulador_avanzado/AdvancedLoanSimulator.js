@@ -46,13 +46,23 @@ const AdvancedLoanSimulator = ({ user }) => {
   const [plazo, setPlazo] = useState(COMMON_TERMS[0]);
   const [resultados, setResultados] = useState(null);
   const [showScoringForm, setShowScoringForm] = useState(false);
+  const [withScoring, setWithScoring] = useState(false);
   const [scoringResult, setScoringResult] = useState(null);
   const [scoringLoading, setScoringLoading] = useState(false);
   const [scoringError, setScoringError] = useState('');
 
   const handleSimulate = (e) => {
     e.preventDefault();
-    setShowScoringForm(true);
+    if (withScoring) {
+      setShowScoringForm(true);
+    } else {
+      // Simulación sin scoring: calcular y mostrar resultados directamente
+      let tasa = LOAN_TYPES.find(t => t.value === tipo)?.rate || 0.12;
+      let plazoNum = usarPlazoManual ? Number(plazoManual) : Number(plazo);
+      const { cuota, tabla } = calculateAmortization(monto, plazoNum, tasa);
+      setResultados({ cuota, tabla, tasa, plazoNum });
+      setShowScoringForm(false);
+    }
   };
 
   // Lógica para consumir el endpoint de scoring
@@ -158,6 +168,17 @@ const AdvancedLoanSimulator = ({ user }) => {
       <h2>Simulador Avanzado de Préstamos</h2>
       {!showScoringForm && (
         <form className="sim-form" onSubmit={handleSimulate}>
+          <div style={{marginBottom: '18px'}}>
+            <label>
+              <input
+                type="checkbox"
+                checked={withScoring}
+                onChange={e => setWithScoring(e.target.checked)}
+                style={{marginRight: '8px'}}
+              />
+              Agregar scoring a la simulación
+            </label>
+          </div>
           <label>Tipo de préstamo:</label>
           <select value={tipo} onChange={e => setTipo(e.target.value)}>
             {LOAN_TYPES.map(t => (

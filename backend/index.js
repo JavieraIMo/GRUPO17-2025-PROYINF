@@ -17,6 +17,10 @@ const scoringRoutes = require('./src/routes/scoring');
 const app = express();
 const port = process.env.PORT || 3100;
 
+// Endpoint raíz para ver estado del API
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'API ALARA funcionando' });
+});
 // =====================================================
 // MIDDLEWARES GLOBALES
 // =====================================================

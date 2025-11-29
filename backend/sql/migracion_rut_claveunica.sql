@@ -7,3 +7,6 @@ ALTER TABLE clientes ADD COLUMN IF NOT EXISTS claveunica_verificada BOOLEAN DEFA
 
 -- 3. (Opcional) Crear índice para búsquedas rápidas por rut y verificación
 CREATE INDEX IF NOT EXISTS idx_clientes_rut_verificada ON clientes(rut, claveunica_verificada);
+
+-- 4. Agregar columna para guardar detalle de scoring en simulaciones avanzadas
+ALTER TABLE simulaciones ADD COLUMN IF NOT EXISTS scoring_detalle JSONB;

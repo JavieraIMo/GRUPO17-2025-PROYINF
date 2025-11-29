@@ -1,0 +1,2 @@
+-- MIGRACIÓN: Agregar columna scoring_detalle a simulaciones para guardar datos de scoring (puede ser NULL para simulaciones simples)
+ALTER TABLE simulaciones ADD COLUMN IF NOT EXISTS scoring_detalle JSONB NULL;

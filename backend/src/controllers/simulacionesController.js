@@ -41,7 +41,7 @@ const db = require('../../db');
 exports.guardarSimulacion = async (req, res) => {
   try {
     console.log('[ALARA][Backend] Recibido POST /api/simulaciones:', req.body);
-    const { tipo, monto, plazo, tasa, cuota, tabla } = req.body;
+    const { tipo, monto, plazo, tasa, cuota, tabla, scoring_detalle } = req.body;
     const cliente_id = req.user ? req.user.id : null;
     console.log('[ALARA][Backend] Usuario autenticado:', cliente_id);
     const tabla12 = Array.isArray(tabla) ? tabla.slice(0, 12) : [];
@@ -52,9 +52,9 @@ exports.guardarSimulacion = async (req, res) => {
       [cliente_id, tipo, monto, plazo, tasa]
     );
     await db.query(
-      `INSERT INTO simulaciones (cliente_id, monto_simulado, plazo_simulado, tasa_aplicada, cuota_calculada, tipo_prestamo, moneda_id, datos_adicionales)
-       VALUES ($1, $2, $3, $4, $5, $6, 1, $7)`,
-      [cliente_id, monto, plazo, tasa, cuota, tipo, JSON.stringify(tabla12)]
+      `INSERT INTO simulaciones (cliente_id, monto_simulado, plazo_simulado, tasa_aplicada, cuota_calculada, tipo_prestamo, moneda_id, datos_adicionales, scoring_detalle)
+       VALUES ($1, $2, $3, $4, $5, $6, 1, $7, $8)`,
+      [cliente_id, monto, plazo, tasa, cuota, tipo, JSON.stringify(tabla12), scoring_detalle ? JSON.stringify(scoring_detalle) : null]
     );
     res.status(201).json({ ok: true, mensaje: 'Simulación guardada correctamente' });
   } catch (error) {
