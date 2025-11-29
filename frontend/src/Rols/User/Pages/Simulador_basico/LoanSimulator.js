@@ -30,6 +30,7 @@ const LoanSimulator = () => {
   const [amount, setAmount] = useState(MIN_AMOUNT);
   const [term, setTerm] = useState(TERMS[0]);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
   const [withScoring, setWithScoring] = useState(false);
   const [showScoringForm, setShowScoringForm] = useState(false);
   const [scoring, setScoring] = useState({
@@ -40,15 +41,16 @@ const LoanSimulator = () => {
 
   const handleSimulate = (e) => {
     e.preventDefault();
-    if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) return;
+    setError("");
+    if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
+      setError("El monto debe estar entre " + MIN_AMOUNT + " y " + MAX_AMOUNT);
+      return;
+    }
     const res = calculateLoan(amount, term);
     setResult(res);
     if (withScoring) {
       setShowScoringForm(true);
     } else {
-      // Simulación simple: guardar directo, asegurando que result esté actualizado
-      // Llamar a handleSaveSimulacion después de setResult puede causar que result esté desactualizado,
-      // así que pasamos el resultado directamente
       handleSaveSimulacion(null, res);
     }
   };
@@ -65,13 +67,18 @@ const LoanSimulator = () => {
       scoring_detalle: scoringManual || null
     };
     try {
-      await fetch('/api/simulaciones', {
+      const response = await fetch('/api/simulaciones', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+      if (!response.ok) {
+        setError('Error al guardar simulación: ' + response.statusText);
+        return;
+      }
       navigate('/usuario/historial_simulaciones');
     } catch (err) {
+      setError('Error al guardar simulación: ' + err.message);
       console.error('Error al guardar simulación', err);
     }
   };
@@ -79,6 +86,7 @@ const LoanSimulator = () => {
   return (
     <div className="loan-simulator">
       <h2>Simulador de Préstamos</h2>
+      {error && <div style={{color: 'red', marginBottom: '10px'}}>{error}</div>}
       <form onSubmit={handleSimulate}>
         <div style={{marginBottom: '18px', display: 'flex', alignItems: 'center', gap: '10px'}}>
           <input

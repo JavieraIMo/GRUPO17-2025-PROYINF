@@ -10,12 +10,9 @@ const path = require('path');
 // Importar rutas MVC
 const authRoutes = require('./src/routes/authRoutes');
 const simulacionesRoutes = require('./src/routes/simulaciones');
-<<<<<<< HEAD
 const notificacionesRoutes = require('./src/routes/notificacionesRoutes');
-=======
 const solicitudRoutes = require('./src/routes/solicitud');
 const scoringRoutes = require('./src/routes/scoring');
->>>>>>> 25a4394f5f371ed7c1c10d0399ac3df86c25cce2
 
 // Inicializar aplicación Express
 const app = express();
@@ -71,12 +68,9 @@ app.get('/api/health', (req, res) => {
 // Rutas de autenticación (MVC)
 app.use('/api/auth', authRoutes);
 app.use('/api/simulaciones', simulacionesRoutes);
-<<<<<<< HEAD
 app.use('/api/notificaciones', notificacionesRoutes);
-=======
 app.use('/api/solicitud', solicitudRoutes);
 app.use('/api/scoring', scoringRoutes);
->>>>>>> 25a4394f5f371ed7c1c10d0399ac3df86c25cce2
 
 // Mantener las rutas legacy para compatibilidad con React
 const AuthController = require('./src/controllers/authController');

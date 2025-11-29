@@ -62,6 +62,31 @@ const AdvancedLoanSimulator = ({ user }) => {
       const { cuota, tabla } = calculateAmortization(monto, plazoNum, tasa);
       setResultados({ cuota, tabla, tasa, plazoNum });
       setShowScoringForm(false);
+
+      // Guardar simulación automáticamente en historial
+      if (user) {
+        const simData = {
+          tipo,
+          monto,
+          plazo: plazoNum,
+          tasa,
+          cuota,
+          tabla,
+          scoring_detalle: {
+            // Valores por defecto para simulación sin scoring
+            dicom: false,
+            pensionAlimenticia: false,
+            ingresos: 0,
+            historial: 'no scoring',
+            antiguedad: 0,
+            endeudamiento: 0,
+            estado: 'default',
+            scoring: null,
+            breakdown: null
+          }
+        };
+        handleGuardarSimulacion(simData);
+      }
     }
   };
 
@@ -98,6 +123,7 @@ const AdvancedLoanSimulator = ({ user }) => {
       const data = await res.json();
       console.log("[ALARA] Respuesta del backend:", data);
 
+
       if (data.ok) {
         setScoringResult(data);
 
@@ -117,6 +143,20 @@ const AdvancedLoanSimulator = ({ user }) => {
 
         const { cuota, tabla } = calculateAmortization(monto, plazoNum, tasaAjustada);
         setResultados({ cuota, tabla, tasa: tasaAjustada, plazoNum });
+
+        // Guardar simulación automáticamente en historial si user existe
+        if (user) {
+          const simData = {
+            tipo,
+            monto,
+            plazo: plazoNum,
+            tasa: tasaAjustada,
+            cuota,
+            tabla,
+            scoring_detalle: data
+          };
+          handleGuardarSimulacion(simData);
+        }
 
       } else {
         setScoringError(data.error || 'No se pudo calcular el scoring.');
@@ -305,13 +345,13 @@ const AdvancedLoanSimulator = ({ user }) => {
           </div>
         </div>
       )}
-      {resultados && scoringResult && scoringResult.estado !== 'rechazado' && (
+      {resultados && (!scoringResult || (scoringResult && scoringResult.estado !== 'rechazado')) && (
         <div className="sim-results">
           <h3>Resultados</h3>
           <p><strong>Plazo simulado:</strong> {resultados.plazoNum || (usarPlazoManual ? plazoManual : plazo)} meses</p>
           <p><strong>Cuota mensual:</strong> {typeof resultados.cuota === 'number' ? formatCLP(resultados.cuota) : JSON.stringify(resultados.cuota)}</p>
           <p><strong>Tasa anual:</strong> {typeof resultados.tasa === 'number' ? (resultados.tasa * 100).toFixed(2) + '%' : JSON.stringify(resultados.tasa)}</p>
-          {scoringResult.estado === 'condicionado' && (
+          {scoringResult && scoringResult.estado === 'condicionado' && (
             <div style={{color:'#eab308',fontWeight:500,marginBottom:'8px'}}>Por política de riesgo, el plazo máximo sugerido es 24 meses y la tasa es mayor.</div>
           )}
           <h4>Tabla de Amortización (12 meses)</h4>
