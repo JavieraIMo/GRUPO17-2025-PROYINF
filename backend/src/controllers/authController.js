@@ -5,6 +5,7 @@
 
 const User = require('../models/User');
 const { validateRut, validateEmail, validatePassword } = require('../utils/validators');
+const { createWelcomeNotification, welcomeNotificationExists } = require('../utils/notificationUtils');
 
 class AuthController {
     
@@ -86,6 +87,9 @@ class AuthController {
             const newUser = await User.create(userData);
             console.log('[REGISTER] Usuario creado:', newUser);
 
+            // 8.5. CREAR NOTIFICACIÓN DE BIENVENIDA
+            await createWelcomeNotification(newUser.id);
+
             // 9. GENERAR TOKEN JWT
             const { signToken } = require('../utils/jwt');
             const jwtToken = signToken({ id: newUser.id, email: newUser.email });
@@ -158,6 +162,12 @@ class AuthController {
                     success: false,
                     error: 'Credenciales inválidas'
                 });
+            }
+
+            // 3.5. CREAR NOTIFICACIÓN DE BIENVENIDA SI NO EXISTE (para usuarios antiguos)
+            const hasWelcome = await welcomeNotificationExists(user.id);
+            if (!hasWelcome) {
+                await createWelcomeNotification(user.id);
             }
 
             // 4. GENERAR TOKEN JWT

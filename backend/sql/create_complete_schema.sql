@@ -349,6 +349,23 @@ CREATE TRIGGER update_prestamos_fecha_actualizacion
     EXECUTE FUNCTION update_fecha_actualizacion();
 
 -- =====================================================
+-- TABLA DE NOTIFICACIONES
+-- =====================================================
+CREATE TABLE notificaciones (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER NOT NULL REFERENCES clientes(id) ON DELETE CASCADE,
+    titulo VARCHAR(255) NOT NULL,
+    mensaje TEXT NOT NULL,
+    fecha TIMESTAMPTZ DEFAULT NOW(),
+    leida BOOLEAN DEFAULT FALSE,
+    tipo VARCHAR(50) DEFAULT 'general'
+);
+
+-- Índices para optimizar búsquedas
+CREATE INDEX idx_notificaciones_usuario ON notificaciones(usuario_id);
+CREATE INDEX idx_notificaciones_fecha ON notificaciones(fecha);
+
+-- =====================================================
 -- COMENTARIOS PARA DOCUMENTACIÓN
 -- =====================================================
 
@@ -360,6 +377,7 @@ COMMENT ON TABLE evaluaciones_riesgo IS 'Resultados de evaluación de riesgo cre
 COMMENT ON TABLE prestamos IS 'Préstamos aprobados y activos';
 COMMENT ON TABLE cuotas IS 'Cronograma de pagos de cada préstamo';
 COMMENT ON TABLE pagos IS 'Registro de pagos realizados por clientes';
+COMMENT ON TABLE notificaciones IS 'Notificaciones para usuarios del sistema';
 
 COMMENT ON COLUMN clientes.rut IS 'RUT chileno formato: XX.XXX.XXX-X';
 COMMENT ON COLUMN clientes.password_hash IS 'Contraseña encriptada con bcrypt';
@@ -388,6 +406,6 @@ WHERE schemaname = 'public'
 AND tablename IN (
     'clientes', 'estados', 'monedas', 'dependientes', 
     'simulaciones', 'solicitudes', 'evaluaciones_riesgo', 
-    'score_riesgo', 'prestamos', 'desembolsos', 'cuotas', 'pagos'
+    'score_riesgo', 'prestamos', 'desembolsos', 'cuotas', 'pagos', 'notificaciones'
 )
 ORDER BY tablename;

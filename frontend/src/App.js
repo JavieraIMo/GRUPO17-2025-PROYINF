@@ -110,7 +110,12 @@ function App() {
             <Route path="/logica-simulador" element={user ? <LoanLogic /> : <BasicLoanLogic />} />
             <Route path="/logica-simulador-basico" element={user ? <UserBasicLoanLogic /> : <BasicLoanLogic />} />
             <Route path="/historial" element={user ? <HistorialSimulaciones user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
+<<<<<<< HEAD
+            <Route path="/notificaciones" element={user ? <Notificaciones user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
+            <Route path="/configuracion" element={user ? <Configuracion user={user} setUser={setUser} /> : <Login onSuccess={handleAuthSuccess} />} />
+=======
             <Route path="/postulacion" element={user ? <PostulacionForm user={user} /> : <Login onSuccess={handleAuthSuccess} />} />
+>>>>>>> 25a4394f5f371ed7c1c10d0399ac3df86c25cce2
             {/* Agrega más rutas si tienes más páginas */}
           </Routes>
         </main>
