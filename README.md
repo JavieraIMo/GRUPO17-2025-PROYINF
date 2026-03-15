@@ -7,7 +7,7 @@ Este es el repositorio del *Grupo 17*, cuyos integrantes son:
 * Antonia Salinas - Rol: 202330512-k
 * Javiera Ibaca Morales - Rol: 202273624-0
 * Emile Allue - Rol: 202273564-3
-* Alvaro Aceituno - Rol: 
+* Alvaro Aceituno - Rol: 202273520-1
 * **Tutor**: Miguel Belisario Huerta Flores
 
 ## Wiki
