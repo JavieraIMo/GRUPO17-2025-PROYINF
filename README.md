@@ -3,7 +3,7 @@
 > **Stack:** React + Node.js + PostgreSQL + Docker  
 > **Estado:** Sistema funcional con autenticación y simulación de préstamos
 
-Aplicación web de simulación de préstamos crediticios con interfaz bancaria profesional, desarrollada por el **Grupo 17** de la UTFSM.
+Aplicación web de simulación de préstamos crediticios con interfaz bancaria profesional, desarrollada por el **Grupo 7** de la UTFSM.
 
 ## 👥 Equipo de Desarrollo
 
