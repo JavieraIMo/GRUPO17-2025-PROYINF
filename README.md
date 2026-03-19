@@ -6,6 +6,8 @@ Este es el repositorio del *Grupo 17*, cuyos integrantes son:
 * Fernanda López - Rol: 202373638-4
 * Antonia Salinas - Rol: 202330512-k
 * Javiera Ibaca Morales - Rol: 202273624-0
+* Emile Allue - Rol: 202273564-3
+* Alvaro Aceituno - Rol: 202273520-1
 * **Tutor**: Miguel Belisario Huerta Flores
 
 ## Wiki
@@ -74,24 +76,6 @@ GRUPO17-2025-PROYINF/
                 ├── Home.js        # Página principal con hero
                 └── Home.css       # Estilos de la página principal
 ```
-
-## Componentes Desarrollados
-
-### 🎯 **Header (components/Header.js)**
-- Navegación principal con logo ALARA
-- Menú hamburguesa responsive posicionado a la derecha
-- Navegación centrada en desktop
-- Estilos profesionales con identidad corporativa
-
-### 🏠 **Home (pages/Home.js)**
-- Página de bienvenida al simulador
-- Hero section con call-to-action
-- Diseño responsive y moderno
-
-### 🐳 **Arquitectura Docker**
-- Contenedores separados para frontend, backend y base de datos
-- Hot-reload configurado para desarrollo
-- Scripts de automatización para inicio rápido
 
 ## Tecnologías Utilizadas
 
