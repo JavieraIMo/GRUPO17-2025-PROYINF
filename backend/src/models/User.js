@@ -7,6 +7,18 @@ const db = require('../../db');
 const bcrypt = require('bcrypt');
 
 class User {
+        /**
+         * Obtener todos los usuarios activos
+         */
+        static async getAllActive() {
+            try {
+                const query = 'SELECT * FROM clientes WHERE activo = true';
+                const result = await db.query(query);
+                return result.rows.map(row => new User(row));
+            } catch (error) {
+                throw new Error(`Error getting all users: ${error.message}`);
+            }
+        }
     constructor(data) {
         this.id = data.id;
         this.rut = data.rut;
