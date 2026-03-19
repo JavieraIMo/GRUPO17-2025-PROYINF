@@ -40,12 +40,12 @@ La plataforma ofrece una interfaz profesional similar a las páginas bancarias r
 
 ## Características Principales
 
-🏦 **Interfaz Bancaria Profesional** - Diseño moderno y responsive
-🔐 **Sistema de Autenticación** - Login seguro con validación RUT chileno
-📊 **Simulador de Préstamos** - Cálculo en tiempo real de cuotas e intereses
-📱 **Diseño Responsive** - Funciona en desktop y mobile
-⚡ **Arquitectura Modular** - Componentes React reutilizables
-🔒 **Seguridad** - Encriptación de contraseñas con bcrypt
+🏦 **Interfaz Bancaria Profesional** - Diseño moderno y responsive  
+🔐 **Sistema de Autenticación** - Login seguro con validación RUT chileno  
+📊 **Simulador de Préstamos** - Cálculo en tiempo real de cuotas e intereses  
+📱 **Diseño Responsive** - Funciona en desktop y mobile  
+⚡ **Arquitectura Modular** - Componentes React reutilizables  
+🔒 **Seguridad** - Encriptación de contraseñas con bcrypt  
 
 ##  Arquitectura del Sistema
 
