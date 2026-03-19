@@ -7,22 +7,24 @@ Aplicación web de simulación de préstamos crediticios con interfaz bancaria p
 
 ## 👥 Equipo de Desarrollo
 
-- **Fernanda López** (202373638-4)
-- **Antonia Salinas** (202330512-k) 
-- **Javiera Ibaca Morales** (202273624-0)
-- **Emile Allué** (202273564-3)
-- **Álvaro Aceituno** (202273520-1)
+- **Fernanda López** - ROL: 202373638-4  
+- **Antonia Salinas** - ROL: 202330512-k  
+- **Javiera Ibaca Morales** - ROL: 202273624-0  
+- **Emile Allué** - ROL: 202273564-3  
+- **Álvaro Aceituno** - ROL: 202273520-1  
 - **Tutor:** Miguel Belisario Huerta Flores
 
 ## Recursos del Proyecto
 
 - [ Wiki del Proyecto](https://github.com/JavieraIMo/GRUPOALARA-2025-PROYINF/wiki)
-- [ Videos de Presentación](https://youtu.be/KnxOXxoZvGs)
+
+#### Videos de Presentación
 * [Video presentación cliente](https://aula.usm.cl/mod/resource/view.php?id=6926137)
 * [Video presentación avance 1 (HU 1)](https://youtu.be/KnxOXxoZvGs)
 * [Video presentación avance 2 (HU 2)](https://youtu.be/TI9UqV6XYTU)
 * [Video presentación avance 3 (HU 4)](https://youtu.be/BiPZFH9mxA0)
 * Etc ...
+  
 - [ Guía de Instalación](SETUP.md)
 
 ## 🏦 Descripción del Proyecto
