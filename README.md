@@ -14,11 +14,11 @@ Aplicación web de simulación de préstamos crediticios con interfaz bancaria p
 - **Álvaro Aceituno** (202273520-1)
 - **Tutor:** Miguel Belisario Huerta Flores
 
-## 📚 Recursos del Proyecto
+## Recursos del Proyecto
 
-- [📖 Wiki del Proyecto](https://github.com/JavieraIMo/GRUPOALARA-2025-PROYINF/wiki)
-- [🎥 Videos de Presentación](https://youtu.be/KnxOXxoZvGs)
-- [🚀 Guía de Instalación](SETUP.md)
+- [ Wiki del Proyecto](https://github.com/JavieraIMo/GRUPOALARA-2025-PROYINF/wiki)
+- [ Videos de Presentación](https://youtu.be/KnxOXxoZvGs)
+- [ Guía de Instalación](SETUP.md)
 
 ## 🏦 Descripción del Proyecto
 
@@ -31,7 +31,7 @@ Aplicación web de simulación de préstamos crediticios con interfaz bancaria p
 
 La plataforma ofrece una interfaz profesional similar a las páginas bancarias reales, con un enfoque en la experiencia de usuario y la seguridad.
 
-## ✨ Características Principales
+## Características Principales
 
 🏦 **Interfaz Bancaria Profesional** - Diseño moderno y responsive
 🔐 **Sistema de Autenticación** - Login seguro con validación RUT chileno
@@ -40,7 +40,7 @@ La plataforma ofrece una interfaz profesional similar a las páginas bancarias r
 ⚡ **Arquitectura Modular** - Componentes React reutilizables
 🔒 **Seguridad** - Encriptación de contraseñas con bcrypt
 
-## 🏗️ Arquitectura del Sistema
+##  Arquitectura del Sistema
 
 **Stack Tecnológico:** React 19.2.0 + Node.js + Express + PostgreSQL + Docker
 
@@ -77,9 +77,9 @@ La plataforma ofrece una interfaz profesional similar a las páginas bancarias r
         └── Admin/     # Panel de administración
 ```
 
-## 📊 Estado del Desarrollo
+##  Estado del Desarrollo
 
-### ✅ Funcionalidades Implementadas
+###  Funcionalidades Implementadas
 - Sistema de autenticación completo (registro/login)
 - Validación de RUT chileno
 - Base de datos PostgreSQL configurada
@@ -94,7 +94,7 @@ La plataforma ofrece una interfaz profesional similar a las páginas bancarias r
 - Dashboard administrativo
 - Reportes y estadísticas
 
-### 🎯 Funcionalidades Planificadas
+###  Funcionalidades Planificadas
 - Integración con servicios de riesgo (DICOM, Equifax)
 - Autenticación con Clave Única
 - Firma digital de documentos
