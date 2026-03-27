@@ -1,29 +1,23 @@
-# Autoevaluación SEMAT — Grupo Alara
-
- 
-> **SEMAT (Software Engineering Method and Theory)** es un framework que describe el progreso de un proyecto de software mediante **7 Alphas**, cada una con estados progresivos que indican la madurez del proyecto en esa dimensión.
- 
----
- 
+# Autoevaluación SEMAT
+  
 ## Resumen de Estados
  
 | Alpha | Estado Actual |
 |---|---|
-| Oportunidad (Opportunity) | **Valor Establecido** |
+| Oportunidad  | **Valor Establecido** |
 | Partes Interesadas (Stakeholders) | **Involucradas** |
-| Requerimientos (Requirements) | **Coherentes** |
-| Sistema de Software (Software System) | **Utilizable** |
-| Trabajo (Work) | **En Curso** |
-| Equipo (Team) | **Colaborando** |
-| Manera de Trabajar (Way of Working) | **En Uso** |
+| Requerimientos  | **Coherentes** |
+| Sistema de Software | **Utilizable** |
+| Trabajo  | **En Curso** |
+| Equipo | **Colaborando** |
+| Manera de Trabajar | **En Uso** |
  
 ---
  
 ## Evaluación Detallada por Alpha
+
  
----
- 
-### 1. 🎯 Oportunidad (Opportunity)
+### 1. Oportunidad
 **Estado: Valor Establecido**
  
 La oportunidad de negocio ha sido identificada y su valor ha sido definido claramente.
@@ -39,23 +33,23 @@ Aún no se ha completado la evaluación crediticia ni la integración con servic
  
 ---
  
-### 2. 👥 Partes Interesadas (Stakeholders)
+### 2. Partes Interesadas (Stakeholders)
 **Estado: Involucradas**
  
 Las partes interesadas han sido identificadas y están participando activamente en el proyecto.
  
 **Justificación:**
 - Se ha identificado al cliente/usuario final (personas que solicitan préstamos).
-- El tutor (Miguel Belisario Huerta Flores) participa activamente como guía del proyecto.
+- El tutor participa activamente como guía del proyecto.
 - Se han realizado presentaciones de avance ante el cliente en múltiples hitos.
 - Las necesidades de los stakeholders han sido recogidas y traducidas en Historias de Usuario.
  
 **¿Por qué no "En Acuerdo"?**
-No hay evidencia de un acuerdo formal documentado con todos los stakeholders sobre el alcance completo del sistema para 2025-2. Las expectativas para el nuevo semestre están en proceso de ser alineadas.
+No hay evidencia de un acuerdo formal documentado con todos los stakeholders sobre el alcance completo del sistema para 2026-1. Las expectativas para el nuevo semestre están en proceso de ser alineadas.
  
 ---
  
-### 3. 📋 Requerimientos (Requirements)
+### 3. Requerimientos
 **Estado: Coherentes**
  
 Los requerimientos están definidos y son consistentes entre sí, aunque aún están en evolución.
@@ -64,14 +58,14 @@ Los requerimientos están definidos y son consistentes entre sí, aunque aún es
 - Se han definido Historias de Usuario para las funcionalidades principales (HU 1, HU 2, HU 4 presentadas en avances anteriores).
 - Los requerimientos implementados son coherentes con la arquitectura del sistema (roles: Public, User, Admin).
 - No existen contradicciones evidentes entre las funcionalidades implementadas.
-- El backlog para 2025-2 está definido (simulador avanzado, evaluación crediticia, dashboard, Transbank).
+- El backlog para 2026-1 está definido (simulador avanzado, evaluación crediticia, dashboard, Transbank).
  
 **¿Por qué no "Dirigido"?**
-Los requerimientos de las nuevas funcionalidades (2025-2) aún no han sido completamente detallados ni priorizados formalmente. Se requiere una planificación más detallada del sprint para el nuevo semestre.
+Los requerimientos de las nuevas funcionalidades aún no han sido completamente detallados ni priorizados formalmente. Se requiere una planificación más detallada del sprint para el nuevo semestre.
  
 ---
  
-### 4. 💻 Sistema de Software (Software System)
+### 4. Sistema de Software
 **Estado: Utilizable**
  
 El sistema puede ser usado por sus usuarios finales para los propósitos básicos previstos.
@@ -88,7 +82,7 @@ Las funcionalidades de mayor valor de negocio (evaluación crediticia, pagos rea
  
 ---
  
-### 5. 🔨 Trabajo (Work)
+### 5. Trabajo
 **Estado: En Curso**
  
 El trabajo está siendo realizado de manera controlada y los avances son visibles.
@@ -100,11 +94,11 @@ El trabajo está siendo realizado de manera controlada y los avances son visible
 - El equipo ha trabajado de manera iterativa entregando funcionalidades en cada avance.
  
 **¿Por qué no "Detenido"?**
-El proyecto está activo y al inicio del semestre 2025-2, lo que implica que el trabajo continuará con nuevas metas definidas.
+El proyecto está activo y al inicio del semestre 2026-1, lo que implica que el trabajo continuará con nuevas metas definidas.
  
 ---
  
-### 6. 🤝 Equipo (Team)
+### 6. Equipo
 **Estado: Colaborando**
  
 El equipo trabaja de manera coordinada y colaborativa.
@@ -116,11 +110,11 @@ El equipo trabaja de manera coordinada y colaborativa.
 - Se han realizado presentaciones conjuntas de los avances.
  
 **¿Por qué no "Realizado"?**
-El proyecto continúa en 2025-2, por lo que el equipo aún está en fase de trabajo activo. La composición del equipo para el nuevo semestre puede necesitar ser confirmada y re-alineada.
+El proyecto continúa en 2026-1, por lo que el equipo aún está en fase de trabajo activo. La composición del equipo para el nuevo semestre puede necesitar ser confirmada y re-alineada.
  
 ---
  
-### 7. ⚙️ Manera de Trabajar (Way of Working)
+### 7. Manera de Trabajar
 **Estado: En Uso**
  
 El equipo sigue un proceso de trabajo establecido y consistente.
@@ -157,9 +151,9 @@ Manera Trabajar Principio Fundm.[EN USO] En uso   Consol.  Retirada
  
 ## Conclusiones
  
-El proyecto **Grupo Alara** se encuentra en un estado de madurez **intermedio-alto** al inicio del semestre 2025-2. Las dimensiones más avanzadas son el **Sistema de Software** (funcional y desplegable) y el **Equipo** (con historial de colaboración comprobado). Las dimensiones con mayor espacio de mejora son los **Requerimientos** (necesitan mayor detalle para 2025-2) y la **Manera de Trabajar** (podría formalizarse más con prácticas ágiles explícitas).
+El proyecto **Grupo Alara** se encuentra en un estado de madurez **intermedio-alto** al inicio del semestre 2026-1. Las dimensiones más avanzadas son el **Sistema de Software** (funcional y desplegable) y el **Equipo** (con historial de colaboración comprobado). Las dimensiones con mayor espacio de mejora son los **Requerimientos** (necesitan mayor detalle para 2025-2) y la **Manera de Trabajar** (podría formalizarse más con prácticas ágiles explícitas).
  
-### Prioridades para 2025-2
+### Prioridades para 2026-1
  
 1. **Refinar Requerimientos** → Detallar y priorizar el backlog de nuevas funcionalidades
 2. **Consolidar Manera de Trabajar** → Establecer sprints, definition of done y retrospectivas
@@ -168,4 +162,4 @@ El proyecto **Grupo Alara** se encuentra en un estado de madurez **intermedio-al
  
 ---
  
-*Autoevaluación realizada por Grupo 7 — UTFSM, inicio semestre 2025-2*
+*Autoevaluación realizada por Grupo 7 — UTFSM, inicio semestre 2026-1*
