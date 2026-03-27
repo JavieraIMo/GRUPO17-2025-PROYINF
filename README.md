@@ -5,7 +5,19 @@
 
 Aplicación web de simulación de préstamos crediticios con interfaz bancaria profesional, desarrollada por el **Grupo 7** de la UTFSM.
 
-##  Equipo de Desarrollo
+## Proyecto Base
+ 
+Este repositorio corresponde al proyecto que será continuado durante el **semestre 2026-1** como parte del ramo Ingeniería de Software (INF225).
+ 
+| Campo | Detalle |
+|---|---|
+| **Nombre del proyecto** | Grupo Alara — Sistema de Préstamos Digitales |
+| **Repositorio base** | [GRUPO07-2026-PROYINF](https://github.com/JavieraIMo/GRUPO07-2026-PROYINF) |
+| **Semestre de origen** | 2025-2 |
+| **Semestre de continuación** | 2026-1 |
+| **Estado al iniciar 2025-1** | Sistema funcional con autenticación, validación RUT y simulador básico de préstamos |
+
+##  👥 Equipo de Desarrollo
 
 - **Fernanda López** - ROL: 202373638-4  
 - **Antonia Salinas** - ROL: 202330512-k  
