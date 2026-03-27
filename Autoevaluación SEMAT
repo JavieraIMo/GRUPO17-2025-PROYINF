@@ -1,0 +1,171 @@
+# Autoevaluación SEMAT — Grupo Alara
+
+ 
+> **SEMAT (Software Engineering Method and Theory)** es un framework que describe el progreso de un proyecto de software mediante **7 Alphas**, cada una con estados progresivos que indican la madurez del proyecto en esa dimensión.
+ 
+---
+ 
+## Resumen de Estados
+ 
+| Alpha | Estado Actual |
+|---|---|
+| Oportunidad (Opportunity) | **Valor Establecido** |
+| Partes Interesadas (Stakeholders) | **Involucradas** |
+| Requerimientos (Requirements) | **Coherentes** |
+| Sistema de Software (Software System) | **Utilizable** |
+| Trabajo (Work) | **En Curso** |
+| Equipo (Team) | **Colaborando** |
+| Manera de Trabajar (Way of Working) | **En Uso** |
+ 
+---
+ 
+## Evaluación Detallada por Alpha
+ 
+---
+ 
+### 1. 🎯 Oportunidad (Opportunity)
+**Estado: Valor Establecido**
+ 
+La oportunidad de negocio ha sido identificada y su valor ha sido definido claramente.
+ 
+**Justificación:**
+- El problema está claramente identificado: la necesidad de una plataforma digital de simulación y gestión de préstamos crediticios para el mercado chileno.
+- El valor del sistema ha sido validado con el cliente (presentación en Hito 1).
+- La solución propuesta es viable técnica y financieramente dentro del contexto universitario.
+- Existe un conjunto claro de beneficios esperados: automatización de cálculos, reducción de tiempos, experiencia de usuario profesional.
+ 
+**¿Por qué no "Viable"?**
+Aún no se ha completado la evaluación crediticia ni la integración con servicios reales (Transbank, DICOM), por lo que la oportunidad en producción real no ha sido completamente validada.
+ 
+---
+ 
+### 2. 👥 Partes Interesadas (Stakeholders)
+**Estado: Involucradas**
+ 
+Las partes interesadas han sido identificadas y están participando activamente en el proyecto.
+ 
+**Justificación:**
+- Se ha identificado al cliente/usuario final (personas que solicitan préstamos).
+- El tutor (Miguel Belisario Huerta Flores) participa activamente como guía del proyecto.
+- Se han realizado presentaciones de avance ante el cliente en múltiples hitos.
+- Las necesidades de los stakeholders han sido recogidas y traducidas en Historias de Usuario.
+ 
+**¿Por qué no "En Acuerdo"?**
+No hay evidencia de un acuerdo formal documentado con todos los stakeholders sobre el alcance completo del sistema para 2025-2. Las expectativas para el nuevo semestre están en proceso de ser alineadas.
+ 
+---
+ 
+### 3. 📋 Requerimientos (Requirements)
+**Estado: Coherentes**
+ 
+Los requerimientos están definidos y son consistentes entre sí, aunque aún están en evolución.
+ 
+**Justificación:**
+- Se han definido Historias de Usuario para las funcionalidades principales (HU 1, HU 2, HU 4 presentadas en avances anteriores).
+- Los requerimientos implementados son coherentes con la arquitectura del sistema (roles: Public, User, Admin).
+- No existen contradicciones evidentes entre las funcionalidades implementadas.
+- El backlog para 2025-2 está definido (simulador avanzado, evaluación crediticia, dashboard, Transbank).
+ 
+**¿Por qué no "Dirigido"?**
+Los requerimientos de las nuevas funcionalidades (2025-2) aún no han sido completamente detallados ni priorizados formalmente. Se requiere una planificación más detallada del sprint para el nuevo semestre.
+ 
+---
+ 
+### 4. 💻 Sistema de Software (Software System)
+**Estado: Utilizable**
+ 
+El sistema puede ser usado por sus usuarios finales para los propósitos básicos previstos.
+ 
+**Justificación:**
+- El sistema cuenta con autenticación completa (registro/login con validación RUT).
+- El simulador básico de préstamos está implementado y funcional.
+- La arquitectura está desplegada vía Docker Compose con frontend, backend y base de datos operativos.
+- Se han completado 4 hitos con releases publicados en GitHub.
+- El frontend está organizado por roles (Public/User/Admin) y es responsive.
+ 
+**¿Por qué no "Listo"?**
+Las funcionalidades de mayor valor de negocio (evaluación crediticia, pagos reales, dashboard administrativo) aún no están implementadas. El sistema no está en producción real, solo en entorno de desarrollo/demostración.
+ 
+---
+ 
+### 5. 🔨 Trabajo (Work)
+**Estado: En Curso**
+ 
+El trabajo está siendo realizado de manera controlada y los avances son visibles.
+ 
+**Justificación:**
+- Se han completado 4 hitos con entregas concretas y videos de presentación.
+- El repositorio cuenta con 78 commits que evidencian actividad continua.
+- Existe un sistema de Issues en GitHub (10 issues registrados) para el seguimiento de tareas.
+- El equipo ha trabajado de manera iterativa entregando funcionalidades en cada avance.
+ 
+**¿Por qué no "Detenido"?**
+El proyecto está activo y al inicio del semestre 2025-2, lo que implica que el trabajo continuará con nuevas metas definidas.
+ 
+---
+ 
+### 6. 🤝 Equipo (Team)
+**Estado: Colaborando**
+ 
+El equipo trabaja de manera coordinada y colaborativa.
+ 
+**Justificación:**
+- El equipo de 5 integrantes ha demostrado colaboración a lo largo de los 4 hitos completados.
+- Existe un tutor que guía y revisa el trabajo del equipo.
+- La estructura del repositorio (branches, commits) refleja trabajo coordinado.
+- Se han realizado presentaciones conjuntas de los avances.
+ 
+**¿Por qué no "Realizado"?**
+El proyecto continúa en 2025-2, por lo que el equipo aún está en fase de trabajo activo. La composición del equipo para el nuevo semestre puede necesitar ser confirmada y re-alineada.
+ 
+---
+ 
+### 7. ⚙️ Manera de Trabajar (Way of Working)
+**Estado: En Uso**
+ 
+El equipo sigue un proceso de trabajo establecido y consistente.
+ 
+**Justificación:**
+- Se utiliza Git/GitHub como control de versiones con commits regulares.
+- Se sigue una metodología iterativa por hitos con entregables definidos.
+- Se usan Issues de GitHub para el seguimiento de tareas pendientes.
+- Existe documentación del proyecto (README, SETUP.md, Wiki).
+- El uso de Docker Compose estandariza el entorno de desarrollo del equipo.
+ 
+**¿Por qué no "Consolidada"?**
+No hay evidencia de retrospectivas formales, métricas de proceso o revisiones sistemáticas de la manera de trabajar. La adopción de prácticas ágiles formales (sprints, definition of done) podría estar incompleta para el nuevo semestre.
+ 
+---
+ 
+## Diagrama de Estado SEMAT
+ 
+```
+Alpha                    Estados →
+─────────────────────────────────────────────────────────────────────
+                  [1]      [2]      [3]      [4]      [5]      [6]
+Oportunidad    Ident.  Soluc.   [VALOR]  Viable  Abordado Beneficio
+Stakeholders   Reconoc. Repres. [INVOLUC] Acuerdo  Satisf.  Superado
+Requerimientos Concebd. Delimit.[COHER.]  Direct.  Abordado Cumplido
+Sist. Software Arq.est. Demo   Utiliz.  [UTLZ.]  Listo    Retirado
+Trabajo        Inic.   Preprd. [EN CRS] Contenid Concluido Cerrado
+Equipo         Sembrd. Formado Colabor.[COLAB.]  Realizado Disuelto
+Manera Trabajar Principio Fundm.[EN USO] En uso   Consol.  Retirada
+```
+*Los estados entre [corchetes] indican el estado actual de cada Alpha.*
+ 
+---
+ 
+## Conclusiones
+ 
+El proyecto **Grupo Alara** se encuentra en un estado de madurez **intermedio-alto** al inicio del semestre 2025-2. Las dimensiones más avanzadas son el **Sistema de Software** (funcional y desplegable) y el **Equipo** (con historial de colaboración comprobado). Las dimensiones con mayor espacio de mejora son los **Requerimientos** (necesitan mayor detalle para 2025-2) y la **Manera de Trabajar** (podría formalizarse más con prácticas ágiles explícitas).
+ 
+### Prioridades para 2025-2
+ 
+1. **Refinar Requerimientos** → Detallar y priorizar el backlog de nuevas funcionalidades
+2. **Consolidar Manera de Trabajar** → Establecer sprints, definition of done y retrospectivas
+3. **Alinear Stakeholders** → Confirmar expectativas del cliente para el nuevo semestre
+4. **Avanzar el Sistema** → Implementar evaluación crediticia, dashboard y pagos
+ 
+---
+ 
+*Autoevaluación realizada por Grupo 7 — UTFSM, inicio semestre 2025-2*
