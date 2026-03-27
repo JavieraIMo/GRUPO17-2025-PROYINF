@@ -19,11 +19,13 @@ Aplicación web de simulación de préstamos crediticios con interfaz bancaria p
 - [ Wiki del Proyecto](https://github.com/JavieraIMo/GRUPOALARA-2025-PROYINF/wiki)
 
 #### Videos de Presentación
-* [Video presentación cliente](https://aula.usm.cl/mod/resource/view.php?id=6926137)
+
+* [Video presentación cliente - 2025](https://aula.usm.cl/mod/resource/view.php?id=6926137)
 * [Video presentación avance 1 (HU 1)](https://youtu.be/KnxOXxoZvGs)
 * [Video presentación avance 2 (HU 2)](https://youtu.be/TI9UqV6XYTU)
 * [Video presentación avance 3 (HU 4)](https://youtu.be/BiPZFH9mxA0)
-* Etc ...
+* [Video presentación cliente - 2026](https://aula.usm.cl/pluginfile.php/8396563/mod_resource/content/1/Presentaci%C3%B3n%20Inicial%20del%20Cliente.mp4)
+* Etc...
   
 - [ Guía de Instalación](SETUP.md)
 
