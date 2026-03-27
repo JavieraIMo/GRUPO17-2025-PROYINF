@@ -5,7 +5,7 @@
 
 Aplicación web de simulación de préstamos crediticios con interfaz bancaria profesional, desarrollada por el **Grupo 7** de la UTFSM.
 
-## 👥 Equipo de Desarrollo
+##  Equipo de Desarrollo
 
 - **Fernanda López** - ROL: 202373638-4  
 - **Antonia Salinas** - ROL: 202330512-k  
@@ -29,7 +29,7 @@ Aplicación web de simulación de préstamos crediticios con interfaz bancaria p
   
 - [ Guía de Instalación](SETUP.md)
 
-## 🏦 Descripción del Proyecto
+## Descripción del Proyecto
 
 **Grupo Alara** es una aplicación web de simulación de préstamos crediticios que permite a los usuarios:
 
@@ -42,12 +42,12 @@ La plataforma ofrece una interfaz profesional similar a las páginas bancarias r
 
 ## Características Principales
 
-🏦 **Interfaz Bancaria Profesional** - Diseño moderno y responsive  
-🔐 **Sistema de Autenticación** - Login seguro con validación RUT chileno  
-📊 **Simulador de Préstamos** - Cálculo en tiempo real de cuotas e intereses  
-📱 **Diseño Responsive** - Funciona en desktop y mobile  
-⚡ **Arquitectura Modular** - Componentes React reutilizables  
-🔒 **Seguridad** - Encriptación de contraseñas con bcrypt  
+ **Interfaz Bancaria Profesional** - Diseño moderno y responsive  
+ **Sistema de Autenticación** - Login seguro con validación RUT chileno  
+ **Simulador de Préstamos** - Cálculo en tiempo real de cuotas e intereses  
+ **Diseño Responsive** - Funciona en desktop y mobile  
+ **Arquitectura Modular** - Componentes React reutilizables  
+ **Seguridad** - Encriptación de contraseñas con bcrypt  
 
 ##  Arquitectura del Sistema
 
@@ -97,7 +97,7 @@ La plataforma ofrece una interfaz profesional similar a las páginas bancarias r
 - Frontend organizado por roles de usuario
 - Simulador básico de préstamos
 
-### 🚧 En Desarrollo
+###  En Desarrollo
 - Simulador avanzado con más variables
 - Sistema de evaluación crediticia
 - Dashboard administrativo
@@ -111,7 +111,7 @@ La plataforma ofrece una interfaz profesional similar a las páginas bancarias r
 - Notificaciones SMS y Email
 - Deploy en plataforma cloud
 
-## 🛠️ Inicio Rápido
+##  Inicio Rápido
 
 Para instalar y ejecutar el proyecto, consulta la [Guía de Instalación (SETUP.md)](SETUP.md) que incluye:
 
